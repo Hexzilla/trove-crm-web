@@ -1,0 +1,581 @@
+<div class="table001 tablePagination">
+    <div class="row justify-content-start">
+        <div class="col-sm-6 col-md-6 col-lg-5 col-xl-3">
+            <div class="input-group mb-3 inputSearch001">
+                <input class="form-control" matInput placeholder="Search..." [(ngModel)]="filterValue" (keyup)="filterRoles()">
+                <div class="input-group-append">
+                    <i class="material-icons input-group-text">search</i>
+                </div>
+            </div>
+
+        </div>
+        <div class="col text-right mb-10-xs">
+            <button (click)="openNewRole(modalNewRole)" class="btnColor1 f-16-500" mat-flat-button>New Role
+              <mat-icon class="material-icons fs-16 ml-1 align-text-top">
+add
+</mat-icon></button>
+        </div>
+    </div>
+    <div class="color-253238 table-responsive table001">
+        <table mat-table [dataSource]="RolesList" class="w-100" matSort matSortActive="name" matSortDisableClear matSortDirection="asc" (matSortChange)="resetPagingRole()">
+            <!-- Role Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <!-- AccessLevel Column -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-slide-toggle class="slideToggle001" [checked]="row.status == 'Active' ? true : false" (change)="changeRoleStatus($event.checked, row.id)"></mat-slide-toggle>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Action">
+                <th class="w-220px" mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let row">
+                    <a (click)="openNewRole(modalNewRole, row.id)" mat-flat-button class="btnEdit1 f-14-400">
+                        <mat-icon class="material-icons mr-1 fs-14 align-text-top">create</mat-icon> Edit
+                    </a>
+                    <a (click)="deleteModal(modalDelete, row.id)" mat-flat-button class="btnDelete1 f-14-400 ml-2">Delete</a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsRoles;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsRoles;"></tr>
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{filterValue}}"</td>
+            </tr>
+        </table>
+    </div>
+    <mat-paginator [length]="resultsLengthRole" [pageSize]="10"></mat-paginator>
+</div>
+
+<ng-template #modalNewRole let-modal>
+    <div class="modal-header">
+        <div class="px-2">
+            <span class="color-253238 f-20-500">Create new role</span>
+        </div>
+    </div>
+    <form [formGroup]="newRoleForm" novalidate (ngSubmit)="onSubmitRoleForm()">
+        <div class="bg-EFF2F7 px-4 py-3 input001">
+            <div class="row color-253238">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <div>
+                        <label class="f-12-500">Role Name*</label>
+                        <span *ngIf="newRoleForm.controls['role_name'].invalid && (newRoleForm.controls['role_name'].dirty || newRoleForm.controls['role_name'].touched)" class="color-ff0000 f-12-500 float-right">
+                        <mat-error *ngIf="newRoleForm.controls.role_name.errors?.required">This field is required.</mat-error>
+                      </span>
+                        <mat-form-field appearance="fill">
+                            <input matInput type="text" formControlName="role_name" value="">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                    <div>
+                        <label class="f-12-500">Description</label>
+                        <mat-form-field appearance="fill">
+                            <textarea matInput formControlName="role_description" id="" cols="30" rows="1"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="px-2 input001">
+                <div class="color-253238 f-16-500 mb-3">
+                    <span>Configure permissions</span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <mat-tab-group animationDuration="0ms" class="horizontalTab tab001" formArrayName="menus">
+                            <ng-template [ngIf]="Permissions">
+                                <mat-tab *ngFor="let menu of Permissions ; let i=index" label="{{menu.name}}">
+                                  <div class="hgt200 customVerScroll">
+                                  <div class="table-responsive">
+                                        <table class="table table-borderless checkbox001 customTB001">
+                                            <tbody class="">
+                                                <tr *ngFor="let child_menu of LoopingVar[i] ; let j=index" formGroupName="{{child_menu.formControlKey}}">
+                                                    <ng-template [ngIf]="child_menu.parent_id == 0" [ngIfElse]="child">
+                                                        <td class="w-75">
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="user_has_menu" type="checkbox" class="custom-control-input" id="menu_titleall_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.user_has_menu" (change)="selectAllMenus(i, child_menu)">
+                                                                <input formControlName="menu_id" type="hidden" class="custom-control-input" [(ngModel)]="child_menu.menu_id">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_titleall_{{child_menu.formControlKey}}">All Modules</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="f-10-400">
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_view" type="checkbox" class="custom-control-input" id="menu_viewall_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_view" (change)="selectAllPermission('permission_view', i, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_viewall_{{child_menu.formControlKey}}">View</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="f-10-400">
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_create" type="checkbox" class="custom-control-input" id="menu_createall_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_create" (change)="selectAllPermission('permission_create', i, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_createall_{{child_menu.formControlKey}}">Create</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="f-10-400">
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_edit" type="checkbox" class="custom-control-input" id="menu_editall_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_edit" (change)="selectAllPermission('permission_edit', i, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_editall_{{child_menu.formControlKey}}">Edit</label>
+                                                            </div>
+                                                        </td>
+                                                    </ng-template>
+                                                    <ng-template #child>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="user_has_menu" type="checkbox" class="custom-control-input" id="menu_title_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.user_has_menu" (change)="SelectMenu(i, j, child_menu)">
+                                                                <input formControlName="menu_id" type="hidden" class="custom-control-input" [(ngModel)]="child_menu.menu_id">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_title_{{child_menu.formControlKey}}">{{child_menu.title}}</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_view" type="checkbox" class="custom-control-input" id="menu_view_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_view" (change)="SelectPermission('permission_view', i, j, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_view_{{child_menu.formControlKey}}"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_create" type="checkbox" class="custom-control-input" id="menu_create_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_create" (change)="SelectPermission('permission_create', i, j, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_create_{{child_menu.formControlKey}}"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox pos-t-0">
+                                                                <input formControlName="permission_edit" type="checkbox" class="custom-control-input" id="menu_edit_{{child_menu.formControlKey}}" [(ngModel)]="child_menu.permission_edit" (change)="SelectPermission('permission_edit', i, j, child_menu)">
+                                                                <label class="custom-control-label f-12-500 color-253238" for="menu_edit_{{child_menu.formControlKey}}"></label>
+                                                            </div>
+                                                        </td>
+                                                    </ng-template>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </mat-tab>
+                            </ng-template>
+
+                            <!--<mat-tab label="Leadss" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Task" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Appointment" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Settings" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Email" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>
+                      <mat-tab label="Log" class="d-none">
+                          <div class="table-responsive">
+                              <table class="table table-borderless checkbox001 customTB001">
+                                  <thead class="color-253238 v-top">
+                                      <tr>
+                                          <th class="w-75">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettings()" type="checkbox" class="custom-control-input" id="settingsChkAll" [(ngModel)]="isSelectAllSettings">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll">All Modules</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsView()" type="checkbox" class="custom-control-input" id="settingsChkAllView" [(ngModel)]="isSelectAllSettingsView">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllView">View</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsCreate()" type="checkbox" class="custom-control-input" id="settingsChkAllCreate" [(ngModel)]="isSelectAllSettingsCreate">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllCreate">Create</label>
+                                              </div>
+                                          </th>
+                                          <th class="f-10-400">
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="selectAllSettingsEdit()" type="checkbox" class="custom-control-input" id="settingsChkAllEdit" [(ngModel)]="isSelectAllSettingsEdit">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAllEdit">Edit</label>
+                                              </div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="">
+                                      <tr *ngFor="let role of settingsPermission ; let i=index">
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettings(role.isSelected)" [(ngModel)]="role.isSelected" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i}}">{{role.name}}</label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsView(role.isSelectedView)" [(ngModel)]="role.isSelectedView" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+1}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+1}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsCreate(role.isSelectedCreate)" [(ngModel)]="role.isSelectedCreate" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+2}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+2}}"></label>
+                                              </div>
+                                          </td>
+                                          <td>
+                                              <div class="custom-control custom-checkbox pos-t-0">
+                                                  <input (change)="unSelectAllSettingsEdit(role.isSelectedEdit)" [(ngModel)]="role.isSelectedEdit" type="checkbox" class="custom-control-input" id="settingsChkAll{{i}}{{i+3}}">
+                                                  <label class="custom-control-label f-12-500 color-253238" for="settingsChkAll{{i}}{{i+3}}"></label>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </mat-tab>-->
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="px-2">
+                <button type="button" class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+                <button class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary" [disabled]="newRoleForm.pristine || newRoleForm.invalid">Create</button>
+            </div>
+        </div>
+    </form>
+</ng-template>
+<ng-template #modalDelete let-modal>
+    <div class="modal-header border-bottom-0">
+        <div class="px-2">
+            <span class="color-253238 f-20-500">Delete Role</span>
+        </div>
+    </div>
+    <div class="modal-body pt-1">
+        <div class="px-2">
+            <div class="color-ff0000 f-13-400">
+                Are you sure you want to permanently delete this one?
+            </div>
+            <div class="mt-3 checkbox001">
+                <div class="custom-control custom-checkbox pos-t-0">
+                    <input type="checkbox" class="custom-control-input" id="deletechk" [(ngModel)]="roleConfirmationForDelete">
+                    <label class="custom-control-label f-13-500 color-253238" for="deletechk">
+          Delete this role and related activities like tasks and calls?
+          This action cannot be undone.
+        </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="px-2">
+            <button type="button" class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary" [disabled]="!roleConfirmationForDelete" (click)="deleteRole(deleteRoleId)">Confirm</button>
+        </div>
+    </div>
+</ng-template>

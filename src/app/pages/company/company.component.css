@@ -1,0 +1,234 @@
+.topBar {
+  width: 100%;
+  padding: 20px 50px 20px 55px;
+  background-color: white;
+}
+
+.topBarDiv {
+  display: flex;
+  align-items: center;
+}
+
+.topBarDiv button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+  color: #253238;
+}
+
+.flatIconTextButton {
+  background: rgba(208, 217, 222, 0.2);
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 0 7px 0 0;
+  font-size: 12px;
+  /* height: 32px; */
+  line-height: 30px;
+}
+
+.showListButton {
+  background: #FFFFFF;
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  padding: 0;
+  border-radius: 3px 0px 0px 3px;
+  min-width: 40px;
+  line-height: 30px;
+}
+
+.showDashboardButton {
+  background: #FFFFFF;
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  padding: 0;
+  border-radius: 0px 3px 3px 0px;
+  min-width: 40px;
+  line-height: 30px;
+}
+
+.activeBtn {
+  background: #F6F7F8;
+}
+
+.iconInButton {
+  font-size: 21px;
+}
+
+.notificationPanelWrap ul , .settingsPanelUL , .addPanelUL {padding: 0; margin: 0; list-style: none;}
+.notificationPanelWrap ul li , .settingsPanelUL li , .addPanelUL li{
+padding-top: 10px;
+height: auto;
+padding-bottom: 10px;
+line-height: normal;
+border-bottom: 1px solid #E6EAF0;
+}
+.settingsPanelUL .mat-menu-item:hover ,
+.notificationPanelWrap .mat-menu-item:hover,
+.addPanelUL .mat-menu-item:hover
+{background-color: #F3F5F9;}
+.notificationPanelWrap ul li:last-child , ul.addPanelUL li {
+border-bottom: 0;
+}
+.settingsPanelUL li:not(:first-child){
+border-bottom: 0;
+}
+.settingsPanelUL li:first-child {
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+border-bottom-color: #E4E9EF;
+}
+.settingsPanelUL li a:hover , .addPanelUL li a:hover {color: #253238;}
+.notificationPanelWrap .alignText {line-height: 25px; white-space: initial;}
+.notificationPanelWrap .material-icons {color: #253238; font-size: 22px;}
+.notificationPanelWrap .alignText .material-icons {color: #ff0000; font-size: 16px;width: auto;
+height: 20px;}
+
+.mainContainer {
+  background: #EFF2F7;
+  /* max-height: calc(100vh - 137px); */
+  padding: 10px 20px;
+}
+
+.gridHeight {
+  height: calc(100vh - 133px);
+}
+
+.listHeight {
+  height: calc(100vh - 190px);
+}
+
+/* .mainContainer .avatar {
+  border-radius: 99px;
+  width: 48px;
+  height: 48px;
+} */
+
+mat-card {
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cardText1 {
+  font-weight: 500;
+  font-size: 16px;
+  color: #253238;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cardText2 {
+  font-weight: normal;
+  font-size: 12px;
+  color: #455B66;
+}
+
+.checkDiv {
+  display: flex;
+  align-items: center;
+}
+
+.checkDiv span {
+  font-weight: normal;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #455B66;
+}
+
+.checkDiv mat-checkbox span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #202D3F;
+}
+
+.drawerContainer {
+  width: 360px;
+}
+
+.drawerContainerTop {
+  padding: 19px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.closeIconButton {
+  background: #FFFFFF;
+  border: 1.14286px solid #E6EAF0;
+  border-radius: 3.42857px;
+  padding: 0;
+  min-width: 24px;
+  line-height: 24px;
+}
+
+.cardCheckBox {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+
+.deleteBtn {
+  border: 1px solid #D0D9DE;
+  border-radius: 6px;
+  line-height: 27px;
+  color: red;
+  background: white;
+}
+
+.smallIconBtn {
+  min-width: 24px;
+  border: 1px solid #D0D9DE;
+  border-radius: 6px;
+  padding: 2px;
+  line-height: 28px;
+  background: white;
+}
+
+.smallIconBtn mat-icon {
+  font-size: 20px;
+  color: #455B66;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconContainer {
+  background: #F3F5F9;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+.fullWidth {
+  width: 100% !important;
+}
+
+.dateDiv {
+  padding-right: 15px;
+  padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #455B66;
+}
+.filterContainer1 {
+max-height: calc(100vh - 200px);
+}
+.clearAllButton {
+background-color: #EFF2F7;
+border: 1px solid #D0D9DE;
+font-size: 12px;
+line-height: 30px;
+margin-left: 100px;
+}

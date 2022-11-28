@@ -1,0 +1,210 @@
+.mat-dialog-title {
+    padding: 24px 40px;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 29px;
+    color: #253238;
+    margin-bottom: 0;
+}
+
+.mat-dialog-content {
+    margin: 0;
+    padding: 0;
+    max-height: 370px !important;
+}
+
+.mainContent {
+    margin: 20px 40px;
+}
+
+.halfDiv {
+    max-width: 202px;
+}
+
+.filterPart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: #E4E9EF solid 1.73px;
+    border-bottom: #E4E9EF solid 1.73px;
+    background: #EFF2F7;
+    padding: 10px 40px;
+}
+
+.filterPart mat-icon {
+    color: #D0D9DE;
+}
+
+span {
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+    font-weight: bold;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+.priceDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ownerDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contactDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mat-dialog-actions {
+    border-top: #E4E9EF solid 1.73px;
+    background: #EFF2F7;
+    margin: 0;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.cancelBtn {
+    background: #EFF2F7;
+    border: 1px solid #D0D9DE;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 119px;
+}
+
+.deleteBtn {
+    background: #EFF2F7;
+    border: 1px solid #D0D9DE;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    width: auto;
+    height: 40px;
+    color: #FF0000;
+}
+
+.createBtn {
+    background: #1F304B;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 119px;
+}
+
+
+/*stage*/
+
+.stage-wrapper {
+    display: flex;
+    height: 40px;
+    max-width: 95%;
+}
+
+.stage-item {
+    background-color: #E1E6EE;
+    border-color: #E1E6EE;
+    flex-basis: 100%;
+    font-size: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.stage-item:before,
+.stage-item:after {
+    border: solid transparent;
+    content: " ";
+    left: 100%;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.stage-item:after {
+    border-left-color: inherit;
+    border-width: 21px;
+    margin-top: -21px;
+}
+
+.stage-item:before {
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+    border-width: 27px;
+    margin-top: -27px;
+}
+
+.stage-item.stage-active {
+    color: #002868;
+    font-weight: bold;
+}
+
+.stage-item span {
+    margin-left: 30px;
+}
+
+.stage-item.stage-active span {
+    margin-left: 0;
+}
+
+
+/*.stage-item.stage-active:after {
+     border-left-color: #002868; 
+}*/
+
+.twoDiv {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+}
+
+.selectWithInput {
+    position: absolute;
+    left: 0;
+    width: 92px;
+    border: 1px solid #D0D9DE;
+    height: 33px;
+    left: -12px;
+    top: 3px;
+    border-radius: 3px;
+    padding-top: 8px;
+    padding-left: 14px;
+    background: #F7F8FA;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+}
+
+.inputWithSelect {
+    margin-left: 92px;
+}
+
+input.mat-input-element,
+textarea.mat-input-element {
+    font-weight: 500;
+}
+
+::ng-deep.mat-form-field-hint-wrapper {
+    display: block!important;
+}
+
+::ng-deep.mat-form-field-subscript-wrapper {
+    position: inherit!important;
+    padding: 0px!important;
+}

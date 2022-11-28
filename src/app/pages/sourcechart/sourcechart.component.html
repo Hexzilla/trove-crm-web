@@ -1,0 +1,40 @@
+<app-header></app-header>
+<mat-drawer-container hasBackdrop="true">
+
+    <mat-drawer #drawer mode="Over" position="end" class="noScrollDrawer">
+      <div class="drawerContainer">
+              <app-sourcechart-filter *ngIf="showFilter"  (closeDialog)="drawer.toggle()" (count)="filterCount=$event"></app-sourcechart-filter>
+      </div>
+    </mat-drawer>
+
+<div fxLayout="row" fxLayout.xs="column" class="lightBackground">
+    <div fxFlex="">
+        <div class="topBar alignCenter">
+          <span routerLink='/pages/dashboard' class="cursorPointer">
+            <mat-icon class="align-top mr-1">arrow_back</mat-icon>
+            Source Overview
+          </span>
+
+
+            <div class="ml-auto">
+              <button matTooltip="Export" mat-button class="flatIconTextButton mw-40 px-0">
+                <mat-icon class="">import_export</mat-icon>
+            </button>
+              <button mat-button class="flatIconTextButton ml-3" (click)="drawer.toggle() ; clickFilter()">
+                <mat-icon class="iconInButton">filter_alt</mat-icon>
+                Filter({{filterCount}})
+            </button>
+            </div>
+
+        </div>
+        <ngx-simplebar [options]="scrollOptions" class="listContainer">
+          <div class="whiteBox">
+            <app-echarts class="chartHeight" [chartOption]="sourceChart"></app-echarts>
+          </div>
+
+           <app-sourcechart-table></app-sourcechart-table>
+        </ngx-simplebar>
+    </div>
+
+</div>
+</mat-drawer-container>

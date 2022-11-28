@@ -1,0 +1,90 @@
+:host ::ng-deep .alignTabCSS .mat-tab-labels {
+    flex-direction: initial;
+}
+
+.mat-tab-group.horizontalTab {
+    flex-direction: column;
+}
+
+.horizontalTab .mat-tab-labels {
+    flex-direction: row;
+}
+
+.addPersonImg img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.table001 .mat-paginator {
+    background-color: transparent;
+}
+
+.userTableImg {
+    width: 40px;
+    margin-right: 10px;
+    border-radius: 100%;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.addPerIconWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EFF2F7;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border-radius: 100%;
+}
+
+.addPersonImg .delAddPerImg {
+    position: absolute;
+    font-size: 16px;
+    right: 0px;
+    cursor: default;
+    top: 0;
+    visibility: hidden;
+    color: #ff0000;
+}
+
+.addPersonImg:hover .delAddPerImg {
+    visibility: visible;
+}
+
+.customTB001 tbody tr {
+    background-color: #F7F8FA;
+    border-bottom: 8px solid #fff;
+}
+
+.table td,
+.table th {
+    padding-bottom: .50em;
+}
+
+@media(max-width:575px) {
+    .addPerIconWrap {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .addPersonImg {
+        width: 50px;
+    }
+}
+
+@media(max-width:1024px) {
+    .addPersonImg .delAddPerImg {
+        visibility: visible;
+    }
+}
+
+.d-none {
+    display: none;
+}

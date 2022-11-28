@@ -1,0 +1,132 @@
+<div class="ngCSSUR bg-F4F4F4">
+    <section class="bgWhite py-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto mr-auto">
+                    <div class="logo-xs-UR">
+                        <img src="../../../assets/images/logo.png" alt="Logo">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <span class="f-18-500 color-253238 d-none-xs" href="javascript:void(0);"> Looking for support?</span>
+                    <a class="btnCurve" href="javascript:void(0);" mat-flat-button color="warn">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-xl-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5 col-lg-7">
+                            <div class="color-1F304B f-60-700">
+                                <span>Login</span>
+                            </div>
+                            <div class="color-1F304B f-18-500 mt-2">
+                                <span>Business management solution designed for <br>professionals.</span>
+                            </div>
+                            <div class="mt-4 w-100-xs">
+                                <img src="../../../assets/images/signupBanner.png" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-7 col-lg-5">
+                            <div class="roundedBox p-4">
+                                <div class="f-22-700 color-1F304B">
+                                    <span>Welcome</span>
+                                </div>
+                                <div class="f-22-500 color-1F304B">
+                                    <span>New here?</span>
+                                    <a class="ml-2 color-1F304B hover-C41E41" routerLink='/user/signup'>Create account</a>
+                                </div>
+                                <div class="alertBox" *ngIf="apiResponse && apiResponse.success">
+                                    <p class="f-14-700 color-253238 mb-1">Success</p>
+                                    <span class="color-455B66 f-12-400">Logged in successfully! Redirecting....</span>
+                                </div>
+                                <div class="alertBoxError" *ngIf="formStatus.canShowErrors()">
+                                    <p class="f-14-700 color-253238 mb-1">Oops!</p>
+                                    <div class="color-455B66 f-12-400" *ngFor="let error of formStatus.errors">{{ error }}</div>
+                                </div>
+                                <div class="alertBoxInfo" *ngIf="formStatus.onFormProcessing()">
+                                    <p class="f-14-700 color-253238 mb-1"></p>
+                                    <div class="color-455B66 f-12-400">We are processing your request...</div>
+                                </div>
+                                <div class="alertBox" *ngIf="this.NavigationExtrasResponse && this.NavigationExtrasResponse.queryParams.success">
+                                    <p class="f-14-700 color-253238 mb-1">Success</p>
+                                    <span class="color-455B66 f-12-400">{{this.NavigationExtrasResponse.queryParams.message}}</span>
+                                </div>
+                                <div class="alertBoxError" *ngIf="this.NavigationExtrasResponse && !this.NavigationExtrasResponse.queryParams.success">
+                                    <p class="f-14-700 color-253238 mb-1">Oops!</p>
+                                    <span class="color-455B66 f-12-400">{{this.NavigationExtrasResponse.queryParams.message}}</span>
+                                </div>
+
+                                <div class="userForm mt-4">
+                                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Work Email</mat-label>
+                                                    <input matInput placeholder="Work Email" formControlName="email">
+                                                    <mat-error *ngIf="loginForm.controls.email.errors?.required">This field is required.</mat-error>
+                                                    <mat-error *ngIf="loginForm.controls.email.errors?.pattern">Please enter a valid email address.</mat-error>
+                                                    <mat-error *ngIf="loginForm.controls.email.errors?.serverError">{{ loginForm.controls.email.errors?.serverError }}</mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Password</mat-label>
+                                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+                                                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </button>
+                                                    <mat-error *ngIf="loginForm.controls.password.errors?.required">This field is required.</mat-error>
+                                                    <mat-error *ngIf="loginForm.controls.password.errors?.pattern">
+                                                        <p>At least 1 Uppercase</p>
+                                                        <p>At least 1 Lowercase</p>
+                                                        <p>At least 1 Number</p>
+                                                        <p>At least 1 Symbol, symbol allowed !@#$%^&*_=+-</p>
+                                                        <p>Min 8 chars and Max 12 chars</p>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <!--<a class="w-100 bg-002868" href="javascript:void(0);" mat-flat-button color="warn">Login</a>-->
+                                                <!-- Submit Button -->
+                                                <button type="submit" class="w-100 bg-002868" mat-flat-button color="warn" [disabled]="!loginForm?.valid || formStatus.submitted">Login</button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                                <div class="f-14-500 mt-2 mb-4">
+                                    <a class="color-1F304B hover-C41E41" routerLink='/user/forgot-password'>Forgotten your password?</a>
+                                </div>
+                                <div class="color-1F304B">
+                                    <hr class="border-f0f0f0">
+                                    <span class="f-13-500 labelLine">or login using</span>
+                                </div>
+
+                                <div class="spacerSI">
+                                    <a mat-stroked-button href="javascript:void(0);" (click)="loginWithGoogle()"> <img src="../../../assets/images/gmail.png" alt="Gmail"></a>
+                                    <a mat-stroked-button href="javascript:void(0);" (click)="loginWithFacebook()"> <img src="../../../assets/images/facebook.png" alt="Facebook"></a>
+                                    <a mat-stroked-button href="javascript:void(0);" (click)="loginWithTwitter()"> <img src="../../../assets/images/twitter.png" alt="Twitter"></a>
+                                    <a mat-stroked-button href="javascript:void(0);"> <img src="../../../assets/images/outlook.png" alt="Outlook"></a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>

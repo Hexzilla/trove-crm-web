@@ -1,0 +1,102 @@
+<form [formGroup]="notificationForm" novalidate (ngSubmit)="saveNotificationSetting()">
+    <div class="row align-items-center">
+        <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9 mb-10-xs">
+            <div class="f-20-400 color-253238">Manage notification settings</div>
+        </div>
+        <div class="col text-right">
+            <button class="btnColor4 f-14-700" mat-flat-button color="primary" [disabled]="notificationForm.pristine || notificationForm.invalid">Save</button>
+        </div>
+    </div>
+    <ng-template [ngIf]="notificationSettings" formArrayName="notifications">
+        <div class="table-responsive mt-3" *ngFor="let notification of notificationSettings ; let i=index">
+            <table class="table table-borderless checkbox001 customTB001 mb-0" *ngIf="notification.child_nofications?.length > 0">
+                <tbody #child>
+                    <tr *ngFor="let child_notification of LoopingVar[i] ; let j=index" formGroupName="{{child_notification.formControlKey}}">
+                        <ng-template [ngIf]="child_notification.parent_id == 0" [ngIfElse]="child">
+                            <td>
+                                <div class="custom-control custom-checkbox pos-t-0">
+                                    <input formControlName="user_notification" (change)="selectAllNotification(i, child_notification)" type="checkbox" class="custom-control-input" id="notification_all_{{child_notification.formControlKey}}" [(ngModel)]="child_notification.user_notification">
+                                    <input formControlName="notification_id" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.notification_id">
+                                    <label class="custom-control-label f-12-500 color-253238" for="notification_all_{{child_notification.formControlKey}}">{{child_notification.title}}</label>
+                                </div>
+                            </td>
+                            <ng-template [ngIf]="i == 0" [ngIfElse]="elsetemp">
+                                <input formControlName="email_notification" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.email_notification">
+                                <input formControlName="push_notification" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.push_notification">
+                                <td class="f-10-400 w-80px">Email</td>
+                                <td class="f-10-400 w-80px">Push</td>
+                            </ng-template>
+                            <ng-template #elsetemp>
+                                <input formControlName="email_notification" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.email_notification">
+                                <input formControlName="push_notification" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.push_notification">
+                                <td class="f-10-400 visible-sm w-80px">Email</td>
+                                <td class="f-10-400 visible-sm w-80px">Push</td>
+                            </ng-template>
+                        </ng-template>
+                        <ng-template #child>
+                            <td>
+                                <div class="custom-control custom-checkbox pos-t-0">
+                                    <input formControlName="user_notification" type="checkbox" class="custom-control-input" id="notification_{{child_notification.formControlKey}}" [(ngModel)]="child_notification.user_notification" (change)="SelectNotificationSetting(i, j, child_notification)">
+                                    <input formControlName="notification_id" type="hidden" class="custom-control-input" [(ngModel)]="child_notification.notification_id">
+                                    <label class="custom-control-label f-12-500 color-253238" for="notification_{{child_notification.formControlKey}}">{{child_notification.title}}</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox pos-t-0">
+                                    <input formControlName="email_notification" type="checkbox" class="custom-control-input" id="notification_email_{{child_notification.formControlKey}}" [(ngModel)]="child_notification.email_notification" (change)="child_notification.email_notification = $event.target.checked ? 1: 0">
+                                    <label class="custom-control-label f-12-500 color-253238" for="notification_email_{{child_notification.formControlKey}}"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox pos-t-0">
+                                    <input formControlName="push_notification" type="checkbox" class="custom-control-input" id="notification_push_{{child_notification.formControlKey}}" [(ngModel)]="child_notification.push_notification" (change)="child_notification.push_notification = $event.target.checked ? 1: 0">
+                                    <label class="custom-control-label f-12-500 color-253238" for="notification_push_{{child_notification.formControlKey}}"></label>
+                                </div>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="table-responsive">
+            <table class="table table-borderless checkbox001 customTB001">
+                <thead class="color-253238 v-top">
+                    <tr>
+                        <th>
+                            <div class="custom-control custom-checkbox pos-t-0">
+                                <input (change)="selectAllNotiSystem()" [(ngModel)]="isNotiSystemAll" type="checkbox" class="custom-control-input" id="customCheck024">
+                                <label class="custom-control-label f-12-500 color-253238" for="customCheck024">System</label>
+                            </div>
+                        </th>
+                        <th class="f-10-400 visible-sm w-80px">Email</th>
+                        <th class="f-10-400 visible-sm w-80px">Push</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr *ngFor="let system of notificationSystem; let i=index">
+                        <td>
+                            <div class="custom-control custom-checkbox pos-t-0">
+                                <input (change)="unSelectNotiSystem(system.isSelected)" [(ngModel)]="system.isSelected" type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i}}">
+                                <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i}}">{{system.name}}</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-checkbox pos-t-0">
+                                <input type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i+1}}">
+                                <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i+1}}"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-checkbox pos-t-0">
+                                <input type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i+2}}">
+                                <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i+2}}"></label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+
+    </ng-template>
+
+</form>

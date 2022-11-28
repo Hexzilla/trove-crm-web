@@ -1,0 +1,141 @@
+.topBar {
+    padding: 20px 40px;
+    background: white;
+}
+
+.topBar span {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 29px;
+    color: #253238;
+    margin-left: 14px;
+    margin-right: 20px;
+}
+
+.addButton {
+    width: 88px;
+    height: 32px;
+    background: #002868;
+    border-radius: 9px 9px 9px 0px;
+    color: white;
+    font-size: 12px;
+    margin-left: 12px;
+}
+
+.listContainer {
+    height: calc(100vh - 130px);
+    padding: 15px 40px;
+}
+
+.listContainer mat-list {
+    background: #FFFFFF;
+    border: 1px solid #E6EAF0;
+    border-radius: 6px 6px 0px 3px;
+}
+
+.taskItem {
+    border-top: 1px solid #E6EAF0;
+    height: 40px !important;
+}
+
+.taskItem mat-checkbox span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+}
+
+.itemHeader {
+    height: 42px !important;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+
+    color: #253238;
+}
+
+.rightPart {
+    border-left: solid 1px #ddd;
+    min-width: 324px;
+}
+
+.filterHeader {
+    padding: 19px 12px;
+    border-bottom: 1px solid #D0D9DE;
+    background: white;
+}
+
+.filterHeader .closeButton {
+    border: 1.14286px solid #E6EAF0;
+    padding: 0;
+    min-width: 24px;
+    line-height: 24px;
+    margin-right: 15px;
+}
+
+.filterHeader span {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    color: #253238;
+    margin-left: 7px;
+}
+
+.lineThrough {
+    text-decoration: line-through;
+}
+
+.datePanel {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 14px;
+    color: #253238;
+
+    background: rgba(208, 217, 222, 0.2);
+    border: 1px solid #D0D9DE;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 1px 5px;
+}
+
+.dateRed {
+    color: red;
+}
+
+.datePanel span {
+    position: relative;
+    top: 3px;
+}
+
+.dateIcon {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createdDate span:nth-child(1) {
+    font-size: 12px;
+    line-height: 14px;
+    color: #455B66;
+    margin-right: 5px;
+}
+
+.createdDate span:nth-child(2) {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #253238;
+}
+.flatIconTextButton {
+  background: rgba(208, 217, 222, 0.2);
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 0 7px 0 0;
+  font-size: 12px;
+  line-height: 30px;
+}
+.drawerContainer {
+  width: 360px;
+}

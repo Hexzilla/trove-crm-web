@@ -1,0 +1,79 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 themeTable">
+  <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header  class="deal">Lead Name</th>
+      <td mat-cell *matCellDef="let element" class="nameCell">
+        <span class="businessImage">
+          <img class="avatar" alt="Image" src="{{element.avatar}}">
+        </span>
+          <span>
+              <span class="nameSpan textOverflow">{{element.name}}</span><br>
+              <span class="descSpan textOverflow">{{element.description}}</span>
+          </span>
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="company">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+    <td mat-cell *matCellDef="let element" class="">
+        {{element.company}}
+    </td>
+</ng-container>
+
+<ng-container matColumnDef="source">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
+  <td mat-cell *matCellDef="let element" class="">
+      {{element.source}}
+  </td>
+</ng-container>
+
+<ng-container matColumnDef="category">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header class="">Category</th>
+  <td mat-cell *matCellDef="let element" class="">
+      {{element.category}}
+  </td>
+</ng-container>
+
+<ng-container matColumnDef="addedon">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Added On</th>
+  <td mat-cell *matCellDef="let element" class="">
+      {{element.addedon}}
+  </td>
+</ng-container>
+
+<ng-container matColumnDef="closedate">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Close Date</th>
+  <td mat-cell *matCellDef="let element" class="">
+      {{element.closedate}}
+  </td>
+</ng-container>
+
+  <ng-container matColumnDef="stage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stage</th>
+      <td mat-cell *matCellDef="let element" class="stageCell">
+          {{element.stage}}
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Value</th>
+      <td mat-cell *matCellDef="let element" class="valueCell">
+          <span>{{element.value}} $</span>
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="contact">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
+      <td mat-cell *matCellDef="let element" class="lastCell"> {{element.contact}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+      <td mat-cell *matCellDef="let element" class="ownerCell"> {{element.owner}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns ; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div class="table001 tablePagination">
+  <mat-paginator class="" [pageSizeOptions]="[4]"></mat-paginator>
+</div>

@@ -1,0 +1,145 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+  <h1 mat-dialog-title>{{isEdit ? 'Edit' : 'New'}} Task</h1>
+  <div mat-dialog-content>
+    <div class="">
+      <span class="required">Task Title</span>
+      <div>
+        <mat-form-field appearance="outline" class="formControl noLabelForm">
+          <input matInput formControlName="title" required>
+          <mat-hint class="mat-error" *ngIf="errors?.title">{{errors.title}}</mat-hint>
+          <mat-error *ngIf="hasValidationError('title')">{{getValidationMessage('title')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <span class="required">Task Content</span>
+    <mat-form-field appearance="outline" class="formControl noLabelForm">
+      <textarea matInput formControlName="description"></textarea>
+      <mat-hint class="mat-error" *ngIf="errors?.description">{{errors.description}}</mat-hint>
+      <mat-error *ngIf="hasValidationError('description')">{{getValidationMessage('description')}}</mat-error>
+    </mat-form-field>
+    <span class="required">Due Date</span>
+    <div class="dateDiv">
+      <div>
+        <mat-form-field appearance="outline" [style.width.px]=155
+          class="formControl noLabelForm datePicker iconColorPath">
+          <input matInput [matDatepicker]="dueDatePicker" readonly formControlName="due_date" required>
+          <mat-hint class="mat-error" *ngIf="errors?.due_date">{{errors.due_date}}</mat-hint>
+          <mat-error *ngIf="hasValidationError('due_date')">{{getValidationMessage('due_date')}}</mat-error>
+          <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #dueDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" [style.width.px]=155 class="formControl timePickerBox iconColorPath">
+          <div class="d-flex">
+            <input matInput [ngxTimepicker]="dueTimepicker" [disableClick]="true" readonly formControlName="due_time"
+              required>
+            <ngx-material-timepicker-toggle [for]="dueTimepicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #dueTimepicker></ngx-material-timepicker>
+          </div>
+
+        </mat-form-field>
+      </div>
+    </div>
+    <span class="required">Reminder</span>
+    <div class="dateDiv">
+      <div>
+        <mat-form-field appearance="outline" [style.width.px]=155
+          class="formControl noLabelForm datePicker iconColorPath">
+          <input matInput [matDatepicker]="reminderDatePicker" readonly formControlName="reminder_date" required>
+          <mat-hint class="mat-error" *ngIf="errors?.reminder_date">{{errors.reminder_date}}</mat-hint>
+          <mat-error *ngIf="hasValidationError('reminder_date')">{{getValidationMessage('reminder_date')}}
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="reminderDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #reminderDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" [style.width.px]=155 class="formControl timePickerBox iconColorPath">
+          <div class="d-flex">
+            <input matInput [ngxTimepicker]="reminderTimepicker" [disableClick]="true" readonly
+              formControlName="reminder_time" required>
+            <ngx-material-timepicker-toggle [for]="reminderTimepicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #reminderTimepicker></ngx-material-timepicker>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+    <span class="required">Associate With</span>
+    <div *ngFor="let e of selected" class="optionDiv selectedDiv" style="position: relative">
+      <i class="material-icons">{{e.icon}}</i>
+      <div class="ml-3">
+        <p class="span1">{{e.name}}</p>
+        <p class="span2">{{e.description}}</p>
+      </div>
+      <mat-icon *ngIf="!isMainAssociate(e)" style="position: absolute; right: 10px" class="cursorPointer" (click)="deleteSelected(e)">
+        close
+      </mat-icon>
+    </div>
+    <mat-form-field class="formControl noLabelForm" appearance="outline" *ngIf="showAuto">
+      <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
+        <div class="optionBtnContainer">
+          <button mat-button class={{activeClass(1)}} (click)="setActive(1)">Person</button>
+          <button mat-button class={{activeClass(2)}} (click)="setActive(2)">Company</button>
+          <button mat-button class={{activeClass(3)}} (click)="setActive(3)">Lead</button>
+        </div>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="setEmpty()">
+          <div class="optionDiv">
+            <i class="material-icons">{{option.icon}}</i>
+            <div class="ml-3">
+              <p class="span1">{{option.name}}</p>
+              <p class="span2">{{option.description}}</p>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-button *ngIf="!showAuto" (click)="clickAdd()" class="addBtn">
+      <mat-icon>add</mat-icon>
+    </button><br>
+
+    <span>Owner</span>
+    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground">
+      <mat-select formControlName="owner_id">
+        <mat-option *ngFor="let owner of owners" [value]="owner.id">{{owner.full_name}}</mat-option>
+    </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions class="justify-content-start">
+    <button *ngIf="isEdit" mat-button type="button" class="deleteBtn" (click)="openModal(modalDelete)">Delete</button>
+    <button mat-button type="button" (click)="onNoClick()" class="cancelBtn ml-auto">Cancel</button>
+    <button mat-button type="submit" class="createBtn ml-3">{{isEdit ? 'Update' : 'Save'}}</button>
+  </div>
+</form>
+
+<ng-template #modalDelete let-modal>
+  <div class="modal-header border-bottom-0">
+    <div class="px-2">
+      <span class="color-253238 f-20-500">Delete</span>
+    </div>
+  </div>
+  <div class="modal-body pt-1">
+    <div class="px-2">
+      <div class="color-ff0000 f-13-400">
+        Are you sure you want to permanently delete this one?
+      </div>
+      <div class="mt-3 checkbox001">
+        <div class="custom-control custom-checkbox pos-t-0">
+          <input type="checkbox" class="custom-control-input" id="deletechk">
+          <label class="custom-control-label f-13-500 color-253238" for="deletechk">
+            Delete this contact and related activities like tasks and calls?
+            This action cannot be undone.
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="px-2">
+      <button class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="modal.close('cancel')">Cancel</button>
+      <button (click)="modal.close('confirm')" class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary">Confirm</button>
+    </div>
+  </div>
+</ng-template>

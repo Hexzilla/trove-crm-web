@@ -1,0 +1,256 @@
+<app-header></app-header>
+<div *ngIf="!listShow">
+    <mat-drawer-container hasBackdrop="true">
+        <mat-drawer #drawer mode="Over" position="end" class="noScrollDrawer">
+            <div class="drawerContainer">
+                <!-- <div class="drawerContainerTop">
+                    <button mat-button class="closeButton mr-4" (click)="drawer.toggle()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-icon>filter_alt</mat-icon>
+                    <span class="mr-5" class="filterBadge" matBadge={{filterCount}} matBadgeColor="warn" matBadgePosition="above after" matBadgeOverlap="false">Filters</span>
+                    <button mat-button class="clearAllButton">
+                        Clear all
+                    </button>
+                </div> -->
+                <!-- <ngx-simplebar [options]="scrollOptions" class="filterContainer1">
+
+                </ngx-simplebar> -->
+                <app-filter *ngIf="showFilter" (filtersChange)="receivefilters($event)" (closeDialog)="drawer.toggle()" (count)="filterCount=$event" [(filters)]="filters" [filterData]="filterData" [(currentSelectedPipeline)]="currentSelectedPipeline"></app-filter>
+            </div>
+        </mat-drawer>
+
+        <div class="topBar">
+            <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column">
+                <div class="topBarDiv input001">
+                    <span class="title mr-3 fontObjektivMk mt-1">All Leads</span>
+
+                    <mat-form-field class="searchForm noLabelForm noSpaceForm" appearance="outline">
+                        <input type="text" matInput placeholder="Search..." [(ngModel)]="searchValue" (keydown.enter)="search($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                    <!-- <button mat-button class="ml-3 flatIconTextButton" [matMenuTriggerFor]="pipePopup">
+                        <mat-icon class="iconInButton">arrow_drop_down</mat-icon>
+                        Sales Pipeline 20...
+                    </button>
+                    <mat-menu #pipePopup="matMenu" class="pipePopup">
+                        <button mat-menu-item>pipe1</button>
+                        <button mat-menu-item>pipe2</button>
+                        <button mat-menu-item>pipe3</button>
+                    </mat-menu> -->
+                    <mat-form-field appearance="fill" class="bg-F7F8FA leadSelect">
+                        <mat-select [(value)]="currentSelectedPipeline" (selectionChange)="onPipelineChange($event.value)">
+                            <mat-option *ngFor="let pipeline of pipelineMaster" [value]="pipeline.id">{{pipeline.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="topBarDiv">
+                    <button mat-button class="flatIconLightButton" (click)="showList()"> <!--(click)="showList()"-->
+                        <mat-icon class="smallIcon">list</mat-icon>
+                    </button>
+                    <button mat-button class="flatIconDarkButton" (click)="showGrid()">
+                        <mat-icon class="smallIcon">dashboard</mat-icon>
+                    </button>
+                    <button mat-button class="flatIconTextButton ml-3" (click)="drawer.toggle() ; clickFilter()">
+                        <mat-icon class="iconInButton">filter_alt</mat-icon>
+                        Filter({{filterCount}})
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <ngx-simplebar [options]="scrollOptions" class="mainContent" *ngIf="canShow; else elseBlock">
+            <div style="display: flex">
+                <div style="min-width: 20px">
+                    <span></span>
+                </div>
+
+                <div *ngFor="let stage of StagesForDrag ; let i=index" class="card-container" cdkDropList id="{{stage.idref}}" [cdkDropListData]="stage.lead_list" [cdkDropListConnectedTo]="connectedTo" (cdkDropListDropped)="dropped(stage.id, $event)">
+                    <p class="list-title">{{stage.name}} {{stage.lead_list.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let lead of stage.lead_list ; let j=index" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <mat-icon class="moneyIcon">attach_money</mat-icon>
+                                    <!--<img *ngIf="i!=100" alt="Image" src="../../../assets/images/user-sample.png" class="avatar">-->
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title">{{lead.name}}</p>
+                                    <p class="card-sub-title1">{{lead.organizations_name}}</p>
+                                    <p class="card-sub-title2">{{lead.currency_symbol}}{{lead.currency_value}}</p>
+                                    <p class="card-sub-title3">{{lead.owner_full_name}}, <span class="card-sub-title4">{{lead.created_at}}</span></p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div>
+
+                <!--<div class="card-container" cdkDropList [cdkDropListData]="qualified" #qualifiedList="cdkDropList" [cdkDropListConnectedTo]="[discoveryList, evolutionList, negotiationList, closedList]" (cdkDropListDropped)="dropped($event)">
+                    <p class="list-title fontObjektivMk">Qualified {{qualified.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let i of qualified" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <mat-icon *ngIf="i==100" class="moneyIcon">attach_money</mat-icon>
+                                    <img *ngIf="i!=100" alt="Image" src="../../../assets/images/user-sample.png" class="avatar">
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title fontObjektivMk">Packet Monster Sales Opportunity</p>
+                                    <p class="card-sub-title1 fontObjektivMk">Packet Monster, Inc.</p>
+                                    <p class="card-sub-title2 fontObjektivMk">$0.00</p>
+                                    <p class="card-sub-title3 fontObjektivMk">Tammy Gillis, <span class="card-sub-title4">14/12/2020</span></p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div>
+
+                <div class="card-container" cdkDropList [cdkDropListData]="evolution" #evolutionList="cdkDropList" [cdkDropListConnectedTo]="[qualifiedList, negotiationList, discoveryList, closedList]" (cdkDropListDropped)="dropped($event)">
+                    <p class="list-title fontObjektivMk">Evolution {{evolution.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let i of evolution" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <mat-icon *ngIf="i==100" class="moneyIcon">attach_money</mat-icon>
+                                    <img *ngIf="i!=100" alt="Image" src="../../../assets/images/user-sample.png" class="avatar">
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title fontObjektivMk">Packet Monster Sales Opportunity</p>
+                                    <p class="card-sub-title1 fontObjektivMk">Packet Monster, Inc.</p>
+                                    <p class="card-sub-title2 fontObjektivMk">$0.00</p>
+                                    <p class="card-sub-title3 fontObjektivMk">Tammy Gillis, <span class="card-sub-title4">14/12/2020</span></p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div>
+
+                <div class="card-container" cdkDropList [cdkDropListData]="negotiation" #negotiationList="cdkDropList" [cdkDropListConnectedTo]="[evolutionList, closedList, discoveryList, qualifiedList]" (cdkDropListDropped)="dropped($event)">
+                    <p class="list-title fontObjektivMk">Negotiation {{negotiation.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let i of negotiation" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <mat-icon *ngIf="i==100" class="moneyIcon">attach_money</mat-icon>
+                                    <img *ngIf="i!=100" alt="Image" src="../../../assets/images/user-sample.png" class="avatar">
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title fontObjektivMk">Packet Monster Sales Opportunity</p>
+                                    <p class="card-sub-title1 fontObjektivMk">Packet Monster, Inc.</p>
+                                    <p class="card-sub-title2 fontObjektivMk">$0.00</p>
+                                    <p class="card-sub-title3 fontObjektivMk">Tammy Gillis, <span class="card-sub-title4">14/12/2020</span></p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div>
+
+                <div class="card-container" cdkDropList #closedList="cdkDropList" [cdkDropListData]="closed" [cdkDropListConnectedTo]="[negotiationList, evolutionList, qualifiedList, discoveryList]" (cdkDropListDropped)="dropped($event)">
+                    <p class="list-title fontObjektivMk">Closed {{closed.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let i of closed" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <mat-icon *ngIf="i==100" class="moneyIcon">attach_money</mat-icon>
+                                    <img *ngIf="i!=100" alt="Image" src="../../../assets/images/user-sample.png" class="avatar">
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title fontObjektivMk">Packet Monster Sales Opportunity</p>
+                                    <p class="card-sub-title1 fontObjektivMk">Packet Monster, Inc.</p>
+                                    <p class="card-sub-title2 fontObjektivMk">$0.00</p>
+                                    <p class="card-sub-title3 fontObjektivMk">Tammy Gillis, <span class="card-sub-title4">14/12/2020</span></p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div>-->
+
+                <!-- <div class="card-container" cdkDropList #closedList="cdkDropList" [cdkDropListData]="closed"
+                    [cdkDropListConnectedTo]="[negotiationList, evolutionList, qualifiedList, discoveryList]"
+                    (cdkDropListDropped)="dropped($event)">
+                    <p class="list-title fontObjektivMk">Closed {{closed.length}}</p>
+                    <ngx-simplebar [options]="scrollOptions" class="cardWrapper">
+                        <mat-card class="mat-elevation-z0 p-2" cdkDrag *ngFor="let i of closed" (click)="clickCard()">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image">
+                                    <img alt="Image" src="../../../assets/images/user-sample.png" class="avatar">
+                                </div>
+                                <mat-card-title>
+                                    <p class="card-title fontObjektivMk">Packet Monster Sales Opportunity</p>
+                                    <p class="card-sub-title1 fontObjektivMk">Packet Monster, Inc.</p>
+                                    <p class="card-sub-title2 fontObjektivMk">$0.00</p>
+                                    <p class="card-sub-title3 fontObjektivMk">Tammy Gillis, <span class="card-sub-title4">14/12/2020</span>
+                                    </p>
+                                </mat-card-title>
+                            </mat-card-header>
+                        </mat-card>
+                    </ngx-simplebar>
+                </div> -->
+
+                <div style="min-width: 20px">
+                    <span></span>
+                </div>
+            </div>
+        </ngx-simplebar>
+        <!--<ngx-simplebar #elseBlock>
+            <div style="display: flex">
+                <div style="min-width: 20px">
+                    <span>No Records Found</span>
+                </div>
+                <div style="min-width: 20px">
+                    <span></span>
+                </div>
+            </div>
+        </ngx-simplebar>-->
+
+        <div class="footer" *ngIf="canShow">
+            <span class="footText1 mr-5">Summary</span>
+            <span class="footText2 mr-2">Total Deals</span> <span class="footText1 mr-5">{{totalLead}}</span>
+            <span class="footText2 mr-2">Total Value</span> <span class="footText1 mr-5">{{totalValue}}</span>
+            <span class="footText2 mr-2">Average Value</span> <span class="footText1">{{avgValue}}</span>
+        </div>
+    </mat-drawer-container>
+</div>
+
+<div *ngIf="listShow">
+    <div fxLayout="row" fxLayout.xs="column" class="lightBackground">
+        <div class="leftPart" fxFlex="80">
+            <div class="topBar">
+                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column" fxLayout.sm="column">
+                    <div class="topBarDiv">
+                        <span class="title mr-3 fontObjektivMk mt-1">Leads</span>
+
+                        <mat-form-field class="searchForm noLabelForm noSpaceForm" appearance="outline">
+                            <input type="text" aria-label="Number" matInput placeholder="Search...">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="topBarDiv">
+                        <button mat-button class="flatIconDarkButton1" (click)="showList()">
+                            <mat-icon class="smallIcon">list</mat-icon>
+                        </button>
+                        <button mat-button class="flatIconLightButton1" (click)="showGrid()">
+                            <mat-icon class="smallIcon">dashboard</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ngx-simplebar [options]="scrollOptions" class="tableContainer" *ngIf="listShow">
+                <app-lead-table [length]="recordsTotal" [pageSize]="pageSize" [propItems]="items" (pagination)="pageChanged($event)"></app-lead-table>
+            </ngx-simplebar>
+        </div>
+        <div class="rightPart" fxFlex="20" fxFill>
+            <!-- <div class="drawerContainerTop">
+                <mat-icon>filter_alt</mat-icon>
+                <span class="mr-5" class="filterBadge" matBadge={{filterCount}} matBadgeColor="warn" matBadgePosition="above after" matBadgeOverlap="false">Filters</span>
+                <button mat-button class="clearAllButton">
+                    Clear all
+                </button>
+            </div> -->
+            <ngx-simplebar [options]="scrollOptions" class="filterContainer2">
+                <app-filter (closeDialog)="drawer.toggle()" (count)="filterCount=$event" [listShow]="listShow" (filtersChange)="receivefilters($event)" [(filters)]="filters" [filterData]="filterData" [(currentSelectedPipeline)]="currentSelectedPipeline"></app-filter>
+            </ngx-simplebar>
+        </div>
+    </div>
+</div>

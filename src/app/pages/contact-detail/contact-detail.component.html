@@ -1,0 +1,99 @@
+<app-header></app-header>
+<div class="topBar">
+    <div class="top1">
+        <mat-icon (click)="goToList()">arrow_back</mat-icon>
+        <span class="span1">Brian Markinson</span>
+        <span class="span2">Packet Monster, Inc.</span>
+        <button mat-button class="ml-5" (click)="editContact()">
+            <mat-icon class="iconInButton">edit</mat-icon>
+            Edit
+        </button>
+    </div>
+    <div class="top2">
+        <button mat-button>Schedule an appointment</button>
+    </div>
+</div>
+
+<ngx-simplebar [options]="scrollOptions" class="mainContainer lightBackground">
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div class="leftPart" fxFlex="22" fxFill>
+            <div class="leftItem1 leftItemBorderBottom">
+                <img alt="Image" src="../../../assets/images/user-sample.png" width="35" height="35" class="avatar">
+                <div style="padding-left: 3px;position: relative;top: 4px;">
+                    <span class="span1">Finance Manager</span><br/>
+                    <span class="span2">Employee at Packet Monster, Inc.</span>
+                </div>
+            </div>
+            <div class="leftItem2 leftItemBorderBottom">
+                <span class="selectLabel">Status</span><br>
+                <mat-form-field class="statusSelect greenSelect" [style.width.px]="75">
+                    <mat-select [(value)]="status">
+                        <mat-option value="active">
+                            Active
+                        </mat-option>
+                        <mat-option value="inactive">
+                            Inactive
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="leftItem3 leftItemPadding leftItemBorderBottom">
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Work <span class="span3">869 673 5678</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Personal <span class="span3">869 673 5678</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>email</mat-icon> Email <span class="span4">wesstudi@pocketmonster.com</span>
+                </div>
+            </div>
+
+            <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Address</span><br>
+                <span class="content ft-11">41156 Taryn Trace, Handview, IL 10398</span>
+            </div>
+
+            <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Associated with</span><br>
+                <div class="alignCenter mb-2">
+                    <span class="redSpot mr-2"></span>
+                    <span class="content ft-12 pt-1">Alex team</span>
+                </div>
+                <div class="alignCenter">
+                    <span class="greenSpot mr-2"></span>
+                    <span class="content ft-12 pt-1">Turner Dev Team</span>
+                </div>
+            </div>
+
+            <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Connections</span><br>
+                <div class="alignCenter mt-2">
+                    <img alt="Image" src="../../../assets/images/skype.svg" class="mr-2">
+                    <span class="content ft-12">brianmark89</span>
+                </div>
+            </div>
+
+            <div class="leftItemPadding">
+                <div>
+                    <span class="title">Added On</span><br>
+                    <span class="content ft-13">1 Jan 2021</span>
+                </div>
+
+                <div class="mt-2">
+                    <span class="title mt-2">Description</span><br>
+                    <span class="content ft-11" style="color: #455B66">Enter a fixed salary, assign a Recurring Schedule.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="centerPart" fxFlex="50">
+            <app-text-editor></app-text-editor>
+            <app-contact-activitylist></app-contact-activitylist>
+        </div>
+
+        <div fxFlex="28">
+          <app-widget (addTaskClicked) = "openTaskDialog($event)" (addAppointClicked) = "openAppointDialog($event)"></app-widget>
+        </div>
+    </div>
+</ngx-simplebar>

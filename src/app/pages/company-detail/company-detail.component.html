@@ -1,0 +1,113 @@
+<!-- <app-header></app-header> -->
+<div class="topBar">
+    <div class="top1">
+        <mat-icon (click)="goToList()">arrow_back</mat-icon>
+        <span class="span1">{{organization.name}}</span>
+        <!-- <span class="span2">Packet Monster, Inc.</span> -->
+        <button mat-button class="ml-5" (click)="editCompany()">
+            <mat-icon class="iconInButton">edit</mat-icon>
+            Edit
+        </button>
+    </div>
+    <div class="top2">
+        <button mat-button (click)="openAppointDialog(false)">Schedule an appointment</button>
+    </div>
+</div>
+
+<ngx-simplebar [options]="scrollOptions" class="mainContainer lightBackground">
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div class="leftPart" fxFlex="22" fxFill>
+            <div class="leftItem1 leftItemBorderBottom">
+                <img alt="Image" src="../../../assets/images/business.svg" width="30" height="30">
+                <div style="padding-left: 10px;position: relative;top: 4px;">
+                    <span class="span1">{{organization.name}}</span><br/>
+                    <!-- <span class="span2">Employee at Packet Monster, Inc.</span> -->
+                </div>
+            </div>
+            <div class="leftItem2 leftItemBorderBottom">
+                <span class="selectLabel">Status</span><br>
+                <mat-form-field class="statusSelect greenSelect" [style.width.px]="75">
+                    <mat-select [(value)]="organization.status" (selectionChange)="companyStatusChanged($event.value)">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="In Active">Inactive</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="leftItem3 leftItemPadding leftItemBorderBottom">
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Personal <span class="span3">({{organization.country_code}}) {{organization.mobile}}</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Work <span class="span3">{{organization.work_phone || '-'}}</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>email</mat-icon> Email <span class="span4">{{organization.email}}</span>
+                </div>
+            </div>
+
+            <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Address</span><br>
+                <span class="content ft-11">{{getFullAddress()}}</span>
+            </div>
+
+            <!-- <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Associated with</span><br>
+                <div class="alignCenter mb-2">
+                    <span class="redSpot mr-2"></span>
+                    <span class="content ft-12 pt-1">Alex team</span>
+                </div>
+                <div class="alignCenter">
+                    <span class="greenSpot mr-2"></span>
+                    <span class="content ft-12 pt-1">Turner Dev Team</span>
+                </div>
+            </div> -->
+
+            <div class="leftItemPadding leftItemBorderBottom">
+                <span class="title">Connections</span><br>
+                <div class="alignCenter mt-2">
+                    <img alt="Image" src="../../../assets/images/skype.svg" class="mr-2">
+                    <span class="content ft-12">{{organization.skype_id}}</span>
+                </div>
+            </div>
+
+            <div class="leftItemPadding">
+                <div>
+                    <span class="title">Added On</span><br>
+                    <span class="content ft-13">{{getCreatedDate()}}</span>
+                </div>
+
+                <div class="mt-2">
+                    <span class="title mt-2">Description</span><br>
+                    <span class="content ft-11" style="color: #455B66">{{organization.description || '-'}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="centerPart" fxFlex="50">
+            <app-text-editor
+                [activity]="selectedActivity"
+                [associate_members]="company.associate_members"
+                (addActivityEvent)="addActivityEvent($event)">
+            </app-text-editor>
+            <app-company-activitylist
+                [organization]="organization"
+                [activities]="company.activity"
+                (editActivityEvent)="editActivity($event)">
+            </app-company-activitylist>
+        </div>
+
+        <div fxFlex="28">
+          <app-widget 
+            [leads_value]="company.leads_value"
+            [associate_members]="company.associate_members"
+            [appointments]="company.appointments"
+            [tasks]="company.tasks"
+            [user_files]="company.files"
+            (addAppointClicked)="addAppointClicked($event)"
+            (appointStateChanged)="appointStateChanged($event)"
+            (addTaskClicked)="addTaskClicked($event)" 
+            (taskStateChanged)="taskStateChanged($event)">
+        </app-widget>
+        </div>
+    </div>
+</ngx-simplebar>

@@ -1,0 +1,323 @@
+<div class="drawerContainerTop">
+  <button mat-button class="closeButton mr-4" (click)="closeDialog.emit()">
+      <mat-icon>close</mat-icon>
+  </button>
+  <mat-icon>filter_alt</mat-icon>
+  <span class="mr-5" class="filterBadge" matBadge={{calculateFilterCount()}} matBadgeColor="warn" matBadgePosition="above after" matBadgeOverlap="false">Filters</span>
+  <button mat-button class="clearAllButton float-right" (click)="clearAll()">
+      Clear all
+  </button>
+</div>
+<ngx-simplebar [options]="scrollOptions" class="filterContainer1">
+<mat-accordion class="grayAccordion customAccordion">
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel1" [expanded]="true">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Pipeline / Stages<br>
+                    <span>{{displayArray(selectedPipe)}}</span>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+            <div class="trapezoid1">
+                <div class="text">
+                  <mat-form-field class="statusSelect text-center">
+                    <mat-select [(value)]="selectedDisplay">
+                        <mat-option value="pipe1">
+                            Pipe 1
+                        </mat-option>
+                        <mat-option value="pipe2">
+                          Pipe 2
+                        </mat-option>
+                        <mat-option value="pipe3">
+                          Pipe 3
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+                </div>
+            </div>
+            <div class="trapezoid2" [class.activePipe]="checkPipe('discovery')">
+                <div class="text" (click)="clickDiscovery('discovery')">Discovery</div>
+            </div>
+            <div class="trapezoid3" [class.activePipe]="checkPipe('content')">
+                <div class="text" (click)="clickDiscovery('content')">Content</div>
+            </div>
+            <div class="trapezoid4" [class.activePipe]="checkPipe('qualified')">
+                <div class="text" (click)="clickDiscovery('qualified')">Qualified</div>
+            </div>
+            <div class="trapezoid5" [class.activePipe]="checkPipe('evolution')">
+                <div class="text" (click)="clickDiscovery('evolution')">Evolution</div>
+            </div>
+            <div class="trapezoid6" [class.activePipe]="checkPipe('closed')">
+                <div class="text" (click)="clickDiscovery('closed')">Closed Won</div>
+            </div>
+            <div class="trapezoid7">
+                <div class="text">
+                    <button mat-button [matMenuTriggerFor]="closeMenu">
+                        More
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                    <mat-menu #closeMenu="matMenu" xPosition="before" class="closeMenu">
+                        <ul class="m-0 p-0" (click)="$event.stopPropagation()">
+                          <li mat-menu-item class="px-0">
+                           <div [class.activePipeDropdown]="checkPipe('Progress')" class="text alignDDItem" (click)="clickDiscovery('Progress')">Progress</div>
+                          </li>
+                          <li mat-menu-item class="px-0">
+                            <div [class.activePipeDropdown]="checkPipe('Won')" class="text alignDDItem" (click)="clickDiscovery('Won')">Won</div>
+                           </li>
+                           <li mat-menu-item class="px-0">
+                            <div [class.activePipeDropdown]="checkPipe('Lost')" class="text alignDDItem" (click)="clickDiscovery('Lost')">Lost</div>
+                           </li>
+                        </ul>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="text-right mt-3">
+              <button mat-button class="clearButton w-auto px-4" (click)="clearPipe()">
+                  Clear
+              </button>
+          </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel2">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Value<br>
+                    <span>{{minValue ? '$' : ''}}{{minValue}}&nbsp;&nbsp; {{highValue ? '-' : ''}} &nbsp;&nbsp;{{highValue ? '$' : ''}}{{highValue}}</span>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+            <div class="valueDiv">
+                <span>From</span>
+                <mat-form-field appearance="outline" class="noLabelForm whiteBackground noTopPrefixField" [style.width.px]=96>
+                    <span matPrefix>$</span>
+                    <input matInput [(ngModel)]="minValue" type='number' maxlength="4" class="valueInput">
+                </mat-form-field>
+                <span>To</span>
+                <mat-form-field appearance="outline" class="noLabelForm whiteBackground noTopPrefixField" [style.width.px]=96>
+                    <span matPrefix>$</span>
+                    <input matInput [(ngModel)]="highValue" type='number' maxlength="4" class="valueInput">
+                </mat-form-field>
+            </div>
+            <br>
+            <div class="rangeDiv">
+                <ngx-slider [(value)]="minValue" [(highValue)]="highValue" [options]="sliderOptions"></ngx-slider>
+            </div>
+            <div class="text-right">
+                <button mat-button class="clearButton w-auto px-4" (click)="clearValueClick()">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel3 contactPanel noPaddingPanel">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Contact
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+          <div class="px-4">
+            <div>
+              <mat-tab-group animationDuration="0ms" class="horizontalTab tab001 activeTabBlue">
+                <mat-tab label="User">
+                    <div>
+                      <mat-form-field appearance="outline" class="serachForm noLabelForm whiteBackground">
+
+                        <input class="typo" matInput placeholder="Search by name" aria-label="Search by name" [matAutocomplete]="autoCreatedBy"
+                          [formControl]="contactCtrl">
+                        <mat-autocomplete #autoCreatedBy="matAutocomplete" class="matAutoComplete001">
+                          <mat-option class="h-auto" *ngFor="let state of filteredCont | async" [value]="state.name">
+
+                            <div class="row" (click)="$event.stopPropagation()">
+                              <div class="col-auto pr-0">
+                                <mat-checkbox color="primary" class="customCheckBox mt-1" [(ngModel)]="state.isChecked"
+                                  (change)="createdBySelection(state)"></mat-checkbox>
+                              </div>
+                              <div class="col pl-0" (click)="state.isChecked = !state.isChecked;createdBySelection(state)">
+                                <span class="bgRoundIcon adjThis">
+                                  <mat-icon class="mr-0 color-455B66">person</mat-icon>
+                                </span>
+                                <span class="ml-2 typo">{{state.name}}</span>
+                              </div>
+                            </div>
+
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <div [class.hgt-150]="selectedCreatedBy.length > 3" class="customVerScroll matAutoComplete001">
+                        <div class="" *ngFor="let state of selectedCreatedBy">
+                          <div class="row align-items-center">
+                            <div class="col-auto pr-0">
+                              <mat-checkbox color="primary" class="customCheckBox" [(ngModel)]="state.isChecked"
+                                (change)="createdBySelection(state)"></mat-checkbox>
+                            </div>
+                            <div class="col-auto p-0" (click)="state.isChecked = !state.isChecked;createdBySelection(state)">
+                              <span class="bgRoundIcon bg-white">
+                                <mat-icon class="mr-0 color-455B66">person</mat-icon>
+                              </span>
+                            </div>
+                            <div class="col pl-0" (click)="state.isChecked = !state.isChecked;createdBySelection(state)">
+                               <span class="ml-2 typo">{{state.name}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="py-3 text-right">
+                        <button mat-button class="clearBtn" (click)="clearCreatedBy()">Clear</button>
+                      </div>
+                    </div>
+
+
+                </mat-tab>
+                <mat-tab label="Company">
+                    <div>
+                      <mat-form-field appearance="outline" class="serachForm noLabelForm whiteBackground">
+
+                        <input class="typo" matInput placeholder="Search by company" aria-label="Search by company" [matAutocomplete]="autoCompany"
+                          [formControl]="companyCtrl">
+                        <mat-autocomplete #autoCompany="matAutocomplete" class="matAutoComplete001">
+                          <mat-option class="h-auto" *ngFor="let state of filteredComp | async" [value]="state.name">
+
+                            <div class="row" (click)="$event.stopPropagation()">
+                              <div class="col-auto pr-0">
+                                <mat-checkbox color="primary" class="customCheckBox mt-1" [(ngModel)]="state.isChecked"
+                                  (change)="companySelection(state)"></mat-checkbox>
+                              </div>
+                              <div class="col pl-0" (click)="state.isChecked = !state.isChecked;companySelection(state)">
+                                <span class="bgRoundIcon adjThis">
+                                  <mat-icon class="mr-0 color-455B66 iconBusiness">business</mat-icon>
+                                </span>
+                                <span class="ml-2 typo">{{state.name}}</span>
+                              </div>
+                            </div>
+
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <div [class.hgt-150]="selectedCompany.length > 3" class="customVerScroll matAutoComplete001">
+                        <div class="" *ngFor="let state of selectedCompany">
+                          <div class="row align-items-center">
+                            <div class="col-auto pr-0">
+                              <mat-checkbox color="primary" class="customCheckBox" [(ngModel)]="state.isChecked"
+                                (change)="companySelection(state)"></mat-checkbox>
+                            </div>
+                            <div class="col-auto p-0" (click)="state.isChecked = !state.isChecked;companySelection(state)">
+                              <span class="bgRoundIcon bg-white">
+                                <mat-icon class="mr-0 color-455B66 iconBusiness">business</mat-icon>
+                              </span>
+                            </div>
+                            <div class="col pl-0" (click)="state.isChecked = !state.isChecked;companySelection(state)">
+                               <span class="ml-2 typo">{{state.name}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="py-3 text-right">
+                        <button mat-button class="clearButton" (click)="clearCompany()">Clear</button>
+                      </div>
+                    </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel4 noPaddingPanel">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Source<br>
+                    <span>{{getSelectedSource()}}</span>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+            <ngx-simplebar [options]="scrollOptions" style="height: 120px; margin-bottom: 16px;">
+                <mat-checkbox class="mb-2" [(ngModel)]="sourceAll" color="primary" (change)="allSourceSelect($event)" class="mx-4 customCheckBox">All</mat-checkbox>
+                <div *ngFor="let e of sources" class="mt-2">
+                    <mat-checkbox class="mx-4 customCheckBox" color="primary"
+                                    [checked]="e.selected" (change)="sourceSelect(e)">{{e.name}}</mat-checkbox>
+                </div>
+
+            </ngx-simplebar>
+            <div class="text-right mt-3 px-4 mb-3">
+              <button mat-button class="clearButton w-auto px-4" (click)="clearSource()">
+                  Clear
+              </button>
+          </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel5">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Status<br>
+                    <span>{{statusType}}</span>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+            <mat-radio-group aria-label="Select an option" class="displayColumn customRadio" color="primary" [(ngModel)]="statusType">
+                <mat-radio-button value="All">All</mat-radio-button>
+                <mat-radio-button value="Active">Active</mat-radio-button>
+                <mat-radio-button value="Inactive">Inactive</mat-radio-button>
+            </mat-radio-group>
+            <div class="text-right mt-3">
+              <button mat-button class="clearButton w-auto px-4" (click)="clearStatus()">
+                  Clear
+              </button>
+          </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 mat-panel6">
+        <mat-expansion-panel-header [@.disabled]="true">
+            <mat-panel-title>
+                <div>
+                    Date Modified<br>
+                    <span>{{getSelectedDate()}}</span>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="panel-content">
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="displayColumn customRadio" [(ngModel)]="dateType">
+                <mat-radio-button color="primary" class="example-radio-button" *ngFor="let type of dateTypes" [value]="type">
+                    {{dateTypeString[type]}}
+                </mat-radio-button>
+                <br>
+            </mat-radio-group>
+            <div class="customDateDiv mt-2" *ngIf="dateType == 6">
+                <span>From</span>
+                <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <span>To</span>
+                <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 (selectedChanged)="onEndDate($event)"></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="text-right mt-3">
+              <button mat-button class="clearButton w-auto px-4" (click)="clearDate()">
+                  Clear
+              </button>
+          </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+</ngx-simplebar>

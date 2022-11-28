@@ -1,0 +1,80 @@
+table {
+  width: 100%;
+}
+
+tr {
+cursor: pointer;
+}
+
+th {
+background: #E1E6EE;
+font-size: 15px;
+color: #253238;
+font-family: objektiv-mk3, sans-serif;
+}
+.deal{
+  width: 20%;
+}
+
+td {
+font-family: objektiv-mk3, sans-serif;
+color: #253238;
+}
+
+.nameCell {
+padding-top: 20px;
+background-color: #fafbfb;
+}
+.nameCell::after {
+position: absolute;
+content: "";
+border-right: 1px solid #f1f1f1;
+height: 100%;
+top: 0;
+bottom: 0;
+right: 0;
+}
+.textOverflow{
+display: inline-block;
+white-space: nowrap;
+overflow: hidden;
+vertical-align: middle;
+width: 200px;
+text-overflow: ellipsis;
+padding-right: 15px;
+}
+
+.nameCell .nameSpan {
+font-weight: 500;
+margin-left: 10px;
+font-size: 16px;
+vertical-align: top;
+}
+
+.nameCell .descSpan {
+margin-left: 45px;
+font-size: 14px;
+position: relative;
+top: -15px;
+}
+
+.valueCell span {
+font-weight: 500;
+}
+
+.stageCell, .lastCell, .valueCell, .ownerCell {
+padding-left: 8px;
+}
+
+.businessImage {
+width: 35px;
+height: 35px;
+display: inline-block;
+}
+
+.businessImage .avatar {
+width: 100%;
+height: 100%;
+border-radius: 6px;
+}
+

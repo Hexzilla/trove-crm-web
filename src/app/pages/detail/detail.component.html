@@ -1,0 +1,105 @@
+<app-header></app-header>
+<div class="topBar">
+    <div class="top1">
+        <mat-icon (click)="goToList()">arrow_back</mat-icon>
+        <span>Packet Monster Sales opportunity</span>
+        <button mat-button class="ml-5" (click)="editLead()">
+            <mat-icon class="iconInButton">edit</mat-icon>
+            Edit
+        </button>
+    </div>
+    <div class="top2">
+        <div class="alignCenter">
+          <span class="position-relative mr-2">
+            <img src="../../../assets/images/stage/start-active-stage-lg.svg">
+            <span class="firstStagePan activeSpan">Sales Pipeline</span>
+          </span>
+
+            <ng-container *ngFor="let e of stages; let i = index" >
+                <div class="alignCenter positionRelative cursorPointer" [style.left.px]="getLeftOffset(i)"
+                    (click)="selectedStage = i">
+                    <img src="{{getStageSrc(i)}}">
+                    <span class="stageSpan"
+                            [class.activeSpan]="selectedStage == i">{{e}}</span>
+                </div>
+            </ng-container>
+            <!-- <div class="alignCenter positionRelative cursorPointer" [style.left.px]="getLeftOffset(stages.length)"
+                (click)="openStageDialog()">
+                <img src="../../../assets/images/stage/new-stage-lg.png">
+                <span class="stageSpan">New Stage</span>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<ngx-simplebar [options]="scrollOptions" class="mainPart lightBackground">
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div class="leftPart" fxFlex="22" fxFill>
+            <div class="leftItem1">
+                <div class="roundBusiness">
+                    <img alt="Image" src="../../../assets/images/business.svg" width="14" height="14">
+                </div>
+                <div>
+                    <span class="span1">Packet Monster</span><br/>
+                    <span class="span2">Employee at Packet Monster, Inc</span>
+                </div>
+            </div>
+
+            <div class="leftItem2">
+                <span class="selectLabel">Status</span><br>
+                <mat-form-field class="statusSelect">
+                    <mat-select [(value)]="status">
+                        <mat-option value="Progress">
+                            Progress
+                        </mat-option>
+                        <mat-option value="Won">
+                            Won
+                        </mat-option>
+                        <mat-option value="Lost">
+                            Lost
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="leftItem3">
+                <div class="personInfo">
+                    <div>
+                        <img alt="Image" src="../../../assets/images/user-sample.png">
+                    </div>
+                    <div class="ml-2">
+                        <span class="span1">Wes Studi</span><br>
+                        <span class="span2">Manager</span>
+                    </div>
+                </div>
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Work <span class="span3">869 673 5678</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>phone</mat-icon> Personal <span class="span3">869 673 5678</span>
+                </div>
+                <div class="panel">
+                    <mat-icon>email</mat-icon> Email <span class="span4">wesstudi@pocketmonster.com</span>
+                </div>
+            </div>
+            <div class="leftItem4">
+                <p class="pType1">Estimated cloding date</p>
+                <p class="pType2">16/1/2021</p>
+                <p class="pType1">Added on</p>
+                <p class="pType2">1/1/2021</p>
+                <p class="pType1">Lead source</p>
+                <p class="pType2">LinkedIn</p>
+                <p class="pType1">Description</p>
+                <p class="pType3">Enter a fixed salary, assign Recurring Schedule.</p>
+            </div>
+        </div>
+
+        <div class="centerPart" fxFlex="50">
+            <app-text-editor></app-text-editor>
+            <app-activitylist></app-activitylist>
+        </div>
+        <div fxFlex="28">
+            <app-widget (addTaskClicked) = "openTaskDialog($event)" (addAppointClicked) = "openAppointDialog($event)"></app-widget>
+        </div>
+    </div>
+</ngx-simplebar>

@@ -1,0 +1,220 @@
+<div class="rightPart">
+    <mat-accordion  class="customAccordion">
+        <mat-expansion-panel class="mat-elevation-z0 grayExpanded" [hideToggle]="true" [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Leads
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content1 pt-2">
+
+                <div class="row justify-content-between px-3">
+                    <div>
+                        <span>Total Value</span><br>
+                        <span class="priceSpan">${{getLeadsTotalValue()}}</span>
+                    </div>
+                    <div>
+                        <span>Total Expected</span><br>
+                        <span class="priceSpan">${{getLeadsExpectValue()}}</span>
+                    </div>
+                </div>
+
+                <!-- empty records design enable if there are no data -->
+                <div class="text-center d-none">
+                  <div class="mb-3">
+                    <img src="../../../../assets/images/appointment-empty.png">
+                  </div>
+                  <div class="color-455B66 mb-3">
+                   <span class="fs-16">You have no leads.</span>
+                  </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0 grayExpanded" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Associated With
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+              <div class="customVerScroll hgt-200">
+
+                <div class="personInfo" *ngFor="let item of associate_members.contacts">
+                  <div class="roundBusiness">
+                    <i class="material-icons">person</i>
+                  </div>
+                    <div class="ml-2">
+                        <span class="span1">{{item.full_name}}</span><br>
+                        <span class="span2">{{item.email}}</span>
+                    </div>
+                </div>
+
+                <div class="personInfo" *ngFor="let item of associate_members.organizations">
+                    <div class="roundBusiness">
+                      <i class="material-icons">business</i>
+                    </div>
+                    <div class="ml-2">
+                        <span class="span1">{{item.name}}</span><br>
+                        <span class="span2">{{item.email}}</span><br>
+                    </div>
+                </div>
+
+                <div class="personInfo" *ngFor="let item of associate_members.leads">
+                    <div class="roundBusiness">
+                        <i class="material-icons">leaderboard</i>
+                    </div>
+                    <div class="ml-2">
+                        <span class="span1">{{item.name}}</span><br>
+                        <span class="span2"></span><br>
+                    </div>
+                </div>
+            <!-- empty records design enable if there are no data -->
+            <div class="text-center d-none">
+              <div class="mb-3">
+                <img src="../../../../assets/images/appointment-empty.png">
+              </div>
+              <div class="color-455B66 f-16-400 mb-3">
+               <span>You have no contacts.</span>
+              </div>
+            </div>
+            </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0  grayExpanded" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Upcoming Appointments
+                    </div>
+                    <div>
+                        <button mat-button class="iconButton" (click)="addAppoint() ; $event.stopPropagation()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content pt-2">
+                <div [class.hgt-200]="appointments.length > 3" class="customVerScroll">
+                    <div *ngFor="let e of appointments" class="mb-3">
+                        <div class="row">
+                            <div class="col-auto pr-0">
+                                <mat-checkbox color="primary" class="mb-1 customCheckBox" [checked]="e.appointment_status==0" (change)="changeAppointState(e, $event)">
+                                </mat-checkbox>
+                            </div>
+                            <div class="col pl-1">
+                                <div class="cursor-pointer" (click)="editAppoint(e)">
+                                    <div class="mb-2">{{e.title}}</div>
+                                    <span [class.color-ff0000]="isPastDateAppoint(e)" class="alertSpan">
+                                        <!-- <mat-icon *ngIf="e.icon== 'notification'" class="fs-14 align-text-top">
+                                            notification_important</mat-icon>
+                                        <mat-icon *ngIf="e.icon== 'calendar'" class="fs-14 align-text-top">calendar_today</mat-icon> -->
+                                        <mat-icon class="fs-14 align-text-top">{{getAppointmentIcon(e)}}</mat-icon>
+                                        <span [class.color-ff0000]="isPastDateAppoint(e)" class="">{{getAppointDate(e)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="appointments.length == 0">
+                    <div class="mb-3">
+                        <img src="../../../../assets/images/appointment-empty.png">
+                    </div>
+                    <div class="color-455B66 f-16-400 mb-3">
+                        <span>You have no upcoming appointments.</span>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0  grayExpanded" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Tasks
+                    </div>
+                    <div>
+                        <button mat-button class="iconButton" (click)="addTask() ; $event.stopPropagation()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content pt-2">
+                <div [class.hgt-200]="tasks.length > 3" class="customVerScroll">
+                    <div *ngFor="let e of tasks" class="mb-3">
+                        <div class="row">
+                            <div class="col-auto pr-0">
+                                <mat-checkbox color="primary" class="mb-1 customCheckBox" [checked]="e.task_status==0" (change)="changeTaskState(e, $event)">
+                                </mat-checkbox>
+                            </div>
+                            <div class="col pl-1">
+                                <div class="cursor-pointer" (click)="editTask(e)">
+                                    <div class="mb-2" [class.lineThrough]="e.selected">{{e.title}}</div>
+                                    <span [class.color-ff0000]="isPastDateTask(e)" class="alertSpan">
+                                        <mat-icon class="fs-14 align-text-top">{{getAppointmentIcon(e)}}</mat-icon>
+                                        <span [class.color-ff0000]="isPastDateTask(e)" class="">{{getTaskDate(e)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="tasks.length == 0">
+                    <div class="mb-3">
+                        <img src="../../../../assets/images/task-empty.png">
+                    </div>
+                    <div class="color-455B66 f-16-400 mb-3">
+                        <span>You have no upcoming tasks.</span>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0  grayExpanded" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Files
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content pt-2">
+              <div [class.hgt-275]="files.length > 5" class="customVerScroll">
+                <div *ngFor="let f of files; let i = index" class="fileItem"
+                    [class.pb-2]="i == 0" [class.py-2]="i > 0" [class.borderBottom]="i < files.length - 1">
+                    <!-- <img *ngIf="f.type == 'word'" alt="Image" src="../../../assets/images/word-icon.svg">
+                    <img *ngIf="f.type == 'excel'" alt="Image" src="../../../assets/images/excel-icon.svg">
+                    <img *ngIf="f.type == 'pdf'" alt="Image" src="../../../assets/images/pdf-icon.svg">
+                    <img *ngIf="f.type == 'Image'" alt="Image" src="../../../assets/images/image-icon.svg"> -->
+                    <img alt="Image" src="{{getFileIcon(f.name)}}">
+
+                    <div class="ml-2">
+                        <span class="fileName">{{f.name}}</span>
+                        <br>
+                        <span class="fileDescription">{{f.description}}</span>
+                    </div>
+                    <div class="ml-auto color-455B66">
+                      <mat-icon class="cursor-pointer" (click)="downloadFile(f)">download</mat-icon>
+                    </div>
+                </div>
+                </div>
+                <div class="text-center" *ngIf="files.length == 0">
+                  <div class="mb-3">
+                    <img src="../../../../assets/images/appointment-empty.png">
+                  </div>
+                  <div class="color-455B66 f-16-400 mb-3">
+                   <span>You have no files.</span>
+                  </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

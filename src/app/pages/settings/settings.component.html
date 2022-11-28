@@ -1,0 +1,75 @@
+<app-header></app-header>
+<section class="py-3 sectionTop">
+    <div class="container-fluid px-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="color-253238 f-20-500">Account Settings</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="sectionOne">
+    <div class="container-fluid pr-5 pl-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="customTabOne py-3">
+                    <div class="f-14-500 color-253238 mb-2 pl-5">Manage</div>
+                    <mat-tab-group [@.disabled]="true">
+                        <mat-tab label="Profile Settings">
+                            <ng-template matTabContent>
+                                <!--Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}-->
+                                <app-profile></app-profile>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Users & Roles Settings">
+                            <ng-template matTabContent>
+                                <!--Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}-->
+                                <app-usersroles></app-usersroles>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Account Preference">
+                            <ng-template matTabContent>
+                                <!--Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}-->
+                                <app-account></app-account>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Notification settings">
+                            <ng-template matTabContent>
+                                <!--Content 4 - Loaded: {{getTimeLoaded(4) | date:'medium'}}-->
+                                <app-notification></app-notification>
+                            </ng-template>
+                        </mat-tab>
+                        <!--<mat-tab label="Data">
+                            <ng-template matTabContent>
+                                <app-data></app-data>
+                            </ng-template>
+                        </mat-tab>-->
+                        <!-- <mat-tab label="Plans & Pricing">
+              <app-planspricing></app-planspricing>
+            </mat-tab> -->
+                        <mat-tab label="Pipeline and Stages">
+                            <ng-template matTabContent>
+                                <!--Content 6 - Loaded: {{getTimeLoaded(6) | date:'medium'}}-->
+                                <app-pipelinestages></app-pipelinestages>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Terms and Services">
+                            <ng-template matTabContent>
+                                <!--Content 7 - Loaded: {{getTimeLoaded(7) | date:'medium'}}-->
+                                <app-termsservices></app-termsservices>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Privacy Policy">
+                            <ng-template matTabContent>
+                                <!--Content 8 - Loaded: {{getTimeLoaded(8) | date:'medium'}}-->
+                                <app-privacypolicy></app-privacypolicy>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

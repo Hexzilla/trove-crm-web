@@ -1,0 +1,110 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 themeTable">
+  <ng-container matColumnDef="contact" sticky>
+      <th mat-header-cell *matHeaderCellDef class="contactHeader">
+          Company
+      </th>
+      <td mat-cell *matCellDef="let element" class="contactCell">
+          <mat-checkbox color="primary" (click)="clickCheck($event, element)" [checked]='setCheckStatus(element)' class="customCheckBox">
+          </mat-checkbox>
+          <span *ngIf="element.company" class="cursorPointer" (click)="clickItem(element)">
+              <!-- <mat-icon class="roundIcon mx-2">business</mat-icon> -->
+              <span class="businessIcon mr-2">
+                <mat-icon class="">business</mat-icon>
+              </span>
+              <span class="textOverflow">{{element.name}}</span>
+          </span>
+      </td>
+  </ng-container>
+
+  <!-- <ng-container matColumnDef="company">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('company')" [class.activeTh]="selectedTh == 'company'">
+          <img class="businessIcon" alt="Image" src="../../../assets/images/business.svg">
+          Company
+      </th>
+      <td mat-cell *matCellDef="let element" class="nameCell">{{element.companyName}}</td>
+  </ng-container> -->
+
+  <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('mobile')" [class.activeTh]="selectedTh == 'mobile'">
+          Mobile</th>
+      <td mat-cell *matCellDef="let element">
+          {{element.mobile}}
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('email')" [class.activeTh]="selectedTh == 'email'">Email</th>
+      <td mat-cell *matCellDef="let element">
+          {{element.email}}
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('city')" [class.activeTh]="selectedTh == 'city'">City</th>
+      <td mat-cell *matCellDef="let element">{{element.city}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('state')" [class.activeTh]="selectedTh == 'state'">State</th>
+      <td mat-cell *matCellDef="let element">{{element.state}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ownerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('ownerName')" [class.activeTh]="selectedTh == 'ownerName'">Owner</th>
+      <td mat-cell *matCellDef="let element">{{element.ownerName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="last_activity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('last_activity')" [class.activeTh]="selectedTh == 'last_activity'">
+          Last Activity</th>
+      <td mat-cell *matCellDef="let element">
+          {{dateToString(element.last_activity)}}
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="contacts_count">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('contacts_count')" [class.activeTh]="selectedTh == 'contacts_count'">
+          Contacts</th>
+      <td mat-cell *matCellDef="let element">{{element.contacts_count}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('status')" [class.activeTh]="selectedTh == 'status'">Status</th>
+      <td mat-cell *matCellDef="let element">{{element.status}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('created_at')" [class.activeTh]="selectedTh == 'created_at'">Added on</th>
+      <td mat-cell *matCellDef="let element">{{dateToString(element.created_at)}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="updated_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header
+          (click)="clickTh('updated_at')" [class.activeTh]="selectedTh == 'updated_at'">Modified on</th>
+      <td mat-cell *matCellDef="let element">{{dateToString(element.updated_at)}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns ; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div class="footer">
+  <!-- <mat-paginator class="customPaginator" [pageSizeOptions]="[5]" showFirstLastButtons (page)="pageChanged($event)"></mat-paginator> -->
+  <mat-paginator 
+    class="customPaginator"
+    [length]="length" 
+    [pageSize]="pageSize" 
+    [pageSizeOptions]="[10]"
+    (page)="pageChanged($event)" >
+  </mat-paginator>
+</div>

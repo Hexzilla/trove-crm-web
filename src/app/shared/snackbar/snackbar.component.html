@@ -1,0 +1,12 @@
+<div class="row align-items-center">
+  <div class="col color-CC3340">
+    <i class="material-icons mr-2 align-bottom">delete</i>
+    <span class="f-14-700">{{data.message}}</span>
+  </div>
+  <div class="col-auto">
+     <span href="#" class="underlineText f-12-500 text-white">Undo</span>
+     <button (click)="snackBarRef.dismiss()" mat-flat-button class="btnColor1-SB ml-2">
+      <i class="material-icons fs-14">clear</i>
+    </button>
+  </div>
+</div>

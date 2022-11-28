@@ -1,0 +1,124 @@
+.centerContent {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background-color: white;
+  border: 1px solid #D0D9DE;
+  padding: 10px 15px;
+}
+
+.selectSpan {
+  font-size: 12px;
+  line-height: 14px;
+  color: #455B66;
+  margin-left: 12px;
+  margin-right: 10px;
+}
+
+.centerContent .centerTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoDiv {
+  display: flex;
+  align-items: center;
+}
+
+.infoDiv .commentIcon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #D0D9DE;
+  border-radius: 3px;
+  font-size: 18px;
+  color: #455B66;
+  margin-right: 6px;
+  background: rgba(208, 217, 222, 0.2);
+  width: 24px;
+  height: 24px;
+}
+
+.centerContent .centerItem {
+  padding: 10px 0 15px;
+  border-bottom: 1px solid #E4E9EF;
+}
+
+.centerContent .centerTitle .span1{
+  color: #002868;
+  font-size: 12.5px;
+}
+
+.centerContent .centerTitle .span2{
+  color: #455B66;
+  font-size: 12px;
+}
+
+.centerContent .centerTitle .actionDiv {
+  display: flex;
+  align-items: center;
+}
+
+.centerContent .centerTitle .actionDiv mat-icon {
+  color: #455B66;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  opacity: .8;
+}
+
+.centerContent .centerTitle .span3{
+  color: #455B66;
+  font-size: 12px;
+  opacity: .8;
+}
+
+.centerContent .centerMsg {
+  margin-top: 12px;
+  margin-left: 40px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 17px;
+
+  color: #253238;
+}
+
+.centerContent .centerMsg1 {
+  margin-top: 12px;
+  margin-left: 40px;
+  color: #253238;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.tx14 {
+  font-size: 14px;
+}
+
+.txItalic {
+  font-style: italic;
+}
+
+.txComment {
+  color: #002868;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.lineHeightMd {
+  line-height: 2;
+}
+
+.selectLabel {
+  font-size: 12px;
+  line-height: 14px;
+  color: #455B66;
+}
+
+.actionIcons i {
+  cursor: pointer;
+  color: #455B66;
+  margin-right: 15px;
+  vertical-align: middle;
+}

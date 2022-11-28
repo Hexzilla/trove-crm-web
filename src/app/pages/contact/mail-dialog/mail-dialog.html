@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>Create Note</h1>
+<div mat-dialog-content>
+    <mat-tab-group #tabGroup (selectedTabChange)="handleTabChange($event)" class="froalaTab">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <img alt="Image" src="../../../assets/images/comment-icon.svg">
+                <span class="ml-2">Add a Note</span>
+            </ng-template>
+            <div class="tabContent">
+                <ngx-simplebar [options]="scrollOptions" style="width: 100%;">
+                    <div class="receiverDiv alignCenter">
+                        <span class="toSpan">To:</span>
+                        <div class="alignCenter">
+                            <span *ngFor="let e of items.items; let i = index" class="receiverSpan">
+                                <span class="receiverName">{{e.name}}</span>
+                                <mat-icon (click)="deleteSelected(e)">close</mat-icon>
+                            </span>
+                        </div>
+                    </div>
+                </ngx-simplebar>
+                <div class="dialogFroala" [froalaEditor] [froalaEditor]="titleOptions1">
+                    Hey!<br>
+                    You can personalise your notifications to receive alerts based on your interests.
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <img alt="Image" src="../../../assets/images/email-icon.svg">
+                <span class="ml-2">Email Log</span>
+            </ng-template>
+            <div class="tabContent">
+                <div class="receiverDiv alignCenter">
+                    <span class="toSpan">To:</span>
+                    <div class="alignCenter">
+                      <span *ngFor="let e of items.items; let i = index" class="receiverSpan">
+                        <span class="receiverName">{{e.name}}</span>
+                        <mat-icon (click)="deleteSelected(e)">close</mat-icon>
+                    </span>
+                    </div>
+                </div>
+                <div class="dialogFroala" [froalaEditor] [froalaEditor]="titleOptions2">Email</div>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <img alt="Image" src="../../../assets/images/phone-icon.svg">
+                <span class="ml-2">Call Log</span>
+            </ng-template>
+            <div class="tabContent">
+                <div class="receiverDiv alignCenter">
+                    <span class="toSpan">To:</span>
+                    <div class="alignCenter">
+                      <span *ngFor="let e of items.items; let i = index" class="receiverSpan">
+                        <span class="receiverName">{{e.name}}</span>
+                        <mat-icon (click)="deleteSelected(e)">close</mat-icon>
+                    </span>
+                    </div>
+                </div>
+                <div class="dialogFroala" [froalaEditor] [froalaEditor]="titleOptions3">Call</div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button class="createBtn ml-3">Create</button>
+</div>

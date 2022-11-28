@@ -1,0 +1,154 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+    <h1 mat-dialog-title>{{isEdit ? 'Edit' : 'Add'}} Company</h1>
+    <div class="filterPart">
+        <mat-form-field class="dialogSearchFormField whiteBackground" appearance="outline">
+            <input type="text" placeholder="Search field" aria-label="Number" matInput [formControl]="searchControl" [matAutocomplete]="auto" formControlName="search">
+            <mat-icon matSuffix *ngIf="!getSearchState()">search</mat-icon>
+            <mat-icon matSuffix *ngIf="getSearchState()" style="color: #253238;cursor: pointer" (click)="resetSearch()">close</mat-icon>
+            <mat-autocomplete #auto="matAutocomplete" class="smFontAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-checkbox color="primary" class="mandatoryCheck customCheckBox" (change)="checkMandatory($event)">Only show mandatory fields</mat-checkbox>
+    </div>
+
+    <div mat-dialog-content>
+        <div class="mainContent">
+            <div *ngIf="checkShow('Company Name')">
+                <span class="required">Company Name</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput formControlName="organization_name" required>
+                    <mat-hint class="mat-error" *ngIf="errors?.organization_name">{{errors.organization_name}}</mat-hint>
+                    <mat-error *ngIf="hasValidationError('organization_name')">{{getValidationMessage('organization_name')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="twoDiv">
+                <div *ngIf="checkShow('Mobile Number')">
+                    <span class="required">Mobile Number</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm inputSelectForm" [style.width.px]="232">
+                        <input matInput class="inputWithSelect" formControlName="mobile_number" required ng-minlength=10 ng-maxlength=10>
+                        <mat-select class="selectWithInput" formControlName="mobile_code" required>
+                            <mat-option *ngFor="let code of dialCodes" [value]="code">{{code}}</mat-option>
+                        </mat-select>
+                        <mat-hint class="mat-error" *ngIf="errors && errors['mobile.number']">{{errors['mobile.number']}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('mobile_number')">{{getValidationMessage('mobile_number')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Work Number') && !showMandatory">
+                    <span>Work Number</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput formControlName="work_phone">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="checkShow('Address') && !showMandatory">
+                <span>Address</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm" (click)="addressSelect = true">
+                    <input matInput formControlName="address">
+                </mat-form-field>
+            </div>
+
+            <div class="twoDiv" *ngIf="!showMandatory && addressSelect">
+                <div *ngIf="checkShow('City')">
+                    <span>City</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput formControlName="city">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Post Code')">
+                    <span>Post Code</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput formControlName="postal_code">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv" *ngIf="!showMandatory && addressSelect">
+                <div *ngIf="checkShow('State/Region')">
+                    <span>State/Region</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput formControlName="state">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Country')">
+                    <span>Country</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground" [style.width.px]="232">
+                        <mat-select formControlName="country">
+                            <mat-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="twoDiv">
+                <div *ngIf="checkShow('Email Address')">
+                    <span class="required">Email Address</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput email formControlName="email" required>
+                        <mat-hint class="mat-error" *ngIf="errors?.email">{{errors.email}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('email')">{{getValidationMessage('email')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Owner')">
+                    <span class="required">Owner</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground" [style.width.px]="232">
+                        <mat-select formControlName="owner_id" required>
+                            <mat-option *ngFor="let owner of emailOwners" [value]="owner.id">{{owner.full_name}}</mat-option>
+                        </mat-select>
+                        <mat-hint class="mat-error" *ngIf="errors?.owner_id">{{errors.owner_id}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('owner_id')">{{getValidationMessage('owner_id')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="checkShow('Skype ID') && !showMandatory">
+                <span>Skype ID</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput formControlName="skype_id">
+                </mat-form-field>
+            </div>
+            <div *ngIf="checkShow('Description') && !showMandatory">
+                <span>Description</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="justify-content-start">
+        <button *ngIf="isEdit" mat-button type="button" class="deleteBtn" (click)="open(modalDelete)">Delete</button>
+        <button mat-button type="button" (click)="onNoClick()" class="cancelBtn ml-auto">Cancel</button>
+        <button mat-button type="submit" class="btnColor2 ml-3 px-4">{{isEdit ? 'Update' : 'Save'}}</button>
+    </div>
+</form>
+
+<ng-template #modalDelete let-modal>
+    <div class="modal-header border-bottom-0">
+        <div class="px-2">
+            <span class="color-253238 f-20-500">Delete</span>
+        </div>
+    </div>
+    <div class="modal-body pt-1">
+        <div class="px-2">
+            <div class="color-ff0000 f-13-400">
+                Are you sure you want to permanently delete this one?
+            </div>
+            <!-- <div class="mt-3 checkbox001">
+                <div class="custom-control custom-checkbox pos-t-0">
+                    <input type="checkbox" class="custom-control-input" id="deletechk">
+                    <label class="custom-control-label f-13-500 color-253238" for="deletechk">
+                      Delete this contact and related activities like tasks and calls?
+                      This action cannot be undone.
+                    </label>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="px-2">
+            <button class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="modal.close()">Cancel</button>
+            <button (click)="modal.close(); deleteItem($event)" class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary">Confirm</button>
+        </div>
+    </div>
+</ng-template>

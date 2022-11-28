@@ -1,0 +1,26 @@
+.snackContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    padding: 0;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-sizing: border-box;
+    border-radius: 3px;
+    min-width: 24px;
+    height: 24px;
+    line-height: 30px;
+}
+
+mat-icon {
+    font-size: 18px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    color: white;
+}

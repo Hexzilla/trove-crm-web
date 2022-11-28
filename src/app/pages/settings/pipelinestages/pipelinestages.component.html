@@ -1,0 +1,142 @@
+<div class="row mb-3">
+    <div class="col-auto">
+        <div class="f-20-400 color-253238">Pipeline and Stages</div>
+    </div>
+    <div class="col text-right">
+        <button (click)="open(modalNewPipeline)" class="btnColor1 f-16-500" mat-flat-button>New Pipeline
+          <mat-icon class="material-icons fs-16 ml-1 align-text-top">
+      add
+      </mat-icon></button>
+    </div>
+</div>
+<div class="color-253238 table-responsive table001">
+    <table mat-table [dataSource]="PipelineList" class="w-100" matSort matSortActive="name" matSortDisableClear matSortDirection="asc" (matSortChange)="resetPagingRole()">
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pipeline and Stages </th>
+            <td mat-cell *matCellDef="let element"> {{element?.name}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="stages_count">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Deal stages </th>
+            <td mat-cell *matCellDef="let element"> {{element?.stages_count}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="action">
+            <th class="w-220px" mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+                <a (click)="open(modalNewPipeline, element.id)" mat-flat-button class="btnEdit1 f-14-400">
+                    <mat-icon class="material-icons mr-1 fs-14 align-text-top">create</mat-icon> Edit
+                </a>
+                <a (click)="deleteModal(modalDelete, element.id)" mat-flat-button class="btnDelete1 f-14-400 ml-2">Delete</a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPipeline"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsPipeline;"></tr>
+    </table>
+</div>
+<mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+<ng-template #modalNewPipeline let-modal>
+    <div class="modal-header">
+        <div class="px-2">
+            <span class="color-253238 f-20-500">Add new pipeline</span>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="px-2 input001">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="addPipelineForm" novalidate>
+                        <div class="color-253238">
+                            <label class="f-12-500">Pipeline name*</label>
+                            <span *ngIf="addPipelineForm.controls['pipeline'].invalid && (addPipelineForm.controls['pipeline'].dirty || addPipelineForm.controls['pipeline'].touched)" class="color-ff0000 f-12-500 float-right">
+                <span *ngIf="addPipelineForm.controls['pipeline'].errors.required">
+                 Please enter the pipeline name.
+                </span>
+                            </span>
+                            <mat-form-field appearance="fill">
+                                <input formControlName="pipeline" matInput type="text" value="">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12">
+                    <div class="bg-F6F8FA py-3 px-4">
+                        <div class="f-12-500 color-253238 mb-2">
+                            <span>Stages</span>
+                        </div>
+                        <div class="drag001">
+                            <div cdkDropList class="dragdrop-list" (cdkDropListDropped)="drop($event)">
+                                <div class="dragdrop-box actionDrag" *ngFor="let dragElement of dragElements ; let i = index" cdkDrag>
+                                    <div class="dragdrop-placeholder" *cdkDragPlaceholder></div>
+                                    <div class="row">
+                                        <div class="col-9 pr-0">
+                                            <div class="dragInput">
+                                                <!-- {{dragElement.name}} -->
+                                                <input matInput type="text" [(ngModel)]="dragElement.name" (keyup)="stagename($event, dragElement)">
+                                                <input type="hidden" [(ngModel)]="dragElement.order">
+                                                <span (click)="removePipelineStage(i)" class="dragDelete"><span class="forDesk">Delete</span><i class="material-icons forMobile">delete</i></span>
+                                            </div>
+                                            <div *ngIf="dragElement.errors">
+                                                <div class="color-ff0000" *ngFor="let error of dragElement.errors">{{ error }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="dragInput">
+                                                <input matInput type="text" [(ngModel)]="dragElement.probability" (keyup)="stageprobability($event, dragElement)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button (click)="addPipelineStage()" mat-flat-button class="btnColor3-B px-2 mw-auto">
+                      <mat-icon class="material-icons">add</mat-icon>
+                    </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="px-2">
+            <button class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+            <button (click)="savePipeline()" class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary" [disabled]="addPipelineForm.invalid">Save</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+    <div class="modal-header border-bottom-0">
+        <div class="px-2">
+            <span class="color-253238 f-20-500">Delete pipeline</span>
+        </div>
+    </div>
+    <div class="modal-body pt-1">
+        <div class="px-2">
+            <div class="color-ff0000 f-13-400">
+                Are you sure you want to permanently delete this one?
+            </div>
+            <div class="mt-3 checkbox001">
+                <div class="custom-control custom-checkbox pos-t-0">
+                    <input type="checkbox" class="custom-control-input" id="deletechk" [(ngModel)]="pipelineConfirmationForDelete">
+                    <label class="custom-control-label f-13-500 color-253238" for="deletechk">
+              Delete this pipeline and related activities like tasks and calls?
+              This action cannot be undone.
+            </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="px-2">
+            <button type="button" class="btnColor3-B px-4 f-16-700" mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+            <button type="button" [disabled]="!pipelineConfirmationForDelete" (click)="deletePipeline(deletePipelineId)" class="btnColor2 ml-2 px-4 f-16-700" mat-flat-button color="primary">Confirm</button>
+        </div>
+    </div>
+</ng-template>

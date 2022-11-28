@@ -1,0 +1,161 @@
+<h1 mat-dialog-title>{{isEdit ? 'Edit' : 'Add'}} Person</h1>
+<div class="filterPart">
+    <mat-form-field class="dialogSearchFormField whiteBackground" appearance="outline">
+        <input type="text" placeholder="Search field" aria-label="Number" matInput [formControl]="searchControl"
+            [matAutocomplete]="auto" [(ngModel)]="search">
+        <mat-icon matSuffix *ngIf="!search">search</mat-icon>
+        <mat-icon matSuffix *ngIf="search" style="color: #253238;cursor: pointer" (click)="search = ''">close</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" class="smFontAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-checkbox color="primary" class="mandatoryCheck customCheckBox" (change)="checkMandatory($event)">Only show
+        mandatory fields</mat-checkbox>
+</div>
+<form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+    <div mat-dialog-content>
+        <div class="mainContent">
+            <input type='file' formControlName="file" (change)="readURL($event);" id="fileInput" accept=".png, .jpg, .jpeg, .bmp"/>
+            <div class="threeDiv">
+                <div *ngIf="checkShow('First Name') || checkShow('Last Name')" style="position: relative;">
+                    <mat-icon *ngIf="!imageSrc" class="material-icons-outlined bigRoundIcon"
+                        style="position: relative; left: -9px; cursor: pointer;" (mouseover)="userHover = true"
+                        (mouseout)="userHover = false" (click)="userIcon()">
+                        {{getUserIcon()}}
+                    </mat-icon>
+                    <img *ngIf="imageSrc" id="preview" [src]="imageSrc || 'http://placehold.it/180'" alt="your image"
+                        width="58" height="58" (mouseover)="imageHover = true" />
+                    <div class="overlay" *ngIf="imageSrc && imageHover" (mouseover)="imageHover = true"
+                        (mouseout)="imageHover = false" (click)="removeImage()">
+                        Remove
+                    </div>
+                </div>
+                <div *ngIf="checkShow('First Name')">
+                    <span class="required">First Name</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth"
+                        [style.width.px]="180">
+                        <input matInput formControlName="first_name" required>
+                        <mat-hint class="mat-error" *ngIf="errors?.first_name">{{errors.first_name}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('first_name')">{{getValidationMessage('first_name')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Last Name')">
+                    <span class="required">Last Name</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth"
+                        [style.width.px]="180">
+                        <input matInput formControlName="last_name" required>
+                        <mat-hint class="mat-error" *ngIf="errors?.last_name">{{errors.last_name}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('last_name')">{{getValidationMessage('last_name')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="threeDiv">
+                <div *ngIf="checkShow('Mobile Number') || checkShow('Work Number')">
+                    <mat-icon class="roundIcon">phone_android</mat-icon>
+                </div>
+                <div *ngIf="checkShow('Mobile Number')" class="mr-0 w-100 pl-15">
+                    <span class="required">Mobile Number</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <input matInput class="inputWithSelect" formControlName="mobile_number" required ng-minlength=10
+                            ng-maxlength=10>
+                        <mat-select class="selectWithInput" formControlName="mobile_code" required>
+                            <mat-option *ngFor="let code of dialCodes" [value]="code">{{code}}</mat-option>
+                        </mat-select>
+                        <mat-hint class="mat-error" *ngIf="errors && errors['mobile.number']">
+                            {{errors['mobile.number']}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('mobile_number')">{{getValidationMessage('mobile_number')}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="threeDiv" *ngIf="!showMandatory">
+                <div *ngIf="checkShow('Work Number')">
+                    <mat-icon class="roundIcon">phone</mat-icon>
+                </div>
+
+                <div *ngIf="checkShow('Work Number')" class="mr-0 w-100 pl-15">
+                    <span>Work Number</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <input matInput formControlName="work_number">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv" *ngIf="!showMandatory">
+                <div *ngIf="checkShow('Company Name')">
+                    <span class="roundIcon">
+                        <img alt="Image" src="../../../../assets/images/company-black.svg">
+                    </span>
+                </div>
+                <div *ngIf="checkShow('Company Name')">
+                    <span>Company Name</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground">
+                        <mat-select multiple class="fw-500" formControlName="organization">
+                            <mat-option data-class="chkbox" *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv">
+                <div *ngIf="checkShow('Email Address')">
+                    <mat-icon class="roundIcon">email</mat-icon>
+                </div>
+                <div *ngIf="checkShow('Email Address')">
+                    <span class="required">Email Address</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <input matInput email formControlName="email" required>
+                        <mat-hint class="mat-error" *ngIf="errors?.email">{{errors.email}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('email')">{{getValidationMessage('email')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv">
+                <div *ngIf="checkShow('Owner')"></div>
+                <div *ngIf="checkShow('Owner')">
+                    <span class="required">Owner</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground">
+                        <mat-select formControlName="owner_id" required>
+                            <mat-option *ngFor="let owner of emailOwners" [value]="owner.id">{{owner.full_name}}</mat-option>
+                        </mat-select>
+                        <mat-hint class="mat-error" *ngIf="errors?.owner_id">{{errors.owner_id}}</mat-hint>
+                        <mat-error *ngIf="hasValidationError('owner_id')">{{getValidationMessage('owner_id')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv" *ngIf="!showMandatory">
+                <div *ngIf="checkShow('Address')"></div>
+                <div *ngIf="checkShow('Address')">
+                    <span>Address</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <input matInput formControlName="address">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv" *ngIf="!showMandatory">
+                <div *ngIf="checkShow('Skype ID')"></div>
+                <div *ngIf="checkShow('Skype ID')">
+                    <span>Skype ID</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <input matInput formControlName="skype_id">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="twoDiv" *ngIf="!showMandatory">
+                <div *ngIf="checkShow('Description')"></div>
+                <div *ngIf="checkShow('Description')">
+                    <span>Description</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <textarea matInput formControlName="description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="justify-content-start">
+        <button *ngIf="isEdit" mat-button class="deleteBtn">Delete</button>
+        <button mat-button (click)="onNoClick()" class="cancelBtn ml-auto">Cancel</button>
+        <button mat-button type="submit" class="btnColor2 ml-3 px-4">{{isEdit ? 'Update' : 'Save'}}</button>
+    </div>
+</form>

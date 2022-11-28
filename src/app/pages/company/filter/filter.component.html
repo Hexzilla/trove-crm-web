@@ -1,0 +1,181 @@
+<div class="drawerContainerTop">
+    <button mat-button class="closeButton mr-4" (click)="closeFilterDilaog()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <mat-icon>filter_alt</mat-icon>
+    <span class="mr-5" class="filterBadge" matBadge={{calculateFilterCount()}} matBadgeColor="warn"
+        matBadgePosition="above after" matBadgeOverlap="false">Filters</span>
+    <button mat-button class="clearAllButton" (click)=clearAll()>
+        Clear all
+    </button>
+</div>
+<ngx-simplebar [options]="scrollOptions" class="filterContainer1">
+    <mat-accordion class="grayAccordion customAccordion">
+        <mat-expansion-panel class="mat-elevation-z0 topPanel" [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        Status<br>
+                        <span class="subTitle">{{filters.status}}</span>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="statusRadio customRadio"
+                    [(ngModel)]="filters.status" (change)="stateFilterChanged($event)">
+                    <mat-radio-button color="primary" class="example-radio-button" *ngFor="let type of statusTypes"
+                        [value]="type">
+                        {{type}}
+                    </mat-radio-button>
+                    <br>
+                </mat-radio-group>
+                <div class="px-2 py-2 text-right">
+                    <button mat-button class="clearBtn" (click)="clearStatus()">Clear</button>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0 noPaddingPanel">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        Owner
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <div class="px-4">
+                    <div class="">
+                        <mat-form-field appearance="outline" class="serachForm noLabelForm whiteBackground">
+                            <input class="typo" matInput placeholder="Search by owner" aria-label="Search by owner"
+                                [matAutocomplete]="autoCreatedBy" [formControl]="ownerFilterCtrl">
+                            <mat-autocomplete #autoCreatedBy="matAutocomplete" class="matAutoComplete001">
+                                <mat-option class="h-auto" *ngFor="let item of ownerFilterObserver | async" [value]="item.full_name">
+                                    <div class="row" (click)="$event.stopPropagation()">
+                                        <div class="col-auto pr-0">
+                                            <mat-checkbox color="primary" class="customCheckBox"
+                                                [(ngModel)]="item.isChecked" (change)="filterByOwner(item)">
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col pl-0"
+                                            (click)="item.isChecked = !item.isChecked;filterByOwner(item)">
+                                            <span class="bgRoundIcon adjThis">
+                                                <mat-icon class="color-455B66 mr-0">person</mat-icon>
+                                            </span>
+                                            <span class="ml-2 typo">{{item.full_name}}</span>
+                                        </div>
+                                    </div>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div [class.hgt-150]="selectedOwners.length > 3" class="customVerScroll matAutoComplete001">
+                            <div class="" *ngFor="let item of selectedOwners">
+                                <div class="row align-items-center">
+                                    <div class="col-auto pr-0">
+                                        <mat-checkbox color="primary" class="customCheckBox"
+                                            [(ngModel)]="item.isChecked" (change)="filterByOwner(item)">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-auto p-0"
+                                        (click)="item.isChecked = !item.isChecked;filterByOwner(item)">
+                                        <span class="bgRoundIcon bg-white">
+                                            <mat-icon class="mr-0 color-455B66">person</mat-icon>
+                                        </span>
+                                    </div>
+                                    <div class="col pl-0"
+                                        (click)="item.isChecked = !item.isChecked;filterByOwner(item)">
+                                        <span class="ml-2 typo">{{item.full_name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-3 text-right">
+                            <button mat-button class="clearBtn" (click)="clearOwner()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0 noPaddingPanel">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        Last Activity<br>
+                        <span class="subTitle">{{getSelectedDate()}}</span>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="statusRadio px-4 customRadio"
+                    [(ngModel)]="filters.activity" (change)="activityFilterChanged($event)">
+                    <mat-radio-button color="primary" class="example-radio-button" *ngFor="let type of dateTypes"
+                        [value]="type">
+                        {{dateTypeString[type]}}
+                    </mat-radio-button>
+                    <br>
+                </mat-radio-group>
+                <div class="customDateDiv mt-2 px-4" *ngIf="filters.activity == 6">
+                    <span>From</span>
+                    <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="filters.activityStartDate" (dateChange)="notify()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <span>To</span>
+                    <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="filters.activityEndDate" (dateChange)="notify()">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <hr>
+                <div class="px-4 pb-3 text-right">
+                    <button mat-button class="clearBtn" (click)="clearDate()">Clear</button>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0 noPaddingPanel">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        Added on<br>
+                        <span class="subTitle">{{getAddSelectedDate()}}</span>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="statusRadio px-4 customRadio"
+                    [(ngModel)]="filters.addedon" (change)="addedonFilterChanged($event)">
+                    <mat-radio-button color="primary" class="example-radio-button" *ngFor="let type of addDateTypes"
+                        [value]="type">
+                        {{addDateTypeString[type]}}
+                    </mat-radio-button>
+                    <br>
+                </mat-radio-group>
+                <div class="customDateDiv mt-2 px-4" *ngIf="filters.addedon == 6">
+                    <span>From</span>
+                    <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="filters.addonStartDate" (dateChange)="notify()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <span>To</span>
+                    <mat-form-field appearance="outline" class="noLabelForm noSpaceField">
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="filters.addonEndDate" (dateChange)="notify()">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <hr>
+                <div class="px-4 pb-3 text-right">
+                    <button mat-button class="clearBtn" (click)="clearAddDate()">Clear</button>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</ngx-simplebar>

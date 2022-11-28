@@ -1,0 +1,9 @@
+.customTB001 tbody tr {
+  background-color: #F7F8FA;
+  border-bottom: 8px solid #fff;
+}
+.table td, .table th {padding-bottom: .50em;}
+.visible-sm {opacity: 0;}
+@media(max-width: 767px){
+  .visible-sm {opacity: 1;}
+}

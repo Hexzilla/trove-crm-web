@@ -1,0 +1,19 @@
+image: node:10
+
+pipelines:
+  branches:
+    release/dev:
+      - step:
+          name: Installation
+          caches:
+            - node
+          script:
+            - npm install
+          artifacts:
+            - node_modules/** # Save modules for next steps
+      - step:
+          name: Build
+          script:
+            - npm run build
+          artifacts:
+            - dist/** # Save build for next steps

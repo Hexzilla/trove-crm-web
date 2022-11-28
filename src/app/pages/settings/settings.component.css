@@ -1,0 +1,81 @@
+.sectionTop {border-bottom: 1px solid #D0D9DE;
+  box-sizing: border-box; background-color: #fff;}
+
+  /* Vertical tab */
+  :host {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  :host ::ng-deep .mat-tab-labels {
+    flex-direction: column;
+  }
+
+  :host ::ng-deep .alignTabCSS .mat-tab-labels {
+    flex-direction: initial;
+  }
+
+  mat-tab-group {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+  }
+
+
+  :host ::ng-deep .mat-tab-body-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-tab-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :host ::ng-deep mat-ink-bar {
+    display: none;
+  }
+  /* Styles for the active tab label */
+  :host ::ng-deep.mat-tab-label.mat-tab-label-active {
+    background-color: transparent;
+    color: #253238;
+    background: rgba(239, 242, 247, 0.75);
+    border-radius: 6px;
+  }
+  /* Styles for the active tab label */
+  :host ::ng-deep.mat-tab-label {
+    background-color: transparent;
+    /* background-color: lightgray; */
+  }
+ /* Vertical tab */
+
+@media(max-width: 1024px){
+  .sectionOne .container-fluid .pr-5.pl-0 , .sectionOne .container-fluid.pr-5{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+.customTabOne .f-14-500.pl-5 {
+  padding-left: 0px !important;
+}
+.graybox {margin-bottom: 1.5rem;}
+}
+@media(max-width: 767px){
+  .graybox.xs-md-TextLeft .mt-1 {margin-top: 1rem !important;}
+}
+  @media(min-width: 768px){
+    .customTabOne::before {
+      position: fixed;
+      content: "";
+      background-color: #fbfcfd;
+      left: 0;
+      top:0;
+      bottom: 0;
+      width: 25%;
+      height: 100%;
+      z-index: -1;
+      border-right: 1px solid #D0D9DE;}
+  }
+

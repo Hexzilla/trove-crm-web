@@ -1,0 +1,191 @@
+<div [class.borderCover1]="activeTabIndex == 0" [class.borderCover2]="activeTabIndex == 1" [class.borderCover3]="activeTabIndex == 2">
+</div>
+<mat-tab-group #tabGroup (selectedTabChange)="handleTabChange($event)" [(selectedIndex)]="activeTabIndex" class="froalaTab">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img alt="Image" src="../../../assets/images/comment-icon.svg">
+      <span class="ml-2">Add a Note</span>
+    </ng-template>
+    <div class="tabContent">
+      <!-- <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button> -->
+      <div class="customMS mb-1">
+        <div class="row">
+          <div class="col-auto pr-0">
+            <span class="color-253238 fs-16">Associated With:</span>
+          </div>
+          <div class="col" [matMenuTriggerFor]="menuTabs">
+            <div [class.hgt70]="selectedAssociates.length > 4" class="customVerScroll py-1">
+              <div class="row">
+                <div class="col-auto pr-0 mb-3 selectedDiv" *ngFor="let e of selectedAssociates">
+                  <span class="selectedSpan">
+                    <!-- <i class="material-icons">{{e.icon}}</i> -->
+                    <span class="ml-1">
+                      {{e.full_name || e.name}}
+                    </span>
+                    <i class="cursorPointer material-icons fs-16" (click)="deleteSelected(e)">close</i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <mat-menu #menuTabs="matMenu" class="w-100">
+          <mat-tab-group animationDuration="0ms" (click)="$event.stopPropagation()" class="customMSTab">
+            <mat-tab label="Person">
+              <ul class="p-0">
+                <li mat-menu-item *ngFor="let contact of associate_members.contacts">
+                  <div class="row align-items-end">
+                    <div class="col-auto">
+                      <mat-checkbox class="example-margin" (change)="onSelectionChange($event, contact)">
+                        <div class="optionDiv">
+                          <div class="col-auto px-0">
+                            <span class="bgRoundIcon">
+                              <i class="material-icons align-text-bottom color-455B66">person</i>
+                            </span>
+                          </div>
+                          <div class="col">
+                            <div class="f-16-500">{{contact.full_name}}</div>
+                            <div class="color-lite-O">{{contact.email}}</div>
+                          </div>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </mat-tab>
+            <mat-tab label="Company">
+              <ul class="p-0">
+                <li mat-menu-item *ngFor="let company of associate_members.organizations">
+                  <div class="row align-items-end">
+                    <div class="col-auto">
+                      <mat-checkbox class="example-margin" (change)="onSelectionChange($event, company)">
+                        <div class="optionDiv">
+                          <div class="col-auto px-0">
+                            <span class="bgRoundIcon">
+                              <i class="material-icons align-text-bottom color-455B66">business</i>
+                            </span>
+                          </div>
+                          <div class="col">
+                            <div class="f-16-500">{{company.name}}</div>
+                            <div class="color-lite-O">{{company.email}}</div>
+                          </div>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </mat-tab>
+            <mat-tab label="Lead">
+              <ul class="p-0">
+                <li mat-menu-item *ngFor="let lead of associate_members.leads">
+                  <div class="row align-items-end">
+                    <div class="col-auto">
+                      <mat-checkbox class="example-margin" (change)="onSelectionChange($event, lead)">
+                        <div class="optionDiv">
+                          <div class="col-auto px-0">
+                            <span class="bgRoundIcon">
+                              <i class="material-icons align-text-bottom color-455B66">leaderboard</i>
+                            </span>
+                          </div>
+                          <div class="col">
+                            <div class="f-16-500">{{lead.name}}</div>
+                            <div class="color-lite-O"><span>&nbsp;</span></div>
+                          </div>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-menu>
+      </div>
+      <div [froalaEditor] *ngIf="activeTabIndex===0 && editorShow" [(froalaModel)]="noteEditorContent" [froalaEditor]="titleOptions"></div>
+
+      <div *ngIf="editorShow">
+        <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+        <button mat-button class="saveButton" (click)="saveNote()">Save</button>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img alt="Image" src="../../../assets/images/email-icon.svg">
+      <span class="ml-2">Email Log</span>
+    </ng-template>
+    <div class="tabContent">
+      <div class="customMS mb-1">
+        <div class="row">
+          <div class="col-auto pr-0">
+            <span class="color-253238 fs-16">Associated With:</span>
+          </div>
+          <div class="col" [matMenuTriggerFor]="menuTabs">
+            <div [class.hgt70]="selectedAssociates.length > 4" class="customVerScroll py-1">
+              <div class="row">
+                <div class="col-auto pr-0 mb-3 selectedDiv" *ngFor="let e of selectedAssociates">
+                  <span class="selectedSpan">
+                    <!-- <i class="material-icons">{{e.icon}}</i> -->
+                    <span class="ml-1">
+                      {{e.full_name || e.name}}
+                    </span>
+                    <i class="cursorPointer material-icons fs-16" (click)="deleteSelected(e)">close</i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button> -->
+      <div [froalaEditor] *ngIf="activeTabIndex===1 && editorShow"  [(froalaModel)]="emailEditorContent"[froalaEditor]="titleOptions"></div>
+      <div *ngIf="editorShow">
+        <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+        <button mat-button class="saveButton" (click)="saveEmail()">Save</button>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img alt="Image" src="../../../assets/images/phone-icon.svg">
+      <span class="ml-2">Call Log</span>
+    </ng-template>
+    <div class="tabContent">
+      <div class="customMS mb-1">
+        <div class="row">
+          <div class="col-auto pr-0">
+            <span class="color-253238 fs-16">Associated With:</span>
+          </div>
+          <div class="col" [matMenuTriggerFor]="menuTabs">
+            <div [class.hgt70]="selectedAssociates.length > 4" class="customVerScroll py-1">
+              <div class="row">
+                <div class="col-auto pr-0 mb-3 selectedDiv" *ngFor="let e of selectedAssociates">
+                  <span class="selectedSpan">
+                    <!-- <i class="material-icons">{{e.icon}}</i> -->
+                    <span class="ml-1">
+                      {{e.full_name || e.name}}
+                    </span>
+                    <i class="cursorPointer material-icons fs-16" (click)="deleteSelected(e)">close
+                    </i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button> -->
+      <div *ngIf="activeTabIndex===2 && editorShow" [(froalaModel)]="callEditorContent" [froalaEditor]="titleOptions"></div>
+      <div *ngIf="editorShow">
+        <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+        <button mat-button class="saveButton" (click)="saveCall()">Save</button>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

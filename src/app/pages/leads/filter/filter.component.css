@@ -1,0 +1,389 @@
+
+.mat-panel1 .panel-content button {
+    width: 100%
+}
+
+.mat-panel3, .mat-panel2, .mat-panel5, .mat-panel6, .mat-panel4 {
+    border-bottom: #ddd solid 1px;
+}
+
+.mat-panel2 {
+    border-top: #ddd solid 1px;
+}
+
+mat-panel-title span{
+    font-size: 12px;
+}
+
+.mat-panel2 .valueDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mat-panel2 .valueDiv mat-form-field {
+    width: 80px;
+    margin-bottom: -1em;
+}
+
+.mat-panel5 span {
+    font-size: 11px;
+}
+
+.tableContainer {
+    padding: 20px 30px;
+}
+
+.trapezoid1 {
+    border-top: 41px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid1 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #002868;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid2 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid2 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid3 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid3 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid4 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 60px);
+    margin-left: 30px;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid4 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid5 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid5 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid6 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 100px);
+    margin-left: 50px;
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid6 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid7 {
+    border-top: 37px solid white !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    position: relative;
+    cursor: pointer;
+}
+
+.trapezoid7 .text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trapezoid7 button {
+    font-weight: normal;
+}
+
+.activePipe {
+    border-top: 37px solid #002868 !important;
+}
+
+.activePipeDropdown {
+  background-color: #002868;
+}
+
+.activePipe .text , .activePipeDropdown.text {
+    color: white;
+}
+
+.contactPanel mat-checkbox {
+    width: 100%;
+    font-size: 12.5px;
+}
+
+.contactPanel .userButton {
+    width: 50%;
+    border: 1px solid #D0D9DE;
+    background-color: #fff;
+    border-radius: 3px 0 0 3px;
+    font-size: 12.5px;
+}
+
+.activeButton {
+    background-color: #EFF2F7 !important;
+}
+
+.contactPanel .companyButton {
+    width: 50%;
+    border: 1px solid #D0D9DE;
+    background-color: #fff;
+    border-radius: 0 3px 3px 0;
+    font-size: 12.5px;
+}
+
+.clearButton {
+    border: 1px solid #D0D9DE;
+    background-color: #EFF2F7;
+    font-size: 12px;
+    width: 90px;
+    height: 35px;
+}
+
+/* .searchForm {
+    margin-bottom: -1.25em;
+    width: 100% !important;
+} */
+.mat-panel3 .panel-content mat-form-field {
+    width: 100%;
+}
+
+.activeBtn {
+    border-bottom: 2px solid #002868;
+    border-radius: 0;
+}
+
+.optionBtnContainer button {
+    min-width: 30px;
+    padding: 0 10px;
+}
+
+.optionBtnContainer button span{
+    font-size: 11px;
+}
+
+.optionDiv {
+    display: flex;
+    align-items: center;
+}
+
+.optionDiv img {
+    border-radius: 6px;
+}
+
+.optionDiv .span1 {
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+    margin-bottom: 0;
+}
+
+.optionDiv .span2 {
+    font-size: 10px;
+    line-height: 14px;
+    color: #455B66;
+    margin-bottom: 0;
+}
+
+.searchForm mat-icon {
+    color: gray;
+}
+
+.valueInput {
+    font-size: 12px;
+}
+
+.customDateDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.customDateDiv span {
+    font-size: 12px;
+}
+
+.customDateDiv mat-form-field {
+  width: 120px;
+  font-size: 12px;
+}
+
+.listContent {
+    font-size: 13px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 18px;
+}
+.adjThis {position: relative; top: 5px;}
+.hgt-150 {
+  height: 150px;
+}
+
+.clearBtn {
+  background: #EFF2F7;
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  border-radius: 3px;
+  height: 35px;
+  width: 100px;
+  font-size: 12.5px;
+  color: #253238;
+  font-weight: bold;
+}
+
+.filterContainer1 {
+  max-height: calc(100vh - 200px);
+}
+
+.drawerContainerTop {
+  padding: 19px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.closeButton {
+  padding: 0;
+  border: 1px solid #E6EAF0;
+  line-height: normal;
+  min-width: 24px;
+}
+
+.clearAllButton {
+  background-color: #EFF2F7;
+  border: 1px solid #D0D9DE;
+  font-size: 12px;
+  line-height: 30px;
+  margin-left: auto;
+}
+
+.drawerContainerTop span {
+  font-size: 16px;
+  font-weight: bold;
+}
+.iconBusiness {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 6px;}
+
+.alignDDItem {
+  padding: 5px 15px;
+  min-width: 175px;
+}

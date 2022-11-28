@@ -1,0 +1,133 @@
+<app-header></app-header>
+
+<mat-drawer-container hasBackdrop="true">
+    <div class="row">
+        <div class="col-md-10 topMenu">
+            <div class="topBar">
+                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column">
+                    <div class="topBarDiv">
+                        <div class="calendarTitle">
+                            <span class="title mr-3 fontObjektivMk mt-1">{{title}}</span>
+                        </div>
+                        <button mat-button class="arrowButton" (click)="prev()">
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+                        <button mat-button class="arrowButton" (click)="next()">
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                        <button mat-button class="scheduleBtn" (click)="openAppointDialog(false, null)">Schedule an
+                            appointment</button>
+                    </div>
+                </div>
+            </div>
+            <div class="fullcalendar">
+                <button mat-button 
+                    id='reminderButton' 
+                    class='reminderButton'
+                    [matMenuTriggerFor]="reminderMenu">
+                </button>
+                <mat-menu id='reminderMenu' #reminderMenu="matMenu">
+                    <div class="notificationPanelWrap">
+                        <ul>
+                            <li mat-menu-item>
+                                <span class="color-253238 f-12-700 mr-2">{{reminderTitle}}</span>
+                                <!-- <mat-icon aria-hidden="false">close</mat-icon> -->
+                            </li>
+                            <li mat-menu-item *ngFor="let e of reminderEvents">
+                                <div class="row alignText" *ngIf="e.isTask">
+                                    <div class="col-auto pr-0">
+                                        <img src="../../../assets/images/notification002.png" alt="Image">
+                                    </div>
+                                    <div class="col">
+                                        <div class="color-253238" (click)="eventClicked(e)">{{e.title}}</div>
+                                    </div>
+                                </div>
+                                <div class="row alignText" *ngIf="!e.isTask" (click)="eventClicked(e)">
+                                    <div class="col-auto pr-0 mt-0">
+                                        <img src="../../../assets/images/notification004.png" alt="Image">
+                                    </div>
+                                    <div class="col mt-1">
+                                        <div class="f-12-400 color-253238"> 
+                                            <span class="mr-1">{{e.title}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </mat-menu>
+                <full-calendar #calendar [(options)]="calendarOptions">
+                </full-calendar>
+            </div>
+        </div>
+        <div class="col-md-2 rightMenu">
+            <div class="eventFilters mt-3 mb-3 pl-3">
+                <mat-icon>filter_alt</mat-icon>
+                <span class="title-small">Filters</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="title-small pl-3">
+                <div class="mt-3 mb-3 pl-2">Calendar</div>
+                <div class="text-center">
+                    <mat-button-toggle-group class="text-center" aria-label="Font Style">
+                        <mat-button-toggle class="viewModeBtn" value="week" (click)="weekView()">Week
+                        </mat-button-toggle>
+                        <mat-button-toggle class="viewModeBtn" value="month" checked="true" (click)="monthView()">Month
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+            <mat-expansion-panel class="mat-elevation-z0 px-0" expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="addPanelTitle">
+                        Type
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-content">
+                    <div class="customVerScroll hgt-200">
+                        <div class="appointItem">
+                            <div class="row">
+                                <div class="col-auto pr-0">
+                                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox"
+                                        [(ngModel)]="filters.all" (change)="showAllEvents()">
+                                        <div class="color-253238 f-12-400 mt-2">All</div>
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointItem">
+                            <div class="row">
+                                <div class="col-auto pr-0">
+                                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox"
+                                        [(ngModel)]="filters.task" (change)="updateFilter()">
+                                        <div class="color-253238 f-12-400 mt-2">Task</div>
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointItem">
+                            <div class="row">
+                                <div class="col-auto pr-0">
+                                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox"
+                                        [(ngModel)]="filters.appoint" (change)="updateFilter()">
+                                        <div class="color-253238 f-12-400 mt-2">Appointments</div>
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointItem">
+                            <div class="row">
+                                <div class="col-auto pr-0">
+                                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox"
+                                        [(ngModel)]="filters.reminder" (change)="updateFilter()">
+                                        <div class="color-253238 f-12-400 mt-2">Reminder</div>
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</mat-drawer-container>

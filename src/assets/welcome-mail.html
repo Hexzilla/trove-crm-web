@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mikontact - Welcome Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.typekit.net/mit3zib.css">
+  <style>
+    .bg-e5e5e5 {background-color: #e5e5e5;}
+    .bg-fff {background-color: #fff;}
+    .fontObjektivMk {font-family: objektiv-mk3, sans-serif; }
+    .mailWrapper {width:47%;margin-left: auto;margin-right: auto;}
+    .containerSpacer {padding-left: 50px; padding-right: 50px;}
+    .m-0 {margin: 0;}
+    .mailBanner {background-image: url(../assets/images/welcomemail-banner.jpg);background-repeat: no-repeat;
+                  background-size: cover; padding-top: 30px;}
+    .titleOne {color: #1F304B; font-size: 45px; line-height: 60px; font-weight: 700;}
+    .titleTwo {color: #1F304B; font-size: 28px; line-height: 40px; font-weight: 700;}
+    .titleThree {color: #1F304B; font-size: 17px; line-height: 28px; font-weight: 500;}
+    .titleFour {color: #1F304B; font-size: 18px; line-height: 26px; font-weight: 700;}
+    .py-30 {padding-top:30px;padding-bottom: 30px;}
+    .mb-30 {margin-bottom: 30px;}
+    .mb-20 {margin-bottom: 20px;}
+    .mb-10 {margin-bottom: 10px;}
+    .w-100 {width: 100%;}
+    .mailBtn {background: #002868; padding: 14px 30px 10px; text-decoration: none; border: 0;
+              border-radius: 20px 3px 20px 20px; color: #fff; font-size: 18px; font-weight: 700;
+              line-height: 26px; display: inline-block;
+              }
+    .grayBox {background-color: #f4f4f4; padding: 15px; border-radius: 6px;}
+    .row {display: flex; flex-wrap: wrap; margin-left: -10px; margin-right: -10px;}
+    .col-4 {
+            flex: 0 0 28%;
+            max-width: 28%;
+            padding-left: 10px;
+            padding-right: 10px;
+            }
+    @media(max-width:767px){
+          .mailWrapper {width:100%;}
+            }
+    @media(max-width:991px){
+      .containerSpacer {padding-left: 20px; padding-right: 20px;}
+          .titleOne {font-size: 25px; line-height: 40px;}
+          .titleTwo {font-size: 20px; line-height: 32px;}
+          .col-4 {
+                 flex: 0 0 94%;
+                 max-width: 94%;
+                 margin-bottom: 20px;
+                 }
+          }
+  </style>
+</head>
+<body class="fontObjektivMk m-0 bg-e5e5e5">
+  <div class="mailWrapper">
+    <section class="mailBanner">
+      <div class="containerSpacer">
+        <div class="mb-30"><img src="../assets/images/logo.png" alt="Logo"></div>
+        <div class="mb-20">
+           <span class="titleOne">Welcome to Contact Manager </span>
+         </div>
+        <div>
+          <img class="w-100" src="../assets/images/welcomemail-image.jpg" alt="Image">
+        </div>
+      </div>
+    </section>
+    <section class="bg-fff py-30">
+      <div class="containerSpacer">
+
+        <div class="mb-10">
+          <span class="titleTwo">Connect with your leads, Set up your email. </span>
+        </div>
+        <div class="mb-30">
+          <span class="titleThree">Phasellus efficitur porttitor mauris fringilla suscipit. Morbi maximus tempor dignissim. Cras vitae enim nisl. Phasellus mattis convallis lacus in feugiat. </span>
+        </div>
+        <div class="mb-30">
+          <a href="javascript:void(0);" class="mailBtn">Get Started</a>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="grayBox">
+              <div class="mb-10"><img src="../assets/images/mail-icon3.png" alt="Image"></div>
+              <div>
+                <span class="titleFour">Connect your email</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="grayBox">
+              <div class="mb-10"><img src="../assets/images/mail-icon1.png" alt="Image"></div>
+              <div>
+                <span class="titleFour">Import contacts</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="grayBox">
+              <div class="mb-10"><img src="../assets/images/mail-icon2.png" alt="Image"></div>
+              <div>
+                <span class="titleFour">Help & Support</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

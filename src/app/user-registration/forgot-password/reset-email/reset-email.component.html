@@ -1,0 +1,55 @@
+<div class="">
+    <section class="bg-e5e5e5 py-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="">
+                        <img src="../../../assets/images/logo.png" alt="Logo">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="py-5 bgWhite">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
+                    <div class="text-center mb-4" *ngIf="apiResponse && apiResponse.success">
+                        <div class="gifImage"><img src="../../../../assets/images/success.gif" alt="Image"></div>
+                        <div class="f-22-700 color-1F304B">
+                            <span>Password reset email sent!</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!timerFinished && apiResponse && apiResponse.success" class="alertBox">
+                        <p class="f-14-700 color-253238 mb-1">Check your email</p>
+                        <span class="color-455B66 f-12-400">We have e-mailed your password reset link</span>
+                    </div>
+                    <div class="alertBoxError" *ngIf="timerFinished && apiResponse && !apiResponse.success">
+                        <p class="f-14-700 color-253238 mb-1">Error</p>
+                        <span class="color-C41E41 f-12-400">{{apiResponse.message}}</span>
+                    </div>
+                    <div class="px-5">
+                        <form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+                            <div class="userForm {{formDisplay}}">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Registered Email</mat-label>
+                                    <input value="" matInput placeholder="Registered Email" formControlName="email">
+                                    <mat-error *ngIf="resetPasswordForm.controls.email.errors?.required">This field is required.</mat-error>
+                                    <mat-error *ngIf="resetPasswordForm.controls.email.errors?.pattern">Please enter a valid email address.</mat-error>
+                                    <mat-error *ngIf="resetPasswordForm.controls.email.errors?.serverError">{{ resetPasswordForm.controls.email.errors?.serverError }}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="mb-4">
+                                <a *ngIf="!timerFinished" routerLink='javascript:void(0)' href="javascript:void(0);" class="w-100 bg-1F304B" mat-flat-button color="warn">Resend in <countdown [config]="{ leftTime: 60, format: 's' }" (event)="onTimerFinished($event)"></countdown> sec </a>
+                                <button *ngIf="timerFinished" type="submit" class="w-100 bg-1F304B" mat-flat-button color="warn" [disabled]="clicked">Resend</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>

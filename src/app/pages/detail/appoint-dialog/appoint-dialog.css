@@ -1,0 +1,139 @@
+.mat-dialog-title {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 29px;
+    color: #253238;
+    padding: 23px 40px;
+    border-bottom: 1px solid #E4E9EF;;
+}
+
+.mat-dialog-content {
+    margin: 0 40px;
+    padding: 0;
+}
+
+.mat-dialog-actions {
+    padding: 18px 40px 27px;
+    margin: 0;
+    border-top: #E4E9EF solid 1.73px;
+    background: #EFF2F7;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.deleteBtn {
+    background: #EFF2F7;
+    border: 1px solid #D0D9DE;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 119px;
+    color: red;
+}
+
+.cancelBtn {
+    background: #EFF2F7;
+    border: 1px solid #D0D9DE;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 119px;
+    float: right!important;
+}
+
+.deleteBtn {
+  background: #EFF2F7;
+  border: 1px solid #D0D9DE;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  color: #FF0000;
+}
+
+.createBtn {
+    background: #002868;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 119px;
+    float: right!important;
+}
+
+span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+
+    color: #253238;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+.titleDiv, .dateDiv, .startDiv, .endDiv, .associateDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.optionDiv {
+    display: flex;
+    align-items: center;
+}
+
+.optionDiv img {
+    border-radius: 6px;
+}
+
+.optionDiv .span1 {
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+    margin-bottom: 0;
+}
+
+.optionDiv .span2 {
+    font-size: 10px;
+    line-height: 14px;
+    color: #455B66;
+    margin-bottom: 0;
+}
+
+.selectedDiv {
+    margin: 5px 0;
+    border: 1px solid #D0D9DE;
+    border-radius: 6px;
+    width: 50%;
+    padding: 6px;
+}
+
+.addBtn {
+    padding: 0;
+    background: rgba(208, 217, 222, 0.2);
+    border: 1px solid #D0D9DE;
+    box-sizing: border-box;
+    border-radius: 6px;
+    min-width: 36px;
+    margin-bottom: 2px;
+}
+
+.activeBtn {
+    border-bottom: 2px solid #002868;
+    border-radius: 0;
+}
+
+::ng-deep.mat-form-field-hint-wrapper {
+    display: block!important;
+}
+
+::ng-deep.mat-form-field-subscript-wrapper {
+    position: inherit!important;
+    padding: 0px!important;
+}

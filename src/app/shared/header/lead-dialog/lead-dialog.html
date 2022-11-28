@@ -1,0 +1,162 @@
+<h1 mat-dialog-title>{{isEdit ? 'Edit': 'Add'}} Lead</h1>
+<div class="filterPart">
+    <!-- <mat-form-field appearance="outline" class="whiteBackground noLabelForm">
+        <input matInput placeholder="search field" [(ngModel)]="search">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field> -->
+    <mat-form-field class="dialogSearchFormField whiteBackground" appearance="outline">
+        <input type="text" placeholder="Search field" aria-label="Number" matInput [formControl]="searchControl" [matAutocomplete]="auto" [(ngModel)]="search">
+        <mat-icon matSuffix *ngIf="!search">search</mat-icon>
+        <mat-icon matSuffix *ngIf="search" style="color: #253238;cursor: pointer" (click)="search = ''">close</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" class="smFontAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-checkbox color="primary" class="mandatoryCheck customCheckBox" (change)="checkMandatory($event)">Only show mandatory fields</mat-checkbox>
+</div>
+<form *ngIf="formLoaded" [formGroup]="addLeadForm" (ngSubmit)="saveLead()" novalidate>
+    <div mat-dialog-content>
+        <div class="mainContent">
+            <div *ngIf="checkShow('Lead Name')">
+                <span>Lead Name *</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput formControlName="name">
+                    <mat-error *ngIf="addLeadForm.controls.name.errors?.required">This field is required.</mat-error>
+                    <mat-error *ngIf="addLeadForm.controls.description.errors?.maxLength">Maximum 100 characters allowed</mat-error>
+                    <mat-error *ngIf="addLeadForm.controls.name.errors?.serverError">{{ addLeadForm.controls.name.errors?.serverError }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="priceDiv">
+                <div *ngIf="checkShow('Primary Contact')">
+                    <span>Primary Contact*</span><br>
+                    <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm" [style.width.px]="232">
+                        <mat-select multiple class="fw-500 customCheckBox" formControlName="contacts" (selectionChange)="onContactChange($event.value)">
+                            <mat-option data-class="chkbox" *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+                            <!--<mat-option data-class="chkbox" value="2">contact2</mat-option>-->
+                        </mat-select>
+                        <mat-error *ngIf="addLeadForm.controls.contacts.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.contacts.errors?.serverError">{{ addLeadForm.controls.contacts.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="checkShow('Value')">
+                    <span>Value*</span><br>
+                    <mat-form-field formGroupName="currency" appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <span class="currencySpan">{{currencyCode}}</span>
+                        <input matInput style="padding-left: 98px" formControlName="value">
+                        <mat-error *ngIf="addLeadForm.controls.currency.value.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.currency.value.errors?.serverError">{{ addLeadForm.controls.currency.value.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="checkShow('Company')">
+                <span>Company*</span><br>
+                <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm">
+                    <mat-select [compareWith]="compareFunction" class="fw-500" formControlName="organization_id">
+                        <mat-option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</mat-option>
+                        <!--<mat-option value="2">company2</mat-option>-->
+                    </mat-select>
+                    <mat-error *ngIf="addLeadForm.controls.organization_id.errors?.required">This field is required.</mat-error>
+                    <mat-error *ngIf="addLeadForm.controls.organization_id.errors?.serverError">{{ addLeadForm.controls.organization_id.errors?.serverError }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="ownerDiv">
+                <div *ngIf="checkShow('Owner')">
+                    <span>Owner*</span><br>
+                    <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm" [style.width.px]="232">
+                        <mat-select [compareWith]="compareFunction" class="fw-500" formControlName="owner_id">
+                            <mat-option *ngFor="let owner of owners" [value]="owner.id">{{owner.full_name}}</mat-option>
+                            <!--<mat-option value="2">owner2</mat-option>-->
+                        </mat-select>
+                        <mat-error *ngIf="addLeadForm.controls.owner_id.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.owner_id.errors?.serverError">{{ addLeadForm.controls.owner_id.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!showMandatory && checkShow('Source')">
+                    <span>Source</span><br>
+                    <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm" [style.width.px]="232">
+                        <mat-select [compareWith]="compareFunction" class="fw-500" formControlName="source_id">
+                            <mat-option *ngFor="let source of sources" [value]="source.id">{{source.name}}</mat-option>
+                            <!--<mat-option value="2">source2</mat-option>-->
+                        </mat-select>
+                        <mat-error *ngIf="addLeadForm.controls.source_id.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.source_id.errors?.serverError">{{ addLeadForm.controls.source_id.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="contactDiv">
+                <!-- <div *ngIf="checkShow('Secondary Contact')">
+                <span>Secondary Contact*</span><br>
+                <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm" [style.width.px]="232">
+                    <mat-select class="fw-500">
+                        <mat-option value="1">contact1</mat-option>
+                        <mat-option value="2">contact2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+                <div *ngIf="checkShow('Added On')">
+                    <span>Added On*</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm datePicker" [style.width.px]="232">
+                        <input matInput [matDatepicker]="picker" formControlName="added_on">
+                        <mat-datepicker-toggle style="height: 10px" matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="addLeadForm.controls.added_on.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.added_on.errors?.serverError">{{ addLeadForm.controls.added_on.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="" *ngIf="checkShow('Estimate Close Date')">
+                    <span>Estimate Close Date*</span><br>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="232">
+                        <input matInput [matDatepicker]="picker" formControlName="closed_on">
+                        <mat-datepicker-toggle style="height: 10px" matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="addLeadForm.controls.closed_on.errors?.required">This field is required.</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.closed_on.errors?.serverError">{{ addLeadForm.controls.closed_on.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="halfDiv" *ngIf="!showMandatory && checkShow('Pipeline Category')">
+                <span>Pipeline Category*</span><br>
+                <mat-form-field appearance="outline" class="grayBackground formControl noLabelForm" [style.width.px]="232">
+                    <mat-select class="fw-500" formControlName="pipeline_id" (selectionChange)="onPipelineChange($event)">
+                        <mat-option *ngFor="let pipeline of pipelines" [value]="pipeline.id">{{pipeline.name}}</mat-option>
+                        <!--<mat-option value="2">category2</mat-option>-->
+                    </mat-select>
+                    <mat-error *ngIf="addLeadForm.controls.pipeline_id.errors?.serverError">{{ addLeadForm.controls.pipeline_id.errors?.serverError }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!showMandatory  && checkShow('Stage')" class="mb-2">
+                <span>Stage*</span><br>
+                <div class="alignCenter">
+                    <ng-container *ngFor="let e of stages; let i = index">
+                        <div class="alignCenter positionRelative cursorPointer" [style.left.px]="getLeftOffset(i)" (click)="selectedStage = i; selectedStageId = e.id;">
+                            <img src="{{getStageSrc(i)}}">
+                            <span [class.stageSpan]="i > 0" [class.firstStagePan]="i == 0" [class.activeSpan]="selectedStage == i">{{e.name}}</span>
+                            <input type="hidden" formControlName="stage_id" [(ngModel)]="selectedStageId" />
+                            <mat-error *ngIf="addLeadForm.controls.stage_id.errors?.serverError">{{ addLeadForm.controls.stage_id.errors?.serverError }}</mat-error>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div *ngIf="!showMandatory && checkShow('Description')">
+                <span>Description</span><br>
+                <div>
+                    <mat-form-field appearance="outline" class="formControl noLabelForm">
+                        <textarea matInput formControlName="description"></textarea>
+                        <mat-error *ngIf="addLeadForm.controls.description.errors?.maxLength">Maximum 500 characters allowed</mat-error>
+                        <mat-error *ngIf="addLeadForm.controls.description.errors?.serverError">{{ addLeadForm.controls.description.errors?.serverError }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="justify-content-start">
+
+        <button *ngIf="isEdit" mat-button class="deleteBtn">Delete</button>
+        <button mat-button (click)="onNoClick()" class="cancelBtn ml-auto">Cancel</button>
+        <button type="submit" mat-button class="createBtn ml-3" [disabled]="addLeadForm?.invalid">{{isEdit ? 'Update': 'Save'}}</button>
+    </div>
+</form>

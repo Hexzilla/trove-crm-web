@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>New Stage</h1>
+<div mat-dialog-content>
+    <span>Stage Name</span><br>
+    <mat-form-field appearance="outline" class="noLabelForm">
+        <input matInput [(ngModel)]="stageName">
+    </mat-form-field>
+    <span>Place</span><br>
+    <mat-form-field appearance="outline" class="noLabelForm grayBackground">
+        <mat-select [(value)]="stagePosition">
+            <mat-option value="before">Before Closed</mat-option>
+            <mat-option value="after">After Closed</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button cdkFocusInitial (click)="onCreateClick()" class="createBtn ml-3">Create</button>
+</div>

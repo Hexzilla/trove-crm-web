@@ -1,0 +1,127 @@
+.contactHeader {
+  background: url('../../../assets/images/headerBg.png') , #253238;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-repeat: no-repeat;
+}
+.userImage img {
+  border-radius: 9px;
+  width: 35px;
+}
+.menuItems span {cursor: pointer;}
+.topSearch .form-control {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.7);
+  border-right: 0;
+}
+.topSearch .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.topSearch .form-control:focus {
+  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: none;
+}
+.topSearch .input-group-text {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.7);
+  border-left: 0;
+}
+.topSearch .input-group-append {
+  margin-left: 0px;
+}
+.contactHeader .btnColor1-R .material-icons {font-size: 20px;}
+.menuItems .material-icons {color: #fff; display: none;}
+.notificationPanelWrap ul , .settingsPanelUL , .addPanelUL {padding: 0; margin: 0; list-style: none;}
+.notificationPanelWrap ul li , .settingsPanelUL li , .addPanelUL li{
+  padding-top: 10px;
+  height: auto;
+  padding-bottom: 10px;
+  line-height: normal;
+  border-bottom: 1px solid #E6EAF0;
+}
+.settingsPanelUL .mat-menu-item:hover ,
+.notificationPanelWrap .mat-menu-item:hover,
+.addPanelUL .mat-menu-item:hover
+{background-color: #F3F5F9;}
+.notificationPanelWrap ul li:last-child , ul.addPanelUL li {
+  border-bottom: 0;
+}
+.settingsPanelUL li:not(:first-child){
+  border-bottom: 0;
+}
+.settingsPanelUL li:first-child {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+  border-bottom-color: #E4E9EF;
+}
+.settingsPanelUL li a:hover , .addPanelUL li a:hover {color: #253238;}
+.notificationPanelWrap .alignText {line-height: 25px; white-space: initial;}
+.notificationPanelWrap .material-icons {color: #253238; font-size: 22px;}
+.notificationPanelWrap .alignText .material-icons {color: #ff0000; font-size: 16px;width: auto;
+  height: 20px;}
+.textUnderline {text-decoration: underline;}
+.notificationPanelWrap a.textUnderline:hover {color: #C41E41;}
+.showMore span {text-decoration: underline;}
+@media(min-width:768px){
+  .activeMenuItem {background-color: #C41E41; border-radius: 12px 12px 12px 0px;}
+}
+@media(max-width:992px){
+  .d-none-sm{display: none;}
+  .menuItems .p-3 {padding-left: 0px !important; padding-right: 0px !important;}
+  .menuItems span img {width: 15px;}
+  .menuItems .mat-icon {width: 15px;font-size: 18px;
+    vertical-align: top;}
+    .menuItems .material-icons {display: inline-block;}
+    .userImage img {display: none;}
+    .forSM button.f-16-500 {font-size: 14px;padding-left: 5px;
+      padding-right: 5px;
+      margin-top: 2px;min-width: auto;}
+      .forSM button .mat-icon {width: auto; height: auto;font-size: 16px !important;}
+}
+@media(min-width:768px) and (max-width:1024px){
+  .menuItems .p-3 {padding-left: 10px !important; padding-right: 10px !important;}
+}
+
+
+.searchForm {
+    /* margin-bottom: -1.25em; */
+    width: 280px;
+}
+
+.activeBtn {
+    border-bottom: 2px solid #002868;
+    border-radius: 0;
+}
+
+.optionBtnContainer button {
+    min-width: 30px;
+    padding: 0 10px;
+}
+
+.optionBtnContainer button span{
+    font-size: 11px;
+}
+
+.optionDiv {
+    display: flex;
+    align-items: center;
+}
+
+.optionDiv img { 
+    border-radius: 6px;
+}
+
+.optionDiv .span1 {
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+    margin-bottom: 0;
+}
+
+.optionDiv .span2 {
+    font-size: 10px;
+    line-height: 14px;
+    color: #455B66;
+    margin-bottom: 0;
+}

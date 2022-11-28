@@ -1,0 +1,66 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="f-20-400 color-253238">Account Preference</div>
+    </div>
+</div>
+<form [formGroup]="accountForm" action="">
+    <div class="row input001 color-253238 v-Bottom">
+        <div class="col-sm-12 col-md-8 col-lg-6 col-xl-5">
+            <div>
+                <label class="f-12-400">Time Zone</label>
+            </div>
+            <div>
+                <div class="row no-gutters">
+                    <div class="col-7">
+                        <mat-form-field appearance="fill" class="bg-F7F8FA">
+                            <mat-select formControlName="time_zone">
+                                <mat-option *ngFor="let timeZone of timeZonesData" [value]="timeZone.id">{{timeZone.zones}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field appearance="fill" class="placeInput color-253238-disabled">
+                            <input matInput type="text" value="{{time | date:'hh:mm:ss a'}}" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-3 col-xl-3">
+            <label class="f-12-400">Time Format</label>
+            <mat-form-field appearance="fill" class="bg-F7F8FA">
+                <mat-select formControlName="time_format">
+                    <mat-option *ngFor="let timeFormat of timeFormatsData" [value]="timeFormat.id">{{timeFormat.timeformat}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-3 col-xl-3">
+            <label class="f-12-400">Date Format</label>
+            <mat-form-field appearance="fill" class="bg-F7F8FA">
+                <mat-select formControlName="date_format">
+                    <mat-option *ngFor="let dateFormat of dateFormatsData" [value]="dateFormat.id">{{dateFormat.dateformat}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-sm-12 col-md-8 col-lg-7 col-xl-5">
+            <label class="f-12-400">Currency Format</label>
+            <mat-form-field appearance="fill" class="bg-F7F8FA">
+                <mat-select formControlName="currency">
+                    <mat-option *ngFor="let currencyFormat of currencyFormatsData" [value]="currencyFormat.id">{{currencyFormat.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-sm-12 col-md-8 col-lg-7 col-xl-5">
+            <label class="f-12-400">Your account id</label>
+            <mat-form-field appearance="fill" class="bg-F7F8FA color-253238-disabled">
+                <input matInput type="text" [value]="account_id" disabled>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="mt-2">
+        <button (click)="updatePreference()" mat-flat-button class="btnColor4 f-14-700" type="button">Save Changes</button>
+        <!--  -->
+    </div>
+</form>

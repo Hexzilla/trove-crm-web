@@ -1,0 +1,37 @@
+.listContainer {
+  height: calc(100vh - 118px);
+}
+.whiteBox{
+  background-color: #FFFFFF;
+  border: 1px solid #E6EAF0;
+  border-radius: 6px;
+  padding: 20px;
+}
+.activityItem {padding: 0; margin: 0; list-style: none;}
+.textLink {
+  cursor: pointer; color: #002868; text-decoration: underline;
+}
+.activityItem li {
+  border-bottom: 1px solid #E4E9EF;
+margin-bottom: 12px;
+padding-bottom: 12px;
+}
+.activityItem li:last-of-type {
+  border-bottom: 0;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+.activityItem li p {margin-bottom: 7px;}
+.activityItem li p:last-of-type {margin-bottom: 0px;}
+.material-icons.arrow{
+  vertical-align: middle !important;
+  height: auto !important;
+  width: auto !important;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  font-size: 14px;
+}
+.activitySession + .activitySession {margin-top: 20px;}
+@media(max-width:767px){
+  .activityItem li p:last-of-type {margin-bottom: 10px;}
+}

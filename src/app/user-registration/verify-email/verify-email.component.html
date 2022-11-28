@@ -1,0 +1,44 @@
+<div class="">
+    <section class="bg-e5e5e5 py-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="">
+                        <img src="../../../assets/images/logo.png" alt="Logo">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="py-5 bgWhite">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
+                    <div class="text-center mb-4" *ngIf="apiResponse && apiResponse.success">
+                        <div class="gifImage"><img src="../../../assets/images/success.gif" alt="Image"></div>
+                        <div class="f-22-700 color-1F304B">
+                            <span>Email verified!</span>
+                        </div>
+                    </div>
+                    <div *ngIf="apiResponse && apiResponse.success" class="alertBox">
+                        <p class="f-14-700 color-253238 mb-1">Success</p>
+                        <span class="color-455B66 f-12-400">{{apiResponse.message}}</span>
+                    </div>
+                    <div class="alertBoxError" *ngIf="apiResponse && !apiResponse.success">
+                        <p class="f-14-700 color-253238 mb-1">Error</p>
+                        <span class="color-C41E41 f-12-400">{{apiResponse.message}}</span>
+                    </div>
+                    <div class="f-14-500">
+                        <div class="mb-3">
+                            <a class="color-1F304B hover-C41E41" routerLink='/user/login'>Return to login</a>
+                        </div>
+                        <div class="mb-2">
+                            <a class="color-1F304B hover-C41E41" href="javascript:void(0);">Looking for support?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,61 @@
+.mat-dialog-title {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 29px;
+    color: #253238;
+    padding: 23px 40px;
+    margin-bottom: 0;
+}
+
+.mat-dialog-content {
+    margin: 0 40px;
+    padding: 0;
+}
+
+.mat-dialog-actions {
+    padding: 23px 40px 23px;
+    margin: 0;
+    border-top: #E4E9EF solid 1.73px;
+    background: #EFF2F7;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cancelBtn {
+    background: #EFF2F7;
+    border: 1px solid #D0D9DE;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 119px;
+}
+
+.deleteBtn {
+    background: red;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 119px;
+}
+
+span {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 17px;
+    color: red;
+    margin-left: 10px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-checkbox {
+    font-size: 14px;
+    color: #455B66;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}

@@ -1,0 +1,153 @@
+<app-header></app-header>
+<section class="py-3">
+  <div class="container-fluid px-5">
+    <div class="row align-items-center">
+      <div class="col">
+        <span class="color-253238 f-20-500">Soylent Corp Dashboard</span>
+      </div>
+      <div class="col-auto ml-auto">
+        <span routerLink='/pages/activities' class="color-253238 f-15-500 underlineText cursor-pointer">View activities</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="lightBackground">
+    <ngx-simplebar [options]="scrollOptions" class="listContainer">
+      <div class="container-fluid px-5 py-3">
+       <div class="row">
+         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 mb-3">
+           <div class="whiteBox">
+             <div class="color-455B66">
+               <span class="f-16-700 mr-2">Revenue this month</span>
+               <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+             </div>
+             <div class="text-center color-455B66 pb-3 pt-5">
+               <span class="f-40-500">{{currency}} {{revenue.revenue_value}}</span>
+             </div>
+             <div class="row pb-3">
+               <div class="col">
+                <div class="text-center color-455B66">
+                  <p class="f-14-400">Total Deals</p>
+                  <span class="f-18-500">{{revenue.total_leads}}</span>
+              </div>
+               </div>
+               <div class="col">
+                <div class="text-center color-455B66">
+                  <p class="f-14-400">Total Value</p>
+                  <span class="f-18-500">{{currency}}{{revenue.total_values}}</span>
+              </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 mb-3">
+          <div class="whiteBox">
+            <div class="color-455B66">
+              <span routerLink='/pages/sourcedetail' class="f-16-700 mr-2 cursorPointer">Source
+                <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+              </span>
+
+            </div>
+            <app-echarts [chartOption]="sourceChart"></app-echarts>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 mb-3">
+          <div class="whiteBox">
+            <div class="color-455B66">
+              <span routerLink='/pages/pipelinedetail' class="f-16-700 mr-2 cursorPointer">Pipeline</span>
+              <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+            </div>
+            <app-echarts [chartOption]="pipelineChart"></app-echarts>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 mb-3">
+          <div class="whiteBox">
+            <div class="color-455B66">
+              <span routerLink='/pages/monthlydetail' class="f-16-700 mr-2 cursorPointer">Monthly</span>
+              <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+            </div>
+            <app-echarts [chartOption]="monthlyChart"></app-echarts>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+          <div class="whiteBox">
+            <div class="color-455B66">
+              <span  class="f-16-700 mr-2">Appointments
+              <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+              </span>
+            </div>
+            <div [class.hgt-150]="appointments.length > 3" class="customVerScroll pt-3">
+              <div *ngFor="let e of appointments" class="mb-3">
+                <div class="row">
+                  <div class="col">
+                      
+                      <div class="mb-2 color-253238 f-16-500">{{e.title}}{{getAppointmentDate(e)}}</div>
+                    <span [class.color-ff0000]="e.color == 'red'" class="alertSpan">
+                      <mat-icon *ngIf="e.icon== 'notification'" class="fs-14 align-text-top">notification_important</mat-icon>
+                      <mat-icon *ngIf="e.icon== 'calendar'" class="fs-14 align-text-top">calendar_today</mat-icon>
+                      <span [class.color-ff0000]="e.color == 'red'" class="">{{e.appointmentdate}}</span>
+                  </span>
+
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div *ngIf="appointments.length > 0" class="f-14-400 color-455B66 mt-3">
+                <span routerLink='/pages/appointments' class="underlineText cursorPointer">View Calendar</span>
+              </div>
+
+              <!-- empty records design enable when the appointment records are not available -->
+              <div class="text-center"  *ngIf="appointments.length == 0">
+                <div class="mb-3">
+                  <img src="../../assets/images/appointment-empty.png">
+                </div>
+                <div class="color-455B66 f-16-400 mb-3">
+                 <span>You have no upcoming appointments.</span>
+                </div>
+                <div class="color-002868 f-16-500">
+                    <span (click)="openAppointDialog(false)" class="underlineText cursorPointer">Create</span>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+          <div class="whiteBox">
+            <div class="color-455B66">
+              <span class="f-16-700 mr-2">Tasks
+                <mat-icon class="fs-20 align-middle">keyboard_arrow_right</mat-icon>
+                </span>
+            </div>
+            <div [class.hgt-150]="tasks.length > 4" class="customVerScroll pt-3">
+              <div *ngFor="let e of tasks" class="mb-2">
+                <div class="row">
+                  <div class="col-auto pr-0">
+                    <mat-checkbox color="primary" class="mb-1 customCheckBox" (change)="onTaskSelected($event,e)" [(ngModel)]="e.selected" >
+                    </mat-checkbox>
+                  </div>
+                  <div class="col pl-1">
+                      <div class="mb-2"  [class.lineThrough]="e.selected">{{e.title}}</div>
+                   </div>
+                </div>
+              </div>
+              </div>
+              <div *ngIf="tasks.length > 0" class="f-14-400 color-455B66 mt-3">
+                <span routerLink='/pages/task' class="underlineText cursorPointer">Show more...</span>
+              </div>
+              <!-- empty records design enable when the task records are not available -->
+              <div class="text-center"  *ngIf="tasks.length == 0">
+                <div class="mb-3">
+                  <img src="../../assets/images/task-empty.png">
+                </div>
+                <div class="color-455B66 f-16-400 mb-3">
+                 <span>You have no upcoming tasks.</span>
+                </div>
+                <div class="color-002868 f-16-500">
+                    <span (click)="openTaskDialog(false)" class="underlineText cursorPointer">Create</span>
+                </div>
+              </div>
+          </div>
+        </div>
+       </div>
+      </div>
+  </ngx-simplebar>
+</section>

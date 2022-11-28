@@ -1,0 +1,75 @@
+.listHeight {
+    height: calc(100vh - 0px);
+}
+
+.bg-32424d {
+    background-color: #32424D;
+}
+
+.bg-e5e5e5 {
+    background-color: #e5e5e5;
+}
+
+.adjIcon {
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+}
+
+.selectedDiv .material-icons {
+    vertical-align: middle;
+}
+
+.selectedDiv .selectedSpan {
+    padding: 5px;
+    border: 1px solid #E1E6EE;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #253238;
+}
+
+.customRadio {
+    display: flex;
+    flex-direction: column;
+}
+
+.iconBorder {
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    color: #253238;
+    padding: 4px 2px;
+    cursor: pointer;
+}
+
+.iconBorder .mat-icon {
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.attachWrapList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.attachWrapList li {
+    border-bottom: 1px solid #E1E6EE;
+    padding: 5px 0px;
+}
+
+.attachWrapList li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.viewnoteContent {
+    margin-left: 3%;
+}
+
+@media(min-width: 580px) {
+    .btnColor3.w-100 {
+        width: auto !important;
+    }
+}
