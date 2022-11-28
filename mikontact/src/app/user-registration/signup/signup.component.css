@@ -1,0 +1,91 @@
+.btnCurve.mat-flat-button{
+  font-family: objektiv-mk3, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 30px;
+  background-color: #C41E41;
+  border-radius: 20px 3px 20px 20px;
+  line-height: 30px;
+  padding: 7px 28px;
+}
+.bg-1F304B.mat-flat-button {
+  background-color: #1f304b; padding-bottom: 10px; padding-top: 10px;font-family: objektiv-mk3, sans-serif;
+  font-size: 16px;
+  font-weight: 700; line-height: 23px;}
+
+.bgWhite a.color-253238:hover{color: #C41E41;}
+.bg-F4F4F4 {background-color: #f4f4f4;}
+.bgWhite {background-color: #fff;}
+.roundedBox{
+  background: #FFFFFF;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.16);
+border-radius: 18px 0px 18px 18px;
+}
+.spacerSI a {margin-right: 15px;padding: 8px; min-width: 50px;border: 0;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.22);
+  border-radius: 6px;}
+.spacerSI a:last-child {margin-right: 0px;}
+.border-f0f0f0 {border-color: #f0f0f0;}
+.userForm .mat-form-field{display: block;font-family: objektiv-mk3, sans-serif;}
+.userForm .pr-adj{padding-right: 7px;}
+.userForm .pl-adj{padding-left: 7px;}
+.radioBox .col-4 {
+  padding-right: 12px;
+}
+/* radio aspect */
+.radioBox [type="radio"]:not(:checked),
+.radioBox [type="radio"]:checked {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+[type="radio"]:not(:checked) + label,
+[type="radio"]:checked + label {
+    position: relative;
+    cursor: pointer;
+}
+.radioBox label {
+  background-color: #fff;
+  border: 1px solid rgba(36, 46, 76, 0.6);
+  border-radius: 6px;
+  color: #253238;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all .2s;
+  font-size: 16px;
+  font-weight: 300;
+  padding: 10px;
+}
+.radioBox input[type="radio"]:checked + label {
+  background-color: #F7F8FA;
+  color: #253238;
+  transition: all .2s;
+  font-weight: 700;
+}
+/* radio aspect */
+
+@media(max-width:767px){
+  .d-none-xs {display: none;}
+  .w-100-xs img {width: 100%; margin-bottom: 30px;}
+  .logo-xs-UR img {width: 70px;}
+  .ngCSSUR .f-18-500 {font-size: 14px;}
+  .spacerSI a {padding: 3px; min-width: 40px;}
+  .radioBox label {font-size: 14px; padding: 10px 4px;}
+  .userForm .pr-adj{padding-right: 15px;}
+  .userForm .pl-adj{padding-left: 15px;}
+}
+@media(max-width:960px){
+  .btnCurve.mat-flat-button{
+    font-size: 14px;
+    margin-left: 25px;
+    padding: 4px 20px;
+  }
+}
+
+
+

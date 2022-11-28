@@ -1,0 +1,105 @@
+mat-tab-group {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tabContent {
+    padding: 18px 20px;
+}
+
+.editorButton {
+    text-align: left;
+    width: 100%;
+    padding: 9px 12px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 17px;
+    color: #253238;
+    border: 1px solid #D0D9DE;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.borderCover1 {
+    width: 158px;
+    height: 1px;
+    background: white;
+    left: 11px;
+    position: absolute;
+    top: 35px;
+    z-index: 100;
+}
+
+.borderCover2 {
+    width: 159px;
+    height: 1px;
+    background: white;
+    left: 171px;
+    position: absolute;
+    top: 35px;
+    z-index: 100;
+}
+
+.borderCover3 {
+    width: 158px;
+    height: 1px;
+    background: white;
+    left: 331px;
+    position: absolute;
+    top: 35px;
+    z-index: 100;
+}
+
+.cancelButton {
+  background: #EFF2F7;
+  border: 1px solid #D0D9DE;
+  box-sizing: border-box;
+  border-radius: 1.8305px;
+  line-height: 30px !important;
+  font-size: 12px;
+  margin-top: 10px !important;
+}
+
+.saveButton {
+  background: #002868;
+  color: white;
+  box-sizing: border-box;
+  border-radius: 1.8305px;
+  line-height: 30px !important;
+  font-size: 12px;
+  margin-top: 10px !important;
+  margin-left: 8px !important;
+}
+
+.receiverDiv {
+    display: flex;
+    align-items: center;
+    border: 1px solid #D0D9DE;
+    padding: 12px 16px;
+}
+
+.receiverDiv span {
+    color: #253238;
+    opacity: 0.5;
+}
+
+.receiverDiv .receiver {
+    background: #FFFFFF;
+    border: 1px solid #E4E9EF;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 4px 7px;
+    margin: 0 3px;
+    font-size: 12px;
+    line-height: 17px;
+    color: #253238;
+}
+
+.receiver mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}

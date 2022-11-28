@@ -1,0 +1,123 @@
+table {
+    width: 100%;
+}
+
+tr {
+  cursor: pointer;
+}
+
+th {
+  background: #E1E6EE;
+  font-size: 15px;
+  color: #253238;
+  font-family: objektiv-mk3, sans-serif; 
+}
+
+.activeTh {
+  background: #E9EDF2;
+}
+
+td {
+  font-family: objektiv-mk3, sans-serif; 
+  color: #253238;
+}
+
+/*stage*/
+.stage-wrapper {
+  display: flex;
+  margin: 0 20px 10px 0;
+  height: 6px;
+}
+.stage-item {
+  background-color: #E1E6EE;
+  border-color: #E1E6EE;
+  color: #E1E6EE;
+  flex-basis: 100%;
+  font-size: 2px;
+  padding: 4px 0 4px 10px;
+  position: relative;
+}
+.stage-item:before,
+.stage-item:after {
+  border: solid transparent;
+  content: " ";
+  left: 100%;
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+}
+.stage-item:after {
+  border-left-color: inherit;
+  border-width: 4px;
+  margin-top: -4px;
+}
+.stage-item:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #fff;
+  border-width: 8px;
+  margin-top: -8px;
+}
+.stage-item.stage-active {
+  background-color: #002868;
+}
+.stage-item.stage-active:after {
+  border-left-color: #002868;
+}
+
+.deal {
+  width: 30%;
+}
+.stage {
+  width: 13%;
+}
+.value {
+  width: 10%;
+}
+.last {
+  width: 10%;
+}
+.owner {
+  width: 20%;
+}
+
+.nameCell {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.nameCell img {
+  border-radius: 6px;
+}
+
+.nameCell .nameSpan {
+  font-weight: 500;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.nameCell .descSpan {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.valueCell span {
+  font-weight: 500;
+}
+
+.stageCell, .lastCell, .valueCell, .ownerCell {
+  padding-left: 8px;
+}
+
+.moneyIcon {
+    width: 35px;
+    height: 35px;
+    background: #F3F5F9;
+    font-size: 25px;
+    display: flex;
+    color: #455B66;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7.2px;
+}

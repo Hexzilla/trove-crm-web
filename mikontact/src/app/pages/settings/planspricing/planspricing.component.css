@@ -1,0 +1,11 @@
+.graybox {
+  background-color: #F7F8FA;
+  border-radius: 6px;
+  padding: 20px;
+}
+@media(max-width: 767px){
+  .graybox.xs-md-TextLeft .mt-1 {margin-top: 1rem !important;}
+}
+@media(max-width: 1024px){
+.graybox {margin-bottom: 1.5rem;}
+}

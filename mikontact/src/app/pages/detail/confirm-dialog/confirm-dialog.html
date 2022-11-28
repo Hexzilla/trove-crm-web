@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Delete Contact</h1>
+<div mat-dialog-content>
+    <span>Are you sure you want to permanently delete this 1 Contact?</span><br>
+    <mat-checkbox class="customCheckBox" color="primary">Delete this contact and related activities like tasks and calls?<br> This action cannot be undone.</mat-checkbox>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button class="deleteBtn ml-3">Yes, Delete</button>
+</div>

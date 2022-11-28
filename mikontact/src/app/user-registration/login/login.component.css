@@ -1,0 +1,52 @@
+.btnCurve.mat-flat-button{
+  font-family: objektiv-mk3, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 20px;
+  background-color: #C41E41;
+  border-radius: 20px 3px 20px 20px;
+  line-height: 30px;
+  padding: 7px 28px;
+}
+.bg-002868.mat-flat-button {background-color: #002868;padding-top: 10px; padding-bottom: 10px; font-size: 16px; font-weight: 700;
+  font-family: objektiv-mk3, sans-serif; line-height: 23px;
+}
+.bgWhite a.color-253238:hover{color: #C41E41;}
+.bg-F4F4F4 {background-color: #f4f4f4;}
+.bgWhite {background-color: #fff;}
+.roundedBox{
+  background: #FFFFFF;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.16);
+border-radius: 18px 0px 18px 18px;
+}
+.spacerSI a {margin-right: 15px;padding: 8px; min-width: 50px;border: 0;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.22);
+  border-radius: 6px;}
+.spacerSI a:last-child {margin-right: 0px;}
+.border-f0f0f0 {border-color: #f0f0f0;}
+.userForm .mat-form-field{display: block;font-family: objektiv-mk3, sans-serif;}
+a.hover-C41E41:hover {color: #C41E41;}
+.labelLine{
+  position: relative;
+top: -28px;
+background-color: #fff;
+padding: 0 10px;
+left: 15px;
+}
+@media(max-width:767px){
+  .d-none-xs {display: none;}
+  .w-100-xs img {width: 100%; margin-bottom: 30px;}
+  .logo-xs-UR img {width: 70px;}
+  .ngCSSUR .f-18-500 {font-size: 14px;}
+  .spacerSI a {padding: 3px; min-width: 40px;}
+}
+@media(max-width:960px){
+  .btnCurve.mat-flat-button{
+    font-size: 14px;
+    margin-left: 20px;
+    padding: 4px 20px;
+  }
+}
+
+
+

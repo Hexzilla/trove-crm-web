@@ -1,0 +1,86 @@
+<div class="row align-items-center">
+  <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9 mb-10-xs">
+    <div class="f-20-400 color-253238">Manage notification settings</div>
+  </div>
+  <div class="col text-right">
+    <button mat-flat-button class="btnColor4 f-14-700" type="button">Save</button>
+  </div>
+</div>
+<div class="table-responsive mt-3">
+  <table class="table table-borderless checkbox001 customTB001 mb-0">
+    <thead class="color-253238 v-top">
+      <tr>
+        <th>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input (change)="selectAllNotiUser()" type="checkbox" class="custom-control-input" id="customCheck0014" [(ngModel)] = "isNotiUserAll">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck0014">User</label>
+          </div>
+        </th>
+        <th class="f-10-400 w-80px">Email</th>
+        <th class="f-10-400 w-80px">Push</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of notificationUser; let i=index" >
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input (change)="unSelectNotiUser(user.isSelected)" type="checkbox" class="custom-control-input" id="customCheck00{{i}}{{i}}"
+             [(ngModel)] = "user.isSelected">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck00{{i}}{{i}}">{{user.name}}</label>
+          </div>
+        </td>
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input type="checkbox" class="custom-control-input" id="customCheck00{{i}}{{i+1}}">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck00{{i}}{{i+1}}"></label>
+          </div>
+        </td>
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input type="checkbox" class="custom-control-input" id="customCheck00{{i}}{{i+2}}">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck00{{i}}{{i+2}}"></label>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+ </div>
+ <div class="table-responsive">
+  <table class="table table-borderless checkbox001 customTB001">
+    <thead class="color-253238 v-top">
+      <tr>
+        <th>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input (change)="selectAllNotiSystem()" [(ngModel)]="isNotiSystemAll" type="checkbox" class="custom-control-input" id="customCheck024">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck024">System</label>
+          </div>
+        </th>
+        <th class="f-10-400 visible-sm w-80px">Email</th>
+        <th class="f-10-400 visible-sm w-80px">Push</th>
+      </tr>
+    </thead>
+    <tbody class="">
+      <tr *ngFor="let system of notificationSystem; let i=index">
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input (change)="unSelectNotiSystem(system.isSelected)" [(ngModel)]="system.isSelected" type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i}}">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i}}">{{system.name}}</label>
+          </div>
+        </td>
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i+1}}">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i+1}}"></label>
+          </div>
+        </td>
+        <td>
+          <div class="custom-control custom-checkbox pos-t-0">
+            <input type="checkbox" class="custom-control-input" id="customCheck0{{i}}{{i+2}}">
+            <label class="custom-control-label f-12-500 color-253238" for="customCheck0{{i}}{{i+2}}"></label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ </div>

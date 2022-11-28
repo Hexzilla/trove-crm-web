@@ -1,0 +1,133 @@
+<app-header></app-header>
+
+<mat-drawer-container hasBackdrop="true">
+    <mat-drawer #drawer mode="Over" position="end" class="noScrollDrawer">
+        <div class="drawerContainer">
+            <div class="drawerContainerTop">
+                <button mat-button class="closeIconButton mr-4" (click)="drawer.toggle()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-icon>filter_alt</mat-icon>
+                <span class="mr-5 mt-1">Filters</span>
+            </div>
+            <!-- <ngx-simplebar [options]="scrollOptions" class="filterContainer1">
+                <app-filter></app-filter>
+            </ngx-simplebar> -->
+            <contact-filter></contact-filter>
+        </div>
+    </mat-drawer>
+
+    <div class="topBar">
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column">
+            <div class="topBarDiv" >
+                <button mat-button [matMenuTriggerFor]="contactMenu">
+                    <span class="title fontObjektivMk mt-1">{{typeString}}</span>
+                    <mat-icon class="iconInButton">arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #contactMenu="matMenu" class="settingsPanel">
+                    <ul class="addPanelUL">
+                        <li mat-menu-item (click)="selectContact()">
+                            <a class="f-16-500 color-253238"><img class="mr-3" src="../../../assets/images/personIcon.png" alt="Image">Contact</a>
+                        </li>
+                        <li mat-menu-item (click)="selectCompany()">
+                            <a class="f-16-500 color-253238"><img class="mr-3" src="../../../assets/images/companyIcon.png" alt="Image">Company</a>
+                        </li>
+                    </ul>
+                </mat-menu>
+
+                <mat-form-field class="searchForm noLabelForm noSpaceForm" appearance="outline" >
+                    <input type="text" matInput placeholder="Search by contact name">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="topBarDiv">
+                <button mat-button class="flatIconTextButton mr-3" [matMenuTriggerFor]="optionMenu">
+                    <mat-icon class="iconInButton">arrow_drop_down</mat-icon>
+                    Option
+                </button>
+                <mat-menu #optionMenu="matMenu">
+                    <button mat-menu-item>option1</button>
+                    <button mat-menu-item>option2</button>
+                    <button mat-menu-item>option3</button>
+                </mat-menu>
+
+                <button mat-button class="showListButton" [class.activeBtn]="listShow" (click)="showList()">
+                    <mat-icon>list</mat-icon>
+                </button>
+                <button mat-button class="showDashboardButton" [class.activeBtn]="!listShow" (click)="showGrid()">
+                    <mat-icon>dashboard</mat-icon>
+                </button>
+                <button mat-button class="flatIconTextButton ml-3" (click)="drawer.toggle()">
+                    <mat-icon class="iconInButton">filter_alt</mat-icon>
+                    Filter(1)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ngx-simplebar [options]="scrollOptions" class="mainContainer" [class.listHeight] = "listShow" [class.gridHeight] = "!listShow">
+        <div *ngIf="!selectedItems.length" class="checkDiv m-3">
+            <mat-checkbox color="primary" class="contactCheck mr-4 customCheckBox" (click)="clickEmptyCheck()"><span>{{items.length}} Contacts</span></mat-checkbox>
+            <span class="pt-1">Sorted by last activity date</span>
+        </div>
+        <div *ngIf="selectedItems.length" class="checkDiv m-3">
+            <mat-checkbox color="primary" [indeterminate]="selectedItems.length" (click)="clickIndeterminate()"
+                        class="contactCheck mr-4 customCheckBox"><span>{{selectedItems.length}} / {{items.length}} Selected</span></mat-checkbox>
+            <button mat-button class="deleteBtn">Delete</button>
+            <button mat-button class="smallIconBtn ml-2" (click)="clickEmail()">
+                <mat-icon>email</mat-icon>
+            </button>
+            <button mat-button class="smallIconBtn ml-2">
+                <mat-icon>phone</mat-icon>
+            </button>
+        </div>
+        
+        <div *ngIf="!listShow" class="row">
+            <div class="fullWidth text-right dateDiv">January, 2021</div>
+            <ng-container  *ngFor="let item of items; let i = index">
+
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <mat-card class="mat-elevation-z0 p-3 mb-4" style="position: relative" 
+                            (click)="clickCard(item)" (mouseover)="setHoveredItem(item)">
+                        <mat-checkbox class="cardCheckBox customCheckBox" [checked]='setCheckStatus(item)' 
+                                    (click)="clickCheck($event, item);$event.stopPropagation();" *ngIf="showCardCheckBox(item)"
+                                    color="primary"></mat-checkbox>
+                        <mat-card-header>
+                            <div mat-card-avatar class="iconContainer">
+                                <img *ngIf="!item.company; else elseBlock" alt="Image" src="../../../assets/images/face.svg" class="avatar">
+                                <ng-template #elseBlock>
+                                    <!-- <mat-icon class="roundIcon">business</mat-icon> -->
+                                    <img alt="Image" src="../../../assets/images/business19.svg">
+                                </ng-template>
+                            </div>
+                        </mat-card-header><br>
+                        <mat-card-content *ngIf="item.company; else companyContent">
+                            <span class="cardText1">{{item.name}}</span><br>
+                            <span class="cardText2">Owner: {{item.owner}}</span><br>
+                            <span class="cardText2">{{item.contactCount}} Contacts</span>
+                        </mat-card-content>
+                        <ng-template #companyContent>
+                            <span class="cardText1">{{item.name}}</span><br>
+                            <span class="cardText2">{{item.email}}</span><br>
+                            <span class="cardText2">{{item.companyName}}</span>
+                        </ng-template>
+                    </mat-card>
+                </div>
+                
+                <ng-container *ngIf="i == 6 || i == 0">
+                    <div class="fullWidth"></div>
+                    <div class="fullWidth text-right dateDiv" *ngIf="i == 0">December, 2020</div>
+                    <div class="fullWidth text-right dateDiv" *ngIf="i == 6">November, 2020</div>
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <div *ngIf="listShow">
+            <app-contact-table
+                [propItems] = "items"
+                [selectedItems] = "selectedItems"
+            ></app-contact-table>
+        </div>
+    </ngx-simplebar>
+
+</mat-drawer-container>

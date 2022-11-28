@@ -1,0 +1,51 @@
+<app-header></app-header>
+<section class="py-3 sectionTop">
+  <div class="container-fluid px-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="color-253238 f-20-500">Account Settings</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sectionOne">
+  <div class="container-fluid pr-5 pl-0">
+    <div class="row">
+      <div class="col-12">
+        <div class="customTabOne py-3">
+          <div class="f-14-500 color-253238 mb-2 pl-5">Manage</div>
+          <mat-tab-group [@.disabled]="true">
+            <mat-tab label="Profile">
+              <app-profile></app-profile>
+            </mat-tab>
+            <mat-tab label="Users & Roles">
+              <app-usersroles></app-usersroles>
+            </mat-tab>
+            <mat-tab label="Account">
+              <app-account></app-account>
+            </mat-tab>
+            <mat-tab label="Notification">
+              <app-notification></app-notification>
+            </mat-tab>
+            <mat-tab label="Data">
+            <app-data></app-data>
+            </mat-tab>
+            <!-- <mat-tab label="Plans & Pricing">
+              <app-planspricing></app-planspricing>
+            </mat-tab> -->
+            <mat-tab label="Pipeline and Stages">
+              <app-pipelinestages></app-pipelinestages>
+            </mat-tab>
+            <mat-tab label="Terms and Services">
+              <app-termsservices></app-termsservices>
+            </mat-tab>
+            <mat-tab label="Privacy Policy">
+              <app-privacypolicy></app-privacypolicy>
+            </mat-tab>
+          </mat-tab-group>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

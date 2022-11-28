@@ -1,0 +1,139 @@
+<div class="rightPart">
+    <mat-accordion [multi]="true" class="customAccordion">
+        <mat-expansion-panel class="mat-elevation-z0" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Deal
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content1">
+                <div>
+                    <span>Total Value</span><br>
+                    <span class="priceSpan">$430.00</span>
+                </div>
+                <div>
+                    <span>Total Expected</span><br>
+                    <span class="priceSpan">$430.00</span>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0 grayExpanded" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Associated Contacts
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <div class="personInfo">
+                    <div>
+                        <img alt="Image" src="../../../assets/images/user-sample.png" width="35" height="35" style="border-radius: 10px">
+                    </div>
+                    <div class="ml-2">
+                        <span class="span1">Wes Studi</span><br>
+                        <span class="span2">Manager</span>
+                    </div>
+                </div>
+                <div class="personInfo">
+                    <div class="roundBusiness">
+                        <img alt="Image" src="../../../assets/images/business.svg" width="14" height="14">
+                    </div>
+                    <div class="ml-2">
+                        <span class="span1">Packet Monster</span><br>
+                        <span class="span2">Employee at Packet Monster, Inc.</span>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Upcoming Appointments
+                    </div>
+                    <div>
+                        <button mat-button class="iconButton" (click)="addAppoint()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <div class="appointItem">
+                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox">
+                        Packet Monster Sales Opportunity
+                    </mat-checkbox><br>
+                    <span class="alertSpan">
+                        <img alt="Image" src="../../../assets/images/ring.svg">
+                        <span style="margin-left: 2px;">Today at 9:00</span>
+                    </span>
+                </div>
+                <hr>
+                <div class="appointItem">
+                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox">
+                        UX design meeting at 17:30 hrs. sales pipeline design discussion.
+                    </mat-checkbox><br>
+                    <span class="alertSpan">
+                        <img alt="Image" src="../../../assets/images/calendar.svg">
+                        <span style="margin-left: 2px; color: red">Thu, 20 Dec, 2020</span>
+                    </span>
+                </div>
+                <hr>
+                <div class="appointItem">
+                    <mat-checkbox color="primary" style="margin-bottom: 7px;" class="customCheckBox">
+                        Landing page required for new CRM app
+                    </mat-checkbox><br>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Tasks
+                    </div>
+                    <div>
+                        <button mat-button class="iconButton" (click)="addTask()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <mat-checkbox *ngFor="let e of tasks" color="primary" class="mb-1 customCheckBox" [(ngModel)]="e.selected">
+                    <span [class.lineThrough]="e.selected">{{e.name}}</span>
+                </mat-checkbox>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="mat-elevation-z0" [hideToggle]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="addPanelTitle">
+                    <div>
+                        <mat-icon class="mr-2 ownIcon">keyboard_arrow_right</mat-icon>
+                        Files
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="panel-content">
+                <div *ngFor="let f of files;let i = index" class="fileItem"
+                    [class.pb-2]="i == 0" [class.py-2]="i > 0" [class.borderBottom]="i < files.length - 1">
+                    <img *ngIf="f.type == 'word'" alt="Image" src="../../../assets/images/word-icon.svg">
+                    <img *ngIf="f.type == 'excel'" alt="Image" src="../../../assets/images/excel-icon.svg">
+                    <img *ngIf="f.type == 'pdf'" alt="Image" src="../../../assets/images/pdf-icon.svg">
+
+                    <div class="ml-2">
+                        <span class="fileName">{{f.name}}</span><br>
+                        <span class="fileDescription">{{f.description}}</span>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

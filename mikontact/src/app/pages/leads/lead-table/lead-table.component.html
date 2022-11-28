@@ -1,0 +1,54 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 noBackground">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="clickTh('name')" class="deal leftRadiusTh"
+        [class.activeTh]="selectedTh == 'name'">Deal Name</th>
+        <td mat-cell *matCellDef="let element; let i = index" class="nameCell"> 
+
+            <mat-icon *ngIf="i==0" class="moneyIcon">attach_money</mat-icon>
+            <img *ngIf="i>0" class="avatar" alt="Image" src="{{element.avatar}}">
+
+            <div>
+                <span class="nameSpan">{{element.name}}</span><br>
+                <span class="descSpan">{{element.description}}</span>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="clickTh('stage')" class="pl-2 stage"
+        [class.activeTh]="selectedTh == 'stage'">Stage</th>
+        <td mat-cell *matCellDef="let element" class="stageCell"> 
+            {{element.stage}} 
+            <div class="stage-wrapper mt-1">
+                <div class="stage-item"></div>
+                <div class="stage-item"></div>
+                <div class="stage-item stage-active"></div>
+                <div class="stage-item"></div>
+                <div class="stage-item"></div>
+            </div>
+        </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header  (click)="clickTh('value')" class="pl-2 value"
+        [class.activeTh]="selectedTh == 'value'">Value</th>
+        <td mat-cell *matCellDef="let element" class="valueCell"> 
+            <span>{{element.value}} $</span>
+        </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="day">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header  (click)="clickTh('day')" class="pl-2 last"
+        [class.activeTh]="selectedTh == 'day'">Last Activity Date</th>
+        <td mat-cell *matCellDef="let element" class="lastCell"> {{element.day}} Day</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header  (click)="clickTh('owner')" class="pl-2 owner rightRadiusTh"
+        [class.activeTh]="selectedTh == 'owner'">Owner</th>
+        <td mat-cell *matCellDef="let element" class="ownerCell"> {{element.owner}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickRow(row)"></tr>
+</table>

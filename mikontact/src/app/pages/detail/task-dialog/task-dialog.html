@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>New Task</h1>
+<div mat-dialog-content>
+    <span>Task Content *</span>
+    <mat-form-field appearance="outline" class="formControl noLabelForm">
+        <textarea matInput ></textarea>
+    </mat-form-field>
+    <span>Due Date</span>
+    <div class="dateDiv">
+        <div>
+            <mat-form-field appearance="outline" [style.width.px]=155 class="formControl noLabelForm datePicker">
+                <input matInput [matDatepicker]="fromPicker" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" [style.width.px]=155 class="formControl noLabelForm datePicker">
+                <input matInput [matDatepicker]="toPicker" readonly>
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <span>Reminder</span>
+    <div class="reminderDiv">
+        <div>
+            <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="155">
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="155">
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <span>Associated Contact</span><br>
+    <div *ngFor="let e of selected" class="optionDiv selectedDiv" style="position: relative">
+        <img alt="Image" src="../../../assets/images/user-sample.png">  
+        <div class="ml-3">
+            <p class="span1">{{e}}</p>
+            <p class="span2">{{e}} description</p>
+        </div>
+        <mat-icon style="position: absolute; right: 10px" class="cursorPointer" 
+                    (click)="deleteSelected(e)">close</mat-icon>
+    </div>
+    <mat-form-field class="formControl noLabelForm" appearance="outline" *ngIf="showAuto">
+        <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
+            <div class="optionBtnContainer">
+                <button mat-button class={{activeClass(1)}} (click)="setActive(1)">Person</button>
+                <button mat-button class={{activeClass(2)}} (click)="setActive(2)">Company</button>
+                <button mat-button class={{activeClass(3)}} (click)="setActive(3)">Lead</button>
+            </div>
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <div class="optionDiv">
+                    <img alt="Image" src="../../../assets/images/user-sample.png">  
+                    <div class="ml-3">
+                        <p class="span1">{{option}}</p>
+                        <p class="span2">{{option}} description</p>
+                    </div>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <button mat-button *ngIf="!showAuto" (click)="clickAdd()" class="addBtn">
+        <mat-icon>add</mat-icon>
+    </button><br>
+    
+    <span>Owner</span>
+    <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground">
+        <mat-select>
+            <mat-option value="1">Owner1</mat-option>
+            <mat-option value="2">Owner2</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button class="createBtn ml-3">Create</button>
+</div>

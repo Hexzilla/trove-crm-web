@@ -1,0 +1,60 @@
+<app-header></app-header>
+<div fxLayout="row" fxLayout.xs="column" class="lightBackground">
+    <div fxFlex="80">
+        <div class="topBar alignCenter">
+            <mat-icon>notes</mat-icon>
+            <span>Tasks</span>
+            <mat-form-field class="searchForm noLabelForm noSpaceForm" appearance="outline">
+                <input type="text" matInput placeholder="Search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <button mat-button class="addButton" (click)="clickAddTask()">Add Task</button>
+        </div>
+        <ngx-simplebar [options]="scrollOptions" class="listContainer">
+            <mat-list>
+                <mat-list-item class="itemHeader">All task</mat-list-item>
+                <ng-container *ngFor="let task of tasks; let i = index">
+                    <mat-list-item class="taskItem">
+                        <mat-checkbox class="customCheckBox" (change)="clickCheckBox(task)"
+                                [checked]="task.selected">
+                            <span [class.lineThrough]="task.selected">{{task.name}}</span>
+                        </mat-checkbox>
+                        <div class="alignCenter">
+                            <div class="datePanel alignCenter mr-3" *ngIf="task.date"
+                                [class.dateRed]="i==1">
+                                <mat-icon class="material-icons-outlined dateIcon">calendar_today</mat-icon>
+                                <span>{{task.date}}</span>
+                            </div>
+                            <div class="datePanel alignCenter mr-3" *ngIf="task.time">
+                                <mat-icon class="dateIcon">notifications</mat-icon>
+                                <span>{{task.time}}</span>
+                            </div>
+                            <div class="createdDate">
+                                <span>Created</span>
+                                <span>{{task.created}}</span>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                </ng-container>
+                <ng-container *ngIf="getCompletedTasks().length > 0">
+                    <mat-list-item class="itemHeader">Completed</mat-list-item>
+                    <mat-list-item class="taskItem" *ngFor="let e of completedTasks">
+                        <mat-checkbox class="customCheckBox" [checked]="true" (change)="clickCompleteCheck(e)">
+                            <span class="lineThrough">{{e.name}}</span>
+                        </mat-checkbox>
+                    </mat-list-item>
+                </ng-container>
+            </mat-list>
+        </ngx-simplebar>
+    </div>
+    <div class="rightPart" fxFlex="20" fxFill>
+        <div class="filterHeader alignCenter">
+            <button mat-button class="closeButton">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon>filter_alt</mat-icon>
+            <span>Filters</span>
+        </div>
+        <app-task-filter></app-task-filter>
+    </div>
+</div>

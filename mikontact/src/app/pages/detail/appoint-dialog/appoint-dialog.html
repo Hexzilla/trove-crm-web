@@ -1,0 +1,112 @@
+<h1 mat-dialog-title>New Appointment</h1>
+<div mat-dialog-content>
+    <div class="titleDiv">
+        <div>
+            <span>Title</span>
+            <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="320">
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div style="padding-left: 20px;">
+            <span>Where?</span>
+            <mat-form-field appearance="outline" class="formControl noLabelForm" [style.width.px]="320">
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <span>Description</span>
+    <mat-form-field appearance="outline" class="formControl noLabelForm">
+        <textarea matInput ></textarea>
+    </mat-form-field>
+    <div class="dateDiv">
+        <div class="startDiv">
+            <div class="mr-3">
+                <span>Start Date</span><br>
+                <mat-form-field appearance="outline" [style.width.px]=160 class="formControl noLabelForm datePicker">
+                    <input matInput [matDatepicker]="startPicker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div>
+                <span></span><br>
+                <mat-form-field appearance="outline" [style.width.px]=144 class="formControl noLabelForm">
+                    <input matInput type="time">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="endDiv">
+            <div class="mr-3">
+                <span>End Date</span><br>
+                <mat-form-field appearance="outline" [style.width.px]=160 class="formControl noLabelForm datePicker">
+                    <input matInput [matDatepicker]="endPicker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div>
+                <span></span><br>
+                <mat-form-field appearance="outline" [style.width.px]=144 class="formControl noLabelForm">
+                    <input matInput type="time">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="associateDiv">
+        <div>
+            <span>Associated Contact</span><br>
+            <div *ngFor="let e of selected" class="optionDiv selectedDiv" [style.width.px]="320" style="position: relative">
+                <img alt="Image" src="../../../assets/images/user-sample.png">  
+                <div class="ml-3">
+                    <p class="span1">{{e}}</p>
+                    <p class="span2">{{e}} description</p>
+                </div>
+                <mat-icon style="position: absolute; right: 10px" class="cursorPointer" 
+                            (click)="deleteSelected(e)">close</mat-icon>
+            </div>
+            <mat-form-field class="halfControl noLabelForm" appearance="outline" *ngIf="showAuto" [style.width.px]="320">
+                <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
+                    <div class="optionBtnContainer">
+                        <button mat-button class={{activeClass(1)}} (click)="setActive(1)">Person</button>
+                        <button mat-button class={{activeClass(2)}} (click)="setActive(2)">Company</button>
+                        <button mat-button class={{activeClass(3)}} (click)="setActive(3)">Lead</button>
+                    </div>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <div class="optionDiv">
+                            <img alt="Image" src="../../../assets/images/user-sample.png">  
+                            <div class="ml-3">
+                                <p class="span1">{{option}}</p>
+                                <p class="span2">{{option}} description</p>
+                            </div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="endDiv">
+            <div class="mr-3">
+                <span></span><br>
+                <mat-form-field appearance="outline" [style.width.px]=160 class="formControl noLabelForm datePicker">
+                    <input matInput [matDatepicker]="assPicker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="assPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #assPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div>
+                <span></span><br>
+                <mat-form-field appearance="outline" [style.width.px]=144 class="formControl noLabelForm">
+                    <input matInput type="time">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <button mat-button *ngIf="!showAuto" (click)="clickAdd()" class="addBtn">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button class="createBtn ml-3">Create</button>
+</div>

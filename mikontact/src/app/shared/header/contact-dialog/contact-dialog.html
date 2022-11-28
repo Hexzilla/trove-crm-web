@@ -1,0 +1,145 @@
+<h1 mat-dialog-title>Add Person</h1>
+<div class="filterPart">
+    <mat-form-field class="dialogSearchFormField whiteBackground" appearance="outline">
+        <input type="text" placeholder="Search field" aria-label="Number" matInput [formControl]="searchControl"
+            [matAutocomplete]="auto" [(ngModel)]="search">
+        <mat-icon matSuffix *ngIf="!search">search</mat-icon>
+        <mat-icon matSuffix *ngIf="search" style="color: #253238;cursor: pointer" (click)="search = ''">close</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" class="smFontAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-checkbox color="primary" class="mandatoryCheck customCheckBox" (change)="checkMandatory($event)" >Only show mandatory fields</mat-checkbox>
+</div>
+<div mat-dialog-content>
+    <div class="mainContent">
+
+        <input type='file' (change)="readURL($event);" id="fileInput" accept=".png"/>
+
+        <div class="threeDiv">
+            <div *ngIf="checkShow('First Name') || checkShow('Last Name')" style="position: relative;">
+                <mat-icon *ngIf="!imageSrc" class="material-icons-outlined bigRoundIcon" style="position: relative; left: -9px; cursor: pointer;"
+                    (mouseover)="userHover = true" (mouseout)="userHover = false" (click)="userIcon()">
+                    {{getUserIcon()}}
+                </mat-icon>
+                <img *ngIf="imageSrc" id="preview" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" width="58" 
+                        height="58" (mouseover)="imageHover = true"/>
+                <div class="overlay" *ngIf="imageSrc && imageHover" (mouseover)="imageHover = true" (mouseout)="imageHover = false" (click)="removeImage()">
+                    Remove
+                </div>
+            </div>
+            <div *ngIf="checkShow('First Name')">
+                <span>First Name</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth" [style.width.px]="180">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div *ngIf="checkShow('Last Name')">
+                <span>Last Name</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth" [style.width.px]="180">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="threeDiv">
+            <div *ngIf="checkShow('Mobile Number') || checkShow('Work Number')">
+                <mat-icon class="roundIcon">phone</mat-icon>
+            </div>
+            <div *ngIf="checkShow('Mobile Number')">
+                <span>Mobile Number</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth" [style.width.px]="180">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div *ngIf="checkShow('Work Number')">
+                <span>Work Number</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm formMaxWidth" [style.width.px]="180">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="twoDiv" *ngIf="!showMandatory">
+            <div *ngIf="checkShow('Company Name')">
+                <span class="roundIcon">
+                    <img alt="Image" src="../../../../assets/images/company-black.svg">
+                </span>
+            </div>
+            <div *ngIf="checkShow('Company Name')">
+                <span>Company Name</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground">
+                    <mat-select>
+                        <mat-option value="1">company1</mat-option>
+                        <mat-option value="2">company2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="twoDiv">
+            <div *ngIf="checkShow('Email Address')">
+                <mat-icon class="roundIcon">email</mat-icon>
+            </div>
+            <div *ngIf="checkShow('Email Address')">
+                <span>Email Address</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput type="email">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="threeDiv" *ngIf="!showMandatory">
+            <div *ngIf="checkShow('Contact Type') || checkShow('Contact Group')">
+            </div>
+            <div *ngIf="checkShow('Contact Type')">
+                <span>Contact Type</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground" [style.width.px]="180">
+                    <mat-select>
+                        <mat-option value="1">type1</mat-option>
+                        <mat-option value="2">type2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="checkShow('Contact Group')">
+                <span>Contact Group</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm grayBackground" [style.width.px]="180">
+                    <mat-select>
+                        <mat-option value="1">group1</mat-option>
+                        <mat-option value="2">group2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="twoDiv" *ngIf="!showMandatory">
+            <div *ngIf="checkShow('Address')"></div>
+            <div *ngIf="checkShow('Address')">
+                <span>Address</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="twoDiv" *ngIf="!showMandatory">
+            <div *ngIf="checkShow('Skype ID')"></div>
+            <div *ngIf="checkShow('Skype ID')">
+                <span>Skype ID</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="twoDiv" *ngIf="!showMandatory">
+            <div *ngIf="checkShow('Description')"></div>
+            <div *ngIf="checkShow('Description')">
+                <span>Description</span><br>
+                <mat-form-field appearance="outline" class="formControl noLabelForm">
+                    <textarea matInput></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-button class="createBtn ml-3">Create</button>
+</div>

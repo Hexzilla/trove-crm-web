@@ -1,0 +1,68 @@
+table {
+    width: 100%;
+}
+
+th {
+    width: 10%;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: #253238;
+    background: #E1E6EE;
+    font-family: objektiv-mk3, sans-serif;
+    padding-left: 4px !important;
+}
+
+td {
+    font-family: objektiv-mk3, sans-serif;
+    padding-left: 10px !important;
+}
+
+.contactHeader {
+    width: 20%;
+    padding: 20px 24px !important;
+}
+
+.contactCell {
+    background: rgba(208, 217, 222, 0.12);
+    border-right: 1px solid #E6EAF0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px !important;
+}
+
+.contactCell span{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 23px;
+    color: #253238;
+}
+
+.businessIcon{
+    margin-right: 8px;
+}
+
+.avatar {
+    border-radius: 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.businessImage {
+    background: #E9EDF2;
+    width: 35px;
+    height: 35px;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activeTh {
+    background: #E9EDF2;
+}

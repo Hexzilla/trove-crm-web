@@ -1,0 +1,62 @@
+<div [class.borderCover1]="activeTabIndex == 0" [class.borderCover2]="activeTabIndex == 1" 
+        [class.borderCover3]="activeTabIndex == 2">
+</div>
+<mat-tab-group #tabGroup (selectedTabChange)="handleTabChange($event)" class="froalaTab">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <img alt="Image" src="../../../assets/images/comment-icon.svg">
+            <span class="ml-2">Add a Note</span>
+        </ng-template>
+        <div class="tabContent">
+            <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button>
+
+            <div *ngIf="editorShow" class="receiverDiv">
+                <span>To:</span>
+                <div class="receiver">
+                    asdf
+                    <mat-icon>close</mat-icon>
+                </div>
+                <div class="receiver">
+                    qwer
+                    <mat-icon>close</mat-icon>
+                </div>
+            </div>
+            <div [froalaEditor] *ngIf="activeTabIndex===0 && editorShow" [froalaEditor]="titleOptions1">Note</div>
+
+            <div *ngIf="editorShow">
+                <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+                <button mat-button class="saveButton">Save</button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <img alt="Image" src="../../../assets/images/email-icon.svg">
+            <span class="ml-2">Send an Email</span>
+        </ng-template>
+        <div class="tabContent">
+            <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button>
+            <div [froalaEditor] *ngIf="activeTabIndex===1 && editorShow" [froalaEditor]="titleOptions2">Email</div>
+            <div *ngIf="editorShow">
+                <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+                <button mat-button class="saveButton">Save</button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <img alt="Image" src="../../../assets/images/phone-icon.svg">
+            <span class="ml-2">Call</span>
+        </ng-template>
+        <div class="tabContent">
+            <button mat-button class="editorButton" *ngIf="!editorShow" (click)="showEditor()">Mindfatory Team</button>
+            <div [froalaEditor] *ngIf="activeTabIndex===2 && editorShow" [froalaEditor]="titleOptions3">Call</div>
+            <div *ngIf="editorShow">
+                <button mat-button class="cancelButton" (click)="hideEditor()">Cancel</button>
+                <button mat-button class="saveButton">Save</button>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
